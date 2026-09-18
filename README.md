@@ -28,6 +28,13 @@ npm run check                  # lint + typecheck + production build
 
 Set the same variables in Vercel → Project → Settings → Environment Variables.
 
+## Deploy
+
+The repo is linked to the Vercel project `wonder-apps` (team WonderTeam). Every push
+to a branch gets a preview URL; merging to `main` deploys production. `vercel.json`
+pins the Next.js framework preset and the `bom1` (Mumbai) function region, matching
+the data residency of the products themselves.
+
 ## Edit the content
 
 All copy lives in `src/content/`:
