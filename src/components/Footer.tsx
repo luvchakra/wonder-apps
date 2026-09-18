@@ -41,6 +41,16 @@ export function Footer() {
                   Shared platform
                 </Link>
               </li>
+              <li>
+                <Link href="/appstracker" className="text-fg-muted transition-colors hover:text-fg">
+                  Engineering tracker
+                </Link>
+              </li>
+              <li>
+                <Link href="/appstracker" className="text-fg-muted transition-colors hover:text-fg">
+                  Engineering tracker
+                </Link>
+              </li>
             </ul>
           </div>
 

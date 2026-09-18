@@ -19,6 +19,11 @@
   --brand-magenta: #a94ad1;
   --brand-orange: #ff7a45;
   --accent-soft: oklch(0.94 0.03 260);
+  /* Status palette (fixed roles, never themed) — reference dataviz palette. */
+  --good: #0ca30c;
+  --warn: #fab219;
+  --track: rgba(0, 0, 0, 0.08);
+  --set-aside: rgba(0, 0, 0, 0.2);
   --radius: 18px;
   --radius-lg: 28px;
   --nav-h: 52px;
@@ -38,6 +43,8 @@
   --card-border: rgba(255, 255, 255, 0.08);
   --glass: rgba(20, 20, 22, 0.72);
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.5), 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+  --track: rgba(255, 255, 255, 0.14);
+  --set-aside: rgba(255, 255, 255, 0.26);
   color-scheme: dark;
 }
 
@@ -53,6 +60,8 @@
     --card-border: rgba(255, 255, 255, 0.08);
     --glass: rgba(20, 20, 22, 0.72);
     --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.5), 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+    --track: rgba(255, 255, 255, 0.14);
+    --set-aside: rgba(255, 255, 255, 0.26);
     color-scheme: dark;
   }
   /* In dark mode the "light band" becomes a soft charcoal rather than white. */
@@ -73,6 +82,8 @@
   --card-border: rgba(255, 255, 255, 0.08);
   --glass: rgba(20, 20, 22, 0.72);
   color-scheme: dark;
+  --track: rgba(255, 255, 255, 0.14);
+  --set-aside: rgba(255, 255, 255, 0.26);
 }
 
 @theme inline {
@@ -378,4 +389,10 @@ video {
 @media (prefers-reduced-motion: reduce) {
   .word-rotator-track,
   .word-rotator-item { transition: none; }
+}
+
+/* ---------- Hatched fill for "set aside" work --------------------------- */
+.hatch {
+  background-color: var(--track);
+  background-image: repeating-linear-gradient(135deg, var(--set-aside) 0 3px, transparent 3px 7px);
 }

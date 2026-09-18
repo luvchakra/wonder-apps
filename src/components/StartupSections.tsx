@@ -274,6 +274,16 @@ export function MoatAndTraction({ s }: { s: Startup }) {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={0.2} className="mt-6">
+          <Link href={`/appstracker#${s.slug}`} className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline" style={{ color: s.accent }}>
+            See every module and epic, live from the repo <ArrowRight className="size-3.5" />
+          </Link>
+        </Reveal>
+        <Reveal delay={0.2} className="mt-6">
+          <Link href={`/appstracker#${s.slug}`} className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline" style={{ color: s.accent }}>
+            See every module and epic <ArrowRight className="size-3.5" />
+          </Link>
+        </Reveal>
       </div>
     </section>
   );
