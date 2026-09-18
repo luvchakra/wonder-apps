@@ -45,6 +45,11 @@ export function Nav() {
               </li>
             ))}
             <li>
+              <Link href="/appstracker" className="text-[13px] text-fg-muted transition-colors hover:text-fg">
+                Tracker
+              </Link>
+            </li>
+            <li>
               <Link href="/#thesis" className="text-[13px] text-fg-muted transition-colors hover:text-fg">
                 Thesis
               </Link>
