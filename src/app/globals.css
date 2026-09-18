@@ -287,3 +287,47 @@ video {
   .orb-a, .orb-b, .marquee-track, .shimmer-text { animation: none; }
   .shimmer-text { color: var(--fg); background: none; }
 }
+
+/* ---------- Butterfly mark: one flap every five seconds ----------------- */
+.mark-flap {
+  perspective: 240px;
+  transform-style: preserve-3d;
+}
+.mark-flap .wing {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  object-fit: contain;
+  backface-visibility: visible;
+  will-change: transform;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.mark-flap .wing-left {
+  left: 0;
+  transform-origin: 100% 55%;
+  animation-name: wing-flap-left;
+}
+.mark-flap .wing-right {
+  left: 50%;
+  transform-origin: 0% 55%;
+  animation-name: wing-flap-right;
+}
+/* Two quick beats in the first 0.8s of each 5s cycle, then rest. */
+@keyframes wing-flap-left {
+  0%, 16%, 100% { transform: rotateY(0deg); }
+  4%  { transform: rotateY(58deg); }
+  8%  { transform: rotateY(12deg); }
+  12% { transform: rotateY(50deg); }
+}
+@keyframes wing-flap-right {
+  0%, 16%, 100% { transform: rotateY(0deg); }
+  4%  { transform: rotateY(-58deg); }
+  8%  { transform: rotateY(-12deg); }
+  12% { transform: rotateY(-50deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark-flap .wing { animation: none; }
+}

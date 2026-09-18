@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { site } from "@/content/site";
 import { startups } from "@/content/startups";
-import { Logo, Wordmark } from "./Logo";
+import { Wordmark } from "./Logo";
+import { AnimatedMark } from "./AnimatedMark";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,7 +33,7 @@ export function Nav() {
       <div className={`glass transition-shadow duration-500 ${scrolled || open ? "shadow-[0_1px_0_var(--line)]" : ""}`}>
         <nav className="container flex h-[var(--nav-h)] items-center justify-between" aria-label="Primary">
           <Link href="/" className="flex items-center gap-2 text-[15px] font-semibold tracking-tight" onClick={() => setOpen(false)}>
-            <Logo className="h-5 w-auto" priority />
+            <AnimatedMark className="h-5" priority />
             <Wordmark className="text-[16px]" />
           </Link>
           <ul className="hidden items-center gap-7 md:flex">
