@@ -331,3 +331,51 @@ video {
 @media (prefers-reduced-motion: reduce) {
   .mark-flap .wing { animation: none; }
 }
+
+/* ---------- Word rotator: vertical slot ticker -------------------------- */
+.word-rotator {
+  display: inline-block;
+  vertical-align: top;
+}
+.word-rotator-window {
+  /* Glimpse the incoming word below; keep the outgoing one from bleeding into the line above. */
+  --peek-top: 0.1em;
+  --peek-bottom: 0.46em;
+  display: block;
+  position: relative;
+  height: calc(1em + var(--peek-top) + var(--peek-bottom));
+  margin-top: calc(-1 * var(--peek-top));
+  margin-bottom: calc(-0.3 * var(--peek-bottom));
+  overflow: hidden;
+  line-height: 1;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 66%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 66%, transparent 100%);
+}
+.word-rotator-track {
+  display: block;
+  padding-top: var(--peek-top);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.word-rotator-item {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--fg-subtle);
+  opacity: 0.28;
+  transition: opacity 0.6s ease, filter 0.6s ease;
+  filter: blur(1.5px);
+}
+.word-rotator-item[data-active] {
+  opacity: 1;
+  filter: none;
+  background: linear-gradient(100deg, #1ba7fe 0%, #6132fd 38%, #a94ad1 62%, #ff7a45 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-rotator-track,
+  .word-rotator-item { transition: none; }
+}

@@ -8,8 +8,12 @@ import { startups } from "@/content/startups";
 import { Device } from "./Device";
 import { Button } from "./ui";
 import { Logo } from "./Logo";
+import { WordRotator } from "./WordRotator";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+/** Each completes "Built for the …". Kept short so none wraps on a phone. */
+const ROTATING = ["agent era.", "household.", "job seeker.", "business.", "enterprise.", "next decade."] as const;
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -57,10 +61,10 @@ export function Hero() {
             Ideas for a brighter tomorrow
           </motion.p>
           <h1 id="hero-title" className="display mt-6 text-[clamp(2.75rem,8.5vw,6.75rem)]">
-            {["Four products.", "One chassis.", "Built for the agent era."].map((line, i) => (
+            {["Four products.", "One chassis.", "Built for the"].map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span
-                  className={`block ${i === 2 ? "text-gradient" : ""}`}
+                  className="block"
                   initial={{ y: "110%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 1, ease, delay: 0.15 + i * 0.12 }}
@@ -69,6 +73,14 @@ export function Hero() {
                 </motion.span>
               </span>
             ))}
+            <motion.span
+              className="block"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease, delay: 0.55 }}
+            >
+              <WordRotator words={ROTATING} />
+            </motion.span>
           </h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
