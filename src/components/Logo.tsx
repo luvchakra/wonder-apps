@@ -2,7 +2,7 @@ import Image from "next/image";
 
 /** The WonderApps butterfly-W mark. Gradient artwork reads on light and dark alike. */
 export function Logo({ className = "h-6 w-auto", priority = false }: { className?: string; priority?: boolean }) {
-  return <Image src="/brands/wonderapps/mark.png" alt="" width={417} height={282} className={className} priority={priority} />;
+  return <Image src="/brands/wonderapps/mark.webp" alt="" width={417} height={282} className={className} priority={priority} />;
 }
 
 /** "Wonder" heavy, "Apps" light — the wordmark as set on the brand sheet. */
