@@ -33,7 +33,8 @@ fetch at build time).
 src/content/        ALL copy lives here — edit these, not the components
   startups.ts       one typed record per product: problem, solution, market,
                     model, moat, traction, roadmap, screens, links (incl. helpUrl)
-  site.ts           name, nav, legal links, jurisdiction, lastUpdated
+  site.ts           name, nav, legal links, jurisdiction, lastUpdated, canonical
+                    url (wonderapps.biz) and contactEmail (connect@wonderapps.biz)
   legal.ts          privacy / terms / cookies / disclaimer / accessibility / security
   types.ts          the Startup type
 src/components/     Hero, Showcase (landing chapter per product), StartupSections
@@ -82,8 +83,15 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 
 - **Never invent traction.** Every number on the site traces to a product's
   public engineering tracker or live site. If you cannot cite it, don't add it.
-- Help-centre links (`helpUrl`) currently redirect to sign-in for three of the
-  four products; the founder will make them public. Keep the links.
+- Help-centre links (`helpUrl`): WonderJobs, WonderArk and WonderAgent are
+  public; WonderHome still redirects to sign-in (checked 2026-09-19). Keep
+  the link regardless — the founder is making it public.
+- Each product's `url`/`helpUrl` point to its custom domain (`home.`, `jobs.`,
+  `ark.`, `agent.` — all `.wonderapps.biz`), the products' intended addresses.
+  If a domain isn't cut over yet, that's an infra step outside this repo, not
+  a reason to revert the copy — verify with a request before assuming stale.
+- `site.contactEmail` (`connect@wonderapps.biz`) is the one address for every
+  product; only the business name next to it changes per placement.
 - Screenshots go through `next/image` with `object-cover object-top` inside a
   fixed-aspect device frame, so any capture size works — don't hand-crop.
 - Animations must respect `prefers-reduced-motion` (MotionConfig does this;

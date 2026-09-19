@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Check, ExternalLink, Lock } from "lucide-react";
+import { site } from "@/content/site";
 import type { Startup } from "@/content/types";
 import { Device } from "./Device";
 import { Parallax } from "./Parallax";
@@ -279,11 +280,6 @@ export function MoatAndTraction({ s }: { s: Startup }) {
             See every module and epic, live from the repo <ArrowRight className="size-3.5" />
           </Link>
         </Reveal>
-        <Reveal delay={0.2} className="mt-6">
-          <Link href={`/appstracker#${s.slug}`} className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline" style={{ color: s.accent }}>
-            See every module and epic <ArrowRight className="size-3.5" />
-          </Link>
-        </Reveal>
       </div>
     </section>
   );
@@ -331,6 +327,12 @@ export function RoadmapAndAsk({ s }: { s: Startup }) {
                 <BookOpen className="size-4" /> Help centre
               </a>
             </div>
+            <p className="mt-6 text-sm text-white/70">
+              Or email {s.name} directly:{" "}
+              <a href={`mailto:${site.contactEmail}`} className="font-medium text-white underline-offset-2 hover:underline">
+                {site.contactEmail}
+              </a>
+            </p>
           </div>
         </Reveal>
       </div>

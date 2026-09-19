@@ -7,10 +7,12 @@ export const site = {
   positioning: "Four AI-native products. One engineering chassis. One founder-operator.",
   description:
     "WonderApps is the portfolio of WonderHome, WonderJobs, WonderArk and WonderAgent — four AI-native software products built on one shared, security-first architecture. Investor overview and contact.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://wonderapps.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://wonderapps.biz",
   /** Shown in legal pages. Set to the operating entity and jurisdiction before going live. */
   jurisdiction: "India",
   contactPath: "/contact",
+  /** Same inbox for every product — the respective business name is what changes next to it in copy. */
+  contactEmail: "connect@wonderapps.biz",
   nav: [
     { href: "/#portfolio", label: "Portfolio" },
     { href: "/#thesis", label: "Thesis" },

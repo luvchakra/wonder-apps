@@ -19,6 +19,12 @@ export function Footer() {
             <Link href={site.contactPath} className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-85">
               Contact the founder <ArrowUpRight className="size-4" />
             </Link>
+            <p className="mt-3 text-sm">
+              Or email {site.name}:{" "}
+              <a href={`mailto:${site.contactEmail}`} className="font-medium text-fg-muted underline-offset-2 hover:text-fg hover:underline">
+                {site.contactEmail}
+              </a>
+            </p>
           </div>
 
           <div>
@@ -39,11 +45,6 @@ export function Footer() {
               <li>
                 <Link href="/#chassis" className="text-fg-muted transition-colors hover:text-fg">
                   Shared platform
-                </Link>
-              </li>
-              <li>
-                <Link href="/appstracker" className="text-fg-muted transition-colors hover:text-fg">
-                  Engineering tracker
                 </Link>
               </li>
               <li>
