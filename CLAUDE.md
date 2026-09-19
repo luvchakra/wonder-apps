@@ -16,6 +16,7 @@ Resend. No database.
 | Typecheck | `npm run typecheck` |
 | Build     | `npm run build`     |
 | All gates | `npm run check`     |
+| Progress  | `npm run progress`  |
 
 There is no test suite yet; `npm run check` (lint + typecheck + build) is the
 pre-push gate.
@@ -52,6 +53,10 @@ src/lib/tracker-parsers.ts  deterministic markdown-table parsers, one per produc
                             keeps the last good data instead of showing wrong numbers
 src/content/progress.ts     the curated snapshot the tracker renders before (and if)
                             the live fetch succeeds; editorial notes per row live here
+docs/progress.md            GENERATED story-by-story progress across all four
+                            products — regenerate with `npm run progress` (fetches
+                            GitHub; `-- --local <dir>` reads local clones instead)
+scripts/build-progress-doc.mjs  the generator
 public/screenshots/<slug>/  captures of the deployed products (desktop 1800w,
                             mobile 780w). WonderAgent's come from its own repo.
 public/brands/<slug>/       logo lockups shipped by the products themselves
@@ -70,6 +75,8 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
   completion denominator and drawn hatched, never as a status colour.
 - Status colours are the fixed dataviz palette (`--good`, `--warn`); text never
   wears them.
+- `docs/progress.md` is generated, never hand-edited. Regenerate it in the same
+  change whenever the tracker parsers or the products' trackers move.
 
 ## Rules that matter here
 
