@@ -6,15 +6,51 @@ Every tracked story from every Wonder product, read from each repository's own t
 
 **Set aside** means deliberately deferred or superseded by later work — not abandoned and not a gap — and is excluded from *active completion* (done ÷ everything still in scope).
 
+## Needs your attention (12)
+
+Derived from the trackers on every regeneration: nothing here is hand-curated, so an item leaves this list only when its source tracker changes.
+
+### Blocked — needs a decision or an external unblock (1)
+
+| Product | ID | Story | Where | Note |
+|---|---|---|---|---|
+| WonderHome | `02-006` | Configure by conversation | Household Configuration & Playbook | P0 · Needs the conversation engine (module 04) |
+
+### Waiting on you — the tracker's own note says so (4)
+
+| Product | ID | Story | Where | Note |
+|---|---|---|---|---|
+| WonderAgent | `FOUNDATION-P0-03.3` | SSO connection foundation (SAML/OIDC) | 01 — Foundation Agent | 2026-09-14: full CRUD service/API/admin UI, domain-based sign-in routing, auth callback + JIT provisioning, live RLS-verified; real end-to-end IdP handshake still unverified. 2026-09-16: confirmed via mcp__Supabase__get_organization + Supabase's own docs that this is a hard infrastructure blocker, not a code gap — SAML 2.0 is Pro-plan-and-above only, and this org is on the free plan. User explicitly chose to skip this and close out the P0 gap-closure pass without it (see audit log); resume only if the user upgrades the plan and supplies a real IdP |
+| WonderAgent | `FOUNDATION-P0-03.4` | MFA foundation | 01 — Foundation Agent | 2026-09-14: Supabase Auth TOTP enroll/verify/unenroll wired at /settings/security; real enrollment against a physical authenticator app not verified in this sandbox, see audit log |
+| WonderAgent | `QA-P0-02.2` | RBAC boundary sweep | 11 — QA Agent | orphaned-permission check clean (0 found); negative-permission proof is generic (the shared gate function itself), not per-permission-key enumerated; SSO JIT mapping unit-tested, real IdP round-trip unverified (sandbox) |
+| WonderAgent | `QA-P0-06` | Authentication suite (SAML/OIDC/session) | 11 — QA Agent | role-mapping and session-expiry still only unit-tested (idle/absolute-expiry timing isn't practically E2E-testable without waiting real clock time); 2026-09-16 added real browser coverage for what was previously fully uncovered: sign-in success/failure, sign-up (including the already-registered-email and under-minlength-password paths), logout, unauthenticated redirect, and negative-permission/tenant-isolation checks (tests/e2e/auth.spec.ts, part of QA-P0-16). SAML/OIDC real IdP exchange and wrong-tenant/domain SSO paths remain out of scope (no test IdP available) |
+
+### Deferred — a recorded decision to revisit (2)
+
+| Product | ID | Story | Where | Note |
+|---|---|---|---|---|
+| WonderArk | `FIN-13` | AI categorisation for unmatched bank lines | Platform build-out › Epic 7 — Finance (details in docs/FINANCE-PROGRESS.md) | Deliberate: Finance is deterministic arithmetic (CLAUDE.md principle 4). Only if wanted. |
+| WonderAgent | `PLATFORM-P0-04.2` | Support access (higher bar) | 09 — Platform Agent | no time-bound/audited support-access infrastructure exists; the backlog explicitly forbids shipping an unbounded shortcut, so nothing was built |
+
+### Unverified — written about, but no code cites it; confirm before relying on it (5)
+
+| Product | ID | Story | Where | Note |
+|---|---|---|---|---|
+| WonderArk | `PLATFORM-P0-10.4` | AI Feature Kill Switch | Platform Administration Portal › AI Safety / Cost Controls | Discussed in docs/design/platform-admin-portal-audit.md, but no code cites it — confirm before relying on this |
+| WonderArk | `PLATFORM-P0-16.4` | Configuration History | Platform Administration Portal › Platform Audit | Discussed in docs/design/platform-admin-portal-audit.md, but no code cites it — confirm before relying on this |
+| WonderArk | `PLATFORM-P0-18.3` | Least Privilege | Platform Administration Portal › Platform Security Controls | Discussed in docs/design/platform-admin-portal-audit.md, but no code cites it — confirm before relying on this |
+| WonderArk | `PLATFORM-P0-19.3` | Desktop Tables | Platform Administration Portal › Platform Administration UI | Discussed in docs/design/platform-admin-portal-audit.md, but no code cites it — confirm before relying on this |
+| WonderArk | `PLATFORM-P0-19.5` | Professional Layout Rule | Platform Administration Portal › Platform Administration UI | Discussed in docs/design/platform-admin-portal-audit.md, but no code cites it — confirm before relying on this |
+
 ## Portfolio
 
 | Product | Stories | Done | In progress | Not started | Set aside | Active completion | Tracker updated |
 |---|---:|---:|---:|---:|---:|---:|---|
 | [WonderHome](#wonderhome) | 170 | 132 | 1 | 36 | 0 | **78%** | 2026-09-19 |
 | [WonderJobs](#wonderjobs) | 97 | 96 | 1 | 0 | 0 | **99%** | 2026-09-19 |
-| [WonderArk](#wonderark) | 391 | 269 | 0 | 91 | 31 | **75%** | see source |
-| [WonderAgent](#wonderagent) | 165 | 142 | 20 | 2 | 1 | **87%** | 2026-09-19 |
-| **All four** | **823** | **639** | **22** | **129** | **32** | **81%** | 2026-09-19 |
+| [WonderArk](#wonderark) | 391 | 270 | 0 | 90 | 31 | **75%** | see source |
+| [WonderAgent](#wonderagent) | 165 | 143 | 20 | 1 | 1 | **87%** | 2026-09-19 |
+| **All four** | **823** | **641** | **22** | **127** | **32** | **81%** | 2026-09-19 |
 
 Not in the columns above but counted in *Stories*: 1 blocked. "Not started" includes unverified stories (written about, not yet cited by code).
 
@@ -565,7 +601,7 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 
 <a id="wonderark"></a>
 
-**269 of 360 active stories done (75%)** · 0 in progress · 91 not started · 31 set aside. Source: [`docs/PROGRESS-TRACKER.md`](https://github.com/luvchakra/founder-collab/blob/main/docs/PROGRESS-TRACKER.md).
+**270 of 360 active stories done (75%)** · 0 in progress · 90 not started · 31 set aside. Source: [`docs/PROGRESS-TRACKER.md`](https://github.com/luvchakra/founder-collab/blob/main/docs/PROGRESS-TRACKER.md).
 
 | Backlog › epic | Stories | Done | In progress | Not started | Set aside | Active % |
 |---|---:|---:|---:|---:|---:|---:|
@@ -576,7 +612,7 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 | Platform build-out › Epic 4 — Inventory migration (details in 03-STOCKPILOT-MIGRATION.md) | 5 | 5 | 0 | 0 | 0 | 100% |
 | Platform build-out › Epic 5 — FSM (details in 02-FSM-PRD.md) | 15 | 15 | 0 | 0 | 0 | 100% |
 | Platform build-out › Epic 6 — Skeletons and convergence | 5 | 5 | 0 | 0 | 0 | 100% |
-| Platform build-out › Epic 7 — Finance (details in docs/FINANCE-PROGRESS.md) | 13 | 0 | 0 | 12 | 1 | 0% |
+| Platform build-out › Epic 7 — Finance (details in docs/FINANCE-PROGRESS.md) | 13 | 1 | 0 | 11 | 1 | 8% |
 | Platform Administration Portal › SUPERADMIN Role | 4 | 4 | 0 | 0 | 0 | 100% |
 | Platform Administration Portal › Platform Dashboard | 3 | 3 | 0 | 0 | 0 | 100% |
 | Platform Administration Portal › Branding & Look and Feel | 5 | 5 | 0 | 0 | 0 | 100% |
@@ -748,7 +784,7 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 
 | ID | Story | Status | Notes |
 |---|---|---|---|
-| `FIN-1` | Finance exceptions queue | ⬜ Not started | docs/FINANCE-PROGRESS.md — surveyed 2026-09-18, not yet built |
+| `FIN-1` | Finance exceptions queue | ✅ Done | docs/FINANCE-PROGRESS.md — exceptions queue, built 2026-09-19 |
 | `FIN-2` | Backfill | ⬜ Not started | docs/FINANCE-PROGRESS.md — surveyed 2026-09-18, not yet built |
 | `FIN-3` | Activation wizard | ⬜ Not started | docs/FINANCE-PROGRESS.md — surveyed 2026-09-18, not yet built |
 | `FIN-4` | Finance invoice view | ⬜ Not started | docs/FINANCE-PROGRESS.md — surveyed 2026-09-18, not yet built |
@@ -1487,7 +1523,7 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 
 <a id="wonderagent"></a>
 
-**142 of 164 active stories done (87%)** · 20 in progress · 2 not started · 1 set aside. Source: [`docs/PROGRESS.md`](https://github.com/luvchakra/wonder-agent/blob/main/docs/PROGRESS.md) · tracker updated 2026-09-19.
+**143 of 164 active stories done (87%)** · 20 in progress · 1 not started · 1 set aside. Source: [`docs/PROGRESS.md`](https://github.com/luvchakra/wonder-agent/blob/main/docs/PROGRESS.md) · tracker updated 2026-09-19.
 
 | Module (agent) | Stories | Done | In progress | Not started | Set aside | Active % |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1496,11 +1532,11 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 | 03 — Integration Agent | 12 | 11 | 1 | 0 | 0 | 92% |
 | 04 — Access Agent | 11 | 11 | 0 | 0 | 0 | 100% |
 | 05 — Runtime Agent | 9 | 9 | 0 | 0 | 0 | 100% |
-| 06 — Risk Agent | 13 | 12 | 0 | 1 | 0 | 92% |
+| 06 — Risk Agent | 13 | 12 | 1 | 0 | 0 | 92% |
 | 07 — Compliance Agent | 13 | 13 | 0 | 0 | 0 | 100% |
 | 08 — Experience Agent | 21 | 19 | 2 | 0 | 0 | 90% |
 | 09 — Platform Agent | 13 | 12 | 0 | 0 | 1 | 100% |
-| 10 — Operations Agent | 11 | 8 | 3 | 0 | 0 | 73% |
+| 10 — Operations Agent | 11 | 9 | 2 | 0 | 0 | 82% |
 | 11 — QA Agent | 22 | 10 | 12 | 0 | 0 | 45% |
 
 ### 01 — Foundation Agent
@@ -1615,7 +1651,7 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 | `RISK-P0-02.2` | Configurable severity weights & INFO tier | ✅ Done |  |
 | `RISK-P0-03.4` | Expanded finding lifecycle states (ACKNOWLEDGED/INVESTIGATING/MITIGATED/EXCEPTION) | ✅ Done |  |
 | `RISK-P0-03.5` | False positive disposition with reason & expiry | ✅ Done |  |
-| `RISK-P1-05` | Additional deterministic risk factors (privilege level, destructive capability, credential status, attack path) | ⬜ Not started |  |
+| `RISK-P1-05` | Additional deterministic risk factors (privilege level, destructive capability, credential status, attack path) | 🟡 In progress | 2026-09-19: "Privilege level" fully wired (real data via getEffectiveAccess()'s privilegeLevel, triggers on elevated/admin); the other three have real names/weights but always contribute 0, each with its own documented missing-contract dependency, per this story's own explicit acceptance allowance — see audit log |
 | `RISK-P0-04` | Governance Drift detection | ✅ Done | 2026-09-16, unit-tested (7 tests), migration 0054 live-applied. New governance_drift category diffs current purpose/autonomy/allowed-tools/approved-actions/owners/IAM-identities/effective-access against the agent's state as of its last APPROVED lifecycle transition (no new table, reuses risk_findings/risk_evidence); "new tool/data source beyond allowedTools" and "runtime behavior changed" deliberately not built as separate sub-signals — see audit log |
 
 ### 07 — Compliance Agent
@@ -1688,7 +1724,7 @@ Not in the columns above but counted in *Stories*: 1 blocked. "Not started" incl
 | `OPERATIONS-P0-01.2` | Evidence export | ✅ Done |  |
 | `OPERATIONS-P0-02.1` | Schema & channels | ✅ Done | 2026-09-16: user picked Resend. Both channels real: in-app (unchanged) plus modules/operations/email.ts's sendNotificationEmail(), called from notify() for every event. Targets the specific userId when set, otherwise broadcasts to every active tenant member (same semantics the in-app channel already used), honoring each recipient's notification_preferences.email_enabled (defaults to on when no row exists) |
 | `OPERATIONS-P0-02.2` | `notify(event)` and trigger wiring | 🟡 In progress | genuinely ambiguous trigger points (no scheduler, no single unambiguous write event), documented rather than guessed |
-| `OPERATIONS-P0-03.1` | Global search (higher bar) | 🟡 In progress | re-checked 2026-09-16, still 6 of 9 named object types; identity/owner/entitlement still have no tenant-wide list contract published (re-verified: listAgentIdentities/listOwners remain agent-scoped only) |
+| `OPERATIONS-P0-03.1` | Global search (higher bar) | ✅ Done | 2026-09-19: all 9 named object types implemented. Identity Agent published listOwnersForTenant()/listIdentitiesForTenant() and Access Agent published listEntitlementsForTenant() (each the tenant-wide counterpart of an already-published per-agent/per-application list), wired into search() for the previously-missing identity/owner/entitlement types — see audit log |
 | `OPERATIONS-P0-03.2` | Search traceability & role-based field masking | ✅ Done |  |
 | `OPERATIONS-P0-04.1` | P0 report set | ✅ Done |  |
 | `OPERATIONS-P0-04.2` | Report traceability (linked records + data freshness) | ✅ Done |  |

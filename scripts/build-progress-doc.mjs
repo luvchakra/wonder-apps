@@ -192,6 +192,33 @@ lines.push("Every tracked story from every Wonder product, read from each reposi
 lines.push("");
 lines.push("**Set aside** means deliberately deferred or superseded by later work — not abandoned and not a gap — and is excluded from *active completion* (done ÷ everything still in scope).");
 lines.push("");
+/* ---------- needs your attention ------------------------------------------ */
+// Deterministic: status-driven buckets first, then open stories whose own note says
+// they are waiting on a decision, an operator step, or an environment only you can provide.
+const WAITING = /user (direction|approval|decision)|user explicitly chose|pending (explicit )?user direction|open (product )?question|operator[- ]step|stopped and recorded|(real|live)[- ]?(end-to-end )?IdP|physical authenticator|not (yet )?verified in this sandbox|needs? (a |an )?(non-sandboxed|real) environment|upgrades? the plan|records interest only|not connected;|needs (a )?(Google Cloud|provider) (OAuth|config)|custom SMTP/i;
+const withProduct = okResults.flatMap((r) => r.groups.flatMap((g) => g.stories.map((s) => ({ ...s, product: r.name, group: g.name }))));
+const attention = [
+  { title: "Blocked — needs a decision or an external unblock", items: withProduct.filter((s) => s.status === "Blocked") },
+  { title: "Waiting on you — the tracker's own note says so", items: withProduct.filter((s) => s.status !== "Done" && !["Blocked", "Deferred", "Unverified", "Superseded"].includes(s.status) && WAITING.test(s.note)) },
+  { title: "Deferred — a recorded decision to revisit", items: withProduct.filter((s) => s.status === "Deferred") },
+  { title: "Unverified — written about, but no code cites it; confirm before relying on it", items: withProduct.filter((s) => s.status === "Unverified") },
+];
+const attentionTotal = attention.reduce((n, a) => n + a.items.length, 0);
+lines.push(`## Needs your attention (${attentionTotal})`);
+lines.push("");
+lines.push("Derived from the trackers on every regeneration: nothing here is hand-curated, so an item leaves this list only when its source tracker changes.");
+lines.push("");
+for (const a of attention) {
+  if (a.items.length === 0) continue;
+  lines.push(`### ${a.title} (${a.items.length})`);
+  lines.push("");
+  lines.push("| Product | ID | Story | Where | Note |");
+  lines.push("|---|---|---|---|---|");
+  for (const s of a.items) lines.push(`| ${s.product} | \`${esc(s.id)}\` | ${esc(s.story)} | ${esc(s.group)} | ${esc(s.note)} |`);
+  lines.push("");
+}
+if (attentionTotal === 0) lines.push("Nothing right now.", "");
+
 lines.push("## Portfolio");
 lines.push("");
 lines.push("| Product | Stories | Done | In progress | Not started | Set aside | Active completion | Tracker updated |");
