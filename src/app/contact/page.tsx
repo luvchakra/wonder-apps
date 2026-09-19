@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/Reveal";
+import { site } from "@/content/site";
 import { startups } from "@/content/startups";
 
 export const metadata: Metadata = {
@@ -33,6 +34,15 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             <div>
               <dt className="font-semibold">Response time</dt>
               <dd className="mt-1 text-fg-muted">A personal reply within two working days.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Prefer email?</dt>
+              <dd className="mt-1 text-fg-muted">
+                <a href={`mailto:${site.contactEmail}`} className="font-medium underline-offset-2 hover:underline">
+                  {site.contactEmail}
+                </a>{" "}
+                reaches the same inbox as the form below.
+              </dd>
             </div>
           </dl>
         </Reveal>

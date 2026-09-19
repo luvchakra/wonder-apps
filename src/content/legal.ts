@@ -3,7 +3,7 @@ import { site } from "./site";
 export type LegalSection = { heading: string; paragraphs: string[]; bullets?: string[] };
 export type LegalDoc = { slug: string; title: string; summary: string; sections: LegalSection[] };
 
-const contact = `Questions about this document can be sent through the contact form at ${site.url}${site.contactPath}.`;
+const contact = `Questions about this document can be sent through the contact form at ${site.url}${site.contactPath}, or by emailing ${site.contactEmail}.`;
 
 export const legalDocs: LegalDoc[] = [
   {
@@ -217,7 +217,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "3. Reporting a vulnerability",
         paragraphs: [
-          "If you believe you have found a security issue in this site or any Wonder product, please report it through the contact form and mark it as a security report. We will acknowledge promptly and keep you informed. Please do not test against production tenants that are not yours.",
+          `If you believe you have found a security issue in this site or any Wonder product, please report it through the contact form and mark it as a security report, or email ${site.contactEmail} directly. We will acknowledge promptly and keep you informed. Please do not test against production tenants that are not yours.`,
         ],
       },
     ],

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen, ExternalLink } from "lucide-react";
+import { site } from "@/content/site";
 import type { Startup } from "@/content/types";
 import { Device } from "./Device";
 import { Parallax } from "./Parallax";
@@ -68,6 +69,14 @@ export function Showcase({ s, index }: { s: Startup; index: number }) {
                 <BookOpen className="size-4" /> Help centre
               </a>
             </div>
+          </Reveal>
+          <Reveal delay={0.18}>
+            <p className="mt-4 text-sm text-fg-subtle">
+              Email {s.name}:{" "}
+              <a href={`mailto:${site.contactEmail}`} className="underline-offset-2 hover:text-fg hover:underline">
+                {site.contactEmail}
+              </a>
+            </p>
           </Reveal>
         </div>
 
