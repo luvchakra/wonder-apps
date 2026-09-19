@@ -16,6 +16,8 @@ Every tracked story from every Wonder product, read from each repository's own t
 | [WonderAgent](#wonderagent) | 165 | 142 | 20 | 2 | 1 | **87%** | 2026-09-19 |
 | **All four** | **823** | **639** | **22** | **129** | **32** | **81%** | 2026-09-19 |
 
+Not in the columns above but counted in *Stories*: 1 blocked. "Not started" includes unverified stories (written about, not yet cited by code).
+
 ## WonderHome
 
 <a id="wonderhome"></a>

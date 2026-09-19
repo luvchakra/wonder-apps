@@ -203,6 +203,10 @@ for (const r of okResults) {
 lines.push(`| **All four** | **${port.total}** | **${port.done}** | **${port.inProgress}** | **${port.notStarted}** | **${port.setAside}** | **${port.activePct}%** | ${today} |`);
 for (const r of results.filter((x) => !x.ok)) lines.push(`| ${r.name} | — | — | — | — | — | — | ⚠️ not fetched: ${esc(r.error)} |`);
 lines.push("");
+// Anything outside the five columns (e.g. Blocked) is still a story: say so rather than let the row not add up.
+const residual = new Map();
+for (const s of all) if (!["Done", "In progress", "Not started", "Unverified"].includes(s.status) && !ACTIVE_EXCLUDED.has(s.status)) residual.set(s.status, (residual.get(s.status) ?? 0) + 1);
+if (residual.size) lines.push(`Not in the columns above but counted in *Stories*: ${[...residual].map(([k, n]) => `${n} ${k.toLowerCase()}`).join(", ")}. "Not started" includes unverified stories (written about, not yet cited by code).`, "");
 
 for (const r of okResults) {
   const c = tally(r.groups.flatMap((g) => g.stories));
