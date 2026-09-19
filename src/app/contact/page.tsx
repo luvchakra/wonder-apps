@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ContactForm } from "@/components/ContactForm";
+import { EmailCTA } from "@/components/EmailCTA";
 import { Reveal } from "@/components/Reveal";
 import { site } from "@/content/site";
 import { startups } from "@/content/startups";
@@ -35,16 +36,12 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
               <dt className="font-semibold">Response time</dt>
               <dd className="mt-1 text-fg-muted">A personal reply within two working days.</dd>
             </div>
-            <div>
-              <dt className="font-semibold">Prefer email?</dt>
-              <dd className="mt-1 text-fg-muted">
-                <a href={`mailto:${site.contactEmail}`} className="font-medium underline-offset-2 hover:underline">
-                  {site.contactEmail}
-                </a>{" "}
-                reaches the same inbox as the form below.
-              </dd>
-            </div>
           </dl>
+          <div className="mt-8">
+            <p className="text-sm font-semibold">Prefer email?</p>
+            <p className="mt-1 text-sm text-fg-muted">Reaches the same inbox as the form below.</p>
+            <EmailCTA name={site.name} tone="outline" className="mt-3" />
+          </div>
         </Reveal>
         <Reveal delay={0.1} className="lg:col-span-7">
           <Suspense>
