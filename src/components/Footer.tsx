@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { site } from "@/content/site";
 import { startups } from "@/content/startups";
+import { EmailCTA } from "./EmailCTA";
 import { Logo, Wordmark } from "./Logo";
 
 export function Footer() {
@@ -16,15 +17,12 @@ export function Footer() {
             </Link>
             <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-fg-subtle">{site.tagline}</p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-fg-muted">{site.positioning}</p>
-            <Link href={site.contactPath} className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-85">
-              Contact the founder <ArrowUpRight className="size-4" />
-            </Link>
-            <p className="mt-3 text-sm">
-              Or email {site.name}:{" "}
-              <a href={`mailto:${site.contactEmail}`} className="font-medium text-fg-muted underline-offset-2 hover:text-fg hover:underline">
-                {site.contactEmail}
-              </a>
-            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Link href={site.contactPath} className="inline-flex items-center gap-1.5 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-85">
+                Contact the founder <ArrowUpRight className="size-4" />
+              </Link>
+              <EmailCTA name={site.name} tone="ghostDark" />
+            </div>
           </div>
 
           <div>

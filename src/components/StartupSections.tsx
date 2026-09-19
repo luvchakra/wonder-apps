@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Check, ExternalLink, Lock } from "lucide-react";
-import { site } from "@/content/site";
 import type { Startup } from "@/content/types";
 import { Device } from "./Device";
+import { EmailCTA } from "./EmailCTA";
 import { Parallax } from "./Parallax";
 import { Reveal } from "./Reveal";
 import { Stat } from "./Stats";
@@ -326,13 +326,8 @@ export function RoadmapAndAsk({ s }: { s: Startup }) {
               <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 px-4 font-medium text-white/80 hover:text-white">
                 <BookOpen className="size-4" /> Help centre
               </a>
+              <EmailCTA name={s.name} tone="onGradient" className="h-12" />
             </div>
-            <p className="mt-6 text-sm text-white/70">
-              Or email {s.name} directly:{" "}
-              <a href={`mailto:${site.contactEmail}`} className="font-medium text-white underline-offset-2 hover:underline">
-                {site.contactEmail}
-              </a>
-            </p>
           </div>
         </Reveal>
       </div>
