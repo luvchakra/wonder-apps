@@ -27,5 +27,5 @@ export const site = {
     { href: "/accessibility", label: "Accessibility" },
     { href: "/security", label: "Security" },
   ],
-  lastUpdated: "18 September 2026",
+  lastUpdated: "24 September 2026",
 } as const;

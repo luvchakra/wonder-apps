@@ -10,7 +10,7 @@ export const startups: Startup[] = [
   {
     slug: "wonderhome",
     name: "WonderHome",
-    tagline: "Happier Homes. Brighter Tomorrows.",
+    tagline: "Smarter homes · Happier families",
     oneLiner:
       "An AI household operating system that manages the management — so families spend less time coordinating and more time together.",
     category: "Consumer · Family AI",
@@ -22,8 +22,8 @@ export const startups: Startup[] = [
     accent: "oklch(0.49 0.09 190)",
     accentSoft: "oklch(0.93 0.03 190)",
     hero: {
-      headline: "A calmer home is possible.",
-      sub: "WonderHome watches the whole household — school, meals, groceries, bills, help, pets, family time — and interrupts the right person only when a decision is genuinely needed.",
+      headline: "WonderHome takes care, so you can live more.",
+      sub: "WonderHome watches the whole household — school, meals, groceries, bills, help, pets, health and family time, in text or voice — and interrupts the right person only when a decision is genuinely needed.",
     },
     problem: {
       title: "The management of life can consume the life itself.",
@@ -41,8 +41,9 @@ export const startups: Startup[] = [
       pillars: [
         { title: "Outcomes, not chores", body: "A meal is 'ready by 8 pm', a bill is 'paid before the consequence', homework is 'finished with time to spare'. The system plans backwards from the outcome." },
         { title: "Asks before it acts", body: "Every consequential action shows what it understood, what it plans and the impact — with Confirm, Change and Cancel. Payments, deletions and access changes always ask." },
-        { title: "Whole-household coverage", body: "Family & profiles, Today, School, Groceries, Meals, Bills, Househelper, Maintenance, Laundry, Pet care and Family time — one place, one assistant, text or voice." },
-        { title: "Private by design", body: "Tenant isolation is enforced in the database, children get age-appropriate views, and household data is never training data." },
+        { title: "One HomeTalk, every channel", body: "A single gateway carries the same household context to the web, to Gemini Live and to Alexa. Linked voice assistants get their own scoped, revocable OAuth grant — payments and orders are never approved by voice." },
+        { title: "Whole-household coverage", body: "Family & profiles, Today, School, Groceries, Meals, Bills, Househelper, Maintenance, Laundry, Pet care, Health & Fitness and Family time — one place, one assistant, text or voice." },
+        { title: "Private by design", body: "Tenant isolation is enforced in the database, children get age-appropriate views, health context needs its own explicit permission, and household data is never training data." },
       ],
     },
     howItWorks: [
@@ -52,7 +53,7 @@ export const startups: Startup[] = [
       { step: "Monitor & Learn", body: "Notifications are sparse, threaded and resolve themselves. The household's preferences shape what comes next." },
     ],
     screens: [
-      { src: "/screenshots/wonderhome/home-desktop.webp", alt: "WonderHome landing page on desktop showing the hero 'A calmer home is possible' and a household dashboard preview", kind: "desktop", caption: "The product site — same design language as the app" },
+      { src: "/screenshots/wonderhome/home-desktop.webp", alt: "WonderHome landing page on desktop showing the hero 'WonderHome takes care, so you can live more' and a household dashboard preview", kind: "desktop", caption: "The product site — same design language as the app" },
       { src: "/screenshots/wonderhome/home-mobile.webp", alt: "WonderHome on a phone, showing the mobile hero and Today view", kind: "mobile", caption: "Installs like an app on iPhone and Android" },
       { src: "/screenshots/wonderhome/features-desktop.webp", alt: "WonderHome features section listing the household domains", kind: "desktop", caption: "Every feature is a household outcome" },
       { src: "/screenshots/wonderhome/pricing-mobile.webp", alt: "WonderHome plans on a phone: Free, Pro and Max", kind: "mobile", caption: "Three plans, from a quiet watcher to a home that runs itself" },
@@ -66,6 +67,7 @@ export const startups: Startup[] = [
         "Assistants that can plan and act — not just answer — became reliable enough to run background loops in 2025–26.",
         "Household commerce, school portals and calendars all now have programmatic surfaces to observe and act on.",
         "Consumer trust hinges on consent-first design; WonderHome's governed-tool architecture is built for exactly that.",
+        "Voice assistants (Gemini Live, Alexa) now expose the scoped, revocable grants a household is willing to trust with its data.",
       ],
     },
     businessModel: {
@@ -79,23 +81,24 @@ export const startups: Startup[] = [
     },
     moat: [
       { title: "Consent architecture", body: "Deterministic policy checks sit outside the model. Autonomy is set per household, per responsibility. This is hard to bolt on and is the reason families will let it act." },
-      { title: "Household graph", body: "People, guardianship, protected time, stock levels, obligations and preferences form a private, compounding model of one home." },
+      { title: "Household graph", body: "People, guardianship, protected time, stock levels, obligations, health context and preferences form a private, compounding model of one home." },
+      { title: "Governed multi-channel voice", body: "A single HomeTalk contract, not a per-assistant bolt-on: linked voice identities carry hashed, scoped OAuth grants, and payments, orders and health changes are never reachable by voice alone." },
       { title: "Cost discipline", body: "Engineering guardrails target under US$2,000/month infrastructure at 10,000 active households and under US$0.75 of background AI per household per month." },
     ],
     traction: [
-      { label: "Stories shipped", value: "132 / 170", note: "77.6% of a 21-module backlog, per the live tracker" },
-      { label: "Modules complete", value: "8 of 21", note: "Conversation, School, Commerce, Meals, Bills, Family time, Maintenance & Pet care, Bootstrap" },
-      { label: "Connectors live", value: "Calendar · Email · School", note: "On one shared connector contract; commerce adapter in progress" },
+      { label: "Stories shipped", value: "201 / 216", note: "93.1% of a 24-module backlog, per the live tracker" },
+      { label: "Modules complete", value: "17 of 24", note: "Health & Fitness and multi-channel voice (HomeTalk, Gemini Live, Alexa) shipped this cycle" },
+      { label: "Voice channels live", value: "Web · Gemini Live · Alexa", note: "One HomeTalk gateway; scoped, revocable grants per assistant" },
       { label: "Scale target", value: "25,000 households", note: "99.9% availability, p95 ≤ 500 ms API — initial engineering targets" },
     ],
     roadmap: [
-      { horizon: "Now", items: ["Commerce connector for live grocery ordering", "Household certification & understanding", "Privacy, security and governance stories to 8/8"] },
-      { horizon: "Next", items: ["Upgrade/downgrade and billing abstraction", "Platform admin and operations", "Public API and developer platform"] },
+      { horizon: "Now", items: ["Voice evaluation, metrics and release gates", "Multilingual HomeTalk and localized notifications", "Notification center: feed, categories, snooze and settings"] },
+      { horizon: "Next", items: ["Smart batching and behaviour-learned notification timing", "Right-to-left readiness and multi-currency household records", "Public API and developer platform"] },
       { horizon: "Later", items: ["Payment provider integration under step-up approval", "Quota automation and plan experiments", "Regional expansion beyond India"] },
     ],
     ask: "Seeking design-partner families and early-stage investors who believe the household is the next operating system.",
     facts: [
-      { label: "Platform", value: "Web · PWA · iPhone · Android · Desktop" },
+      { label: "Platform", value: "Web · PWA · iPhone · Android · Desktop · Gemini Live · Alexa" },
       { label: "AI", value: "Anthropic Claude primary; Gemini and OpenAI supported; BYOK" },
       { label: "Data", value: "Supabase PostgreSQL, RLS per household, ap-south-1" },
       { label: "Pricing", value: "Free · Pro · Max (no card for Free)" },
@@ -137,6 +140,7 @@ export const startups: Startup[] = [
         { title: "Career DNA", body: "Goal, level, years, rated skills, industries, locations, minimum salary, strengths and growth areas. Every real posting is scored against it — and rescored when it changes." },
         { title: "Explainable fit", body: "Strong Opportunity (82+), Worth Considering (68+), Stretch (55+). Every score explains itself per dimension; quality signals use confidence language, never 'ghost job' claims." },
         { title: "Application prep, human hand-off", body: "Tailored résumé, cover letter and screening answers, with version compare and restore. The candidate reviews, edits and submits. Every external action is audited." },
+        { title: "A browser extension that never submits for you", body: "A free Chrome, Edge & Brave extension fills the employer's own Greenhouse, Lever or Ashby form — name, email, tailored résumé and cover letter — from a short-lived, read-only token. It never clicks submit." },
         { title: "Your AI, your keys", body: "WonderJobs AI (Anthropic Claude) by default, or bring an Anthropic, OpenAI or Gemini key. Keys are AES-256-GCM encrypted, used only server-side, never returned." },
       ],
     },
@@ -148,6 +152,8 @@ export const startups: Startup[] = [
     ],
     screens: [
       { src: "/screenshots/wonderjobs/home-desktop.webp", alt: "WonderJobs landing page on desktop with the parallax hero and live run preview", kind: "desktop", caption: "Scroll-linked hero on the product site" },
+      { src: "/screenshots/wonderjobs/extension-desktop.webp", alt: "WonderJobs browser extension page explaining what it fills and where it works", kind: "desktop", caption: "The browser extension — fills the employer's own form, never submits it" },
+      { src: "/screenshots/wonderjobs/extension-mobile.webp", alt: "WonderJobs browser extension page on a phone", kind: "mobile", caption: "Install it from the landing page or any application" },
       { src: "/screenshots/wonderjobs/jobs-desktop.webp", alt: "WonderJobs jobs list in demo mode with Wonder Fit labels and filters", kind: "desktop", caption: "Jobs view — every match explains itself" },
       { src: "/screenshots/wonderjobs/runs-mobile.webp", alt: "WonderJobs Wonder Runs screen on a phone showing stage-by-stage progress", kind: "mobile", caption: "A run's live stages on mobile" },
       { src: "/screenshots/wonderjobs/applications-desktop.webp", alt: "WonderJobs applications dashboard with status tabs and timeline", kind: "desktop", caption: "Applications tracker" },
@@ -176,18 +182,19 @@ export const startups: Startup[] = [
       ],
     },
     moat: [
-      { title: "Honesty as a feature", body: "Only sources actually searched are shown. Illustrative scenarios are labelled. Wonder never submits on an employer's site. Trust compounds where competitors burn it." },
+      { title: "Honesty as a feature", body: "Only sources actually searched are shown. Illustrative scenarios are labelled. Wonder never submits on an employer's site — including from the browser extension, which fills a form but never clicks submit. Trust compounds where competitors burn it." },
       { title: "Deterministic core, generative edge", body: "Matching, ranking and quality checks are rule-based and unit-tested; language models only draft prose. Cheap, auditable and consistent." },
+      { title: "Scoped, ephemeral extension access", body: "The extension never holds the account session. It mints a short-lived, read-only, HMAC-signed token that can't reach WonderJobs' own API and expires in 30 minutes." },
       { title: "Local-first, sync-second", body: "State hydrates locally and syncs per tenant in batches — fast on a phone, resilient offline, cheap to serve." },
     ],
     traction: [
       { label: "Epics complete", value: "11 / 15", note: "Remaining four are partial, with operator steps or provider config outstanding" },
       { label: "Live job sources", value: "7 families", note: "Greenhouse/Lever/Ashby boards across 20+ companies plus six aggregators" },
+      { label: "Browser extension", value: "Chrome · Edge · Brave", note: "Fills the employer's own application form; never submits on the candidate's behalf" },
       { label: "Accessibility", value: "0 violations", note: "axe-core audit across 18 pages, reduced motion emulated" },
-      { label: "Production", value: "Verified after each push", note: "Auth, demo, sources and per-user state checked on every release" },
     ],
     roadmap: [
-      { horizon: "Now", items: ["Server-side scheduler so runs fire with the app closed", "Email delivery for follow-ups and thank-you notes", "Résumé import to pre-fill Career DNA"] },
+      { horizon: "Now", items: ["Email delivery for follow-ups and thank-you notes", "Custom SMTP for real sign-up volume", "Google sign-in provider configuration"] },
       { horizon: "Next", items: ["Pro plan billing", "Two-way calendar sync", "Push notifications"] },
       { horizon: "Later", items: ["Additional regional sources", "Mock-interview AI and deeper coaching", "Platform admin for usage and key rotation"] },
     ],
@@ -372,7 +379,7 @@ export const startups: Startup[] = [
       { title: "Built to enterprise bar from line one", body: "Tenant RLS on every table, server-side tenant context, immutable audit, encrypted credentials, CSP headers, rate-limited auth — verified by a dedicated QA module." },
     ],
     traction: [
-      { label: "Stories complete", value: "139 / 165", note: "84% across 11 modules; P0 done in every module" },
+      { label: "Stories complete", value: "145 / 165", note: "88% across 11 modules; P0 done in every module" },
       { label: "API surface", value: "89 routes", note: "84 guarded by requirePermission; the 5 exceptions documented by design" },
       { label: "Screens", value: "27 + 8", note: "Customer pages plus vendor platform-admin console" },
       { label: "Integrations", value: "Saviynt · REST · MCP · Webhooks", note: "Read-only by default; write capabilities must be declared" },

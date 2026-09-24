@@ -5,7 +5,7 @@
  * never rounded up. Re-sync by re-reading each `sourceUrl` below.
  *
  * Row shape is normalized across four differently-structured trackers:
- *   - WonderHome groups by 21 backlog "modules" (tracking/PROGRESS.md)
+ *   - WonderHome groups by 24 backlog "modules" (docs/PROGRESS.md, generated)
  *   - WonderJobs groups by 15 "epics" (docs/PROGRESS.md)
  *   - WonderArk groups by 5 backlog documents (docs/PROGRESS-TRACKER.md, generated)
  *   - WonderAgent groups by 11 module "agents" (docs/PROGRESS.md, generated)
@@ -49,35 +49,38 @@ export const productProgress: ProductProgress[] = [
     name: "WonderHome",
     accent: "oklch(0.49 0.09 190)",
     stage: "Live product · early households onboarding",
-    currentFocus: "Module 03 — Outcome & Routine Engine (03-007 Pattern learning)",
-    lastUpdated: "2026-09-19",
-    sourceLabel: "tracking/PROGRESS.md",
-    sourceUrl: "https://github.com/luvchakra/wonder-home/blob/main/tracking/PROGRESS.md",
+    currentFocus: "Module 23 — Smart Notifications (23-005 notification center; module 22 in progress alongside it)",
+    lastUpdated: "2026-09-24",
+    sourceLabel: "docs/PROGRESS.md (generated)",
+    sourceUrl: "https://github.com/luvchakra/wonder-home/blob/main/docs/PROGRESS.md",
     rowLabel: "Backlog module",
     methodology:
-      "170 stories across 21 modules, tagged P0/P1/P2 at design time. A module's remaining stories are a mix of not-started and in-progress work not split out in the source tracker, so they're counted together here as “remaining.”",
+      "216 stories across 24 modules, tagged P0/P1/P2 at design time. A module's remaining stories are a mix of not-started and in-progress work not split out in the source tracker, so they're counted together here as “remaining.”",
     rows: [
       { id: "00", name: "Project Bootstrap & Architecture", total: 10, done: 10, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
-      { id: "01", name: "Identity & Family Accounts", total: 8, done: 7, partial: 0, notStarted: 1, setAside: 0, status: "In Progress" },
-      { id: "02", name: "Household Configuration & Playbook", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
-      { id: "03", name: "Outcome & Routine Engine", total: 8, done: 6, partial: 0, notStarted: 2, setAside: 0, status: "In Progress" },
-      { id: "04", name: "Conversation, Voice & Text", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
-      { id: "05", name: "Household Certification & Understanding", total: 8, done: 6, partial: 0, notStarted: 2, setAside: 0, status: "In Progress" },
-      { id: "06", name: "Actionable Notification Engine", total: 8, done: 7, partial: 0, notStarted: 1, setAside: 0, status: "In Progress" },
-      { id: "07", name: "Househelper & Home Operations", total: 8, done: 5, partial: 0, notStarted: 3, setAside: 0, status: "In Progress" },
-      { id: "08", name: "Kids & School Intelligence", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
-      { id: "09", name: "Commerce, Groceries & Pet Supplies", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "01", name: "Identity & Family Accounts", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "02", name: "Household Configuration & Playbook", total: 9, done: 9, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "03", name: "Outcome & Routine Engine", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "04", name: "Conversation, Voice & Text", total: 17, done: 16, partial: 0, notStarted: 1, setAside: 0, status: "In Progress", note: "Multi-channel HomeTalk (web, Gemini Live, Alexa) shipped; only voice evaluation/release gates remain" },
+      { id: "05", name: "Household Certification & Understanding", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "06", name: "Actionable Notification Engine", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "07", name: "Househelper & Home Operations", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "08", name: "Kids & School Intelligence", total: 9, done: 9, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "09", name: "Commerce, Groceries & Pet Supplies", total: 9, done: 9, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
       { id: "10", name: "Meals & Cooking", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
       { id: "11", name: "Bills, Fees & Finance", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
       { id: "12", name: "Family Time & Social Activities", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
       { id: "13", name: "Maintenance, Laundry & Pet Care", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
-      { id: "14", name: "AI Orchestration & Learning", total: 8, done: 6, partial: 0, notStarted: 2, setAside: 0, status: "In Progress" },
+      { id: "14", name: "AI Orchestration & Learning", total: 14, done: 14, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
       { id: "15", name: "Privacy, Security & Governance", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
-      { id: "16", name: "Platform Admin & Operations", total: 8, done: 6, partial: 0, notStarted: 2, setAside: 0, status: "In Progress" },
-      { id: "17", name: "External Integrations", total: 8, done: 5, partial: 0, notStarted: 3, setAside: 0, status: "In Progress" },
-      { id: "18", name: "API & Developer Platform", total: 8, done: 6, partial: 0, notStarted: 2, setAside: 0, status: "In Progress" },
-      { id: "19", name: "Testing, Observability & Production", total: 8, done: 7, partial: 0, notStarted: 1, setAside: 0, status: "In Progress" },
-      { id: "20", name: "Subscriptions, Entitlements & Usage", total: 8, done: 5, partial: 0, notStarted: 3, setAside: 0, status: "In Progress" },
+      { id: "16", name: "Platform Admin & Operations", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "17", name: "External Integrations", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "18", name: "API & Developer Platform", total: 8, done: 7, partial: 0, notStarted: 1, setAside: 0, status: "In Progress" },
+      { id: "19", name: "Testing, Observability & Production", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "20", name: "Subscriptions, Entitlements & Usage", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "21", name: "Health & Fitness", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "22", name: "Internationalization & Localization", total: 8, done: 3, partial: 0, notStarted: 5, setAside: 0, status: "In Progress", note: "7-language catalog and locale/format plumbing shipped; multilingual HomeTalk and localized notifications still open" },
+      { id: "23", name: "Smart Notifications", total: 12, done: 4, partial: 0, notStarted: 8, setAside: 0, status: "In Progress", note: "Reminder sourcing, per-category timing and dedup shipped; the notification center UI is in progress" },
     ],
   },
   {
