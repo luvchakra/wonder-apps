@@ -71,14 +71,39 @@ async function read(repo, file) {
   return res.text();
 }
 
+/** Lists a repo directory's `.md` files directly, so a stale hand-maintained
+ * index (e.g. BACKLOG-INDEX.md forgetting a newly added module) can't silently
+ * drop stories from the generated doc. Falls back to the index file's own
+ * listing (passed as `fallback`) if directory listing isn't reachable — some
+ * environments allow raw.githubusercontent.com but not api.github.com. */
+async function listMarkdownFiles(repo, dir, fallback) {
+  try {
+    if (localRoot) {
+      const { readdir } = await import("node:fs/promises");
+      const names = await readdir(path.join(localRoot, repo, dir));
+      return names.filter((n) => n.endsWith(".md")).sort().map((n) => `${dir}/${n}`);
+    }
+    const res = await fetch(`https://api.github.com/repos/luvchakra/${repo}/contents/${dir}`, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const entries = await res.json();
+    return entries.filter((e) => e.type === "file" && e.name.endsWith(".md")).map((e) => e.name).sort().map((n) => `${dir}/${n}`);
+  } catch (err) {
+    if (!fallback) throw err;
+    console.error(`${repo}/${dir}: directory listing unavailable (${err.message}), falling back to index`);
+    return fallback();
+  }
+}
+
 const products = [
   {
     slug: "wonderhome", name: "WonderHome", repo: "wonder-home", groupLabel: "Module",
     sources: ["BACKLOG-INDEX.md", "tracking/PROGRESS.md", "backlogs/*.md"],
     async load() {
-      const index = await read(this.repo, "BACKLOG-INDEX.md");
-      const files = [...index.matchAll(/`(backlogs\/[^`]+\.md)`/g)].map((m) => m[1]);
-      if (files.length === 0) throw new Error("wonderhome: no backlog files in BACKLOG-INDEX.md");
+      const files = await listMarkdownFiles(this.repo, "backlogs", async () => {
+        const index = await read(this.repo, "BACKLOG-INDEX.md");
+        return [...index.matchAll(/`(backlogs\/[^`]+\.md)`/g)].map((m) => m[1]);
+      });
+      if (files.length === 0) throw new Error("wonderhome: no backlog files found in backlogs/ or BACKLOG-INDEX.md");
       const groups = [];
       for (const f of files) {
         const md = await read(this.repo, f);
