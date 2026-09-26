@@ -1,7 +1,7 @@
 # WonderApps
 
 Investor-facing portfolio site for four AI-native products — **WonderHome**,
-**WonderJobs**, **WonderArk** and **WonderAgent**. Apple-style presentation:
+**WonderJobs**, **WonderArk** and **WonderID** (formerly WonderAgent). Apple-style presentation:
 dark/light bands, scroll-linked parallax, device frames, staged hero animation.
 Static except for one route handler that emails contact-form submissions via
 Resend. No database.
@@ -59,7 +59,9 @@ docs/progress.md            GENERATED story-by-story progress across all four
                             GitHub; `-- --local <dir>` reads local clones instead)
 scripts/build-progress-doc.mjs  the generator
 public/screenshots/<slug>/  captures of the deployed products (desktop 1800w,
-                            mobile 780w). WonderAgent's come from its own repo.
+                            mobile 780w). WonderID's are public-page captures
+                            (landing, sign-in) — never create an account on a
+                            product's production to capture signed-in screens.
 public/brands/<slug>/       logo lockups shipped by the products themselves
 ```
 
@@ -72,6 +74,8 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 - Parsers find tables by exact header cells, not line numbers. If a product
   changes its tracker layout, fix the parser in `src/lib/tracker-parsers.ts`
   and re-run it against the repo's file before shipping.
+- WonderHome is read from its generated `docs/PROGRESS.md` "By module" table;
+  its hand-kept `tracking/PROGRESS.md` module table drifts from the backlogs.
 - "Set aside" = deferred or superseded work. It's excluded from the active
   completion denominator and drawn hatched, never as a status colour.
 - Status colours are the fixed dataviz palette (`--good`, `--warn`); text never
@@ -83,7 +87,13 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 
 - **Never invent traction.** Every number on the site traces to a product's
   public engineering tracker or live site. If you cannot cite it, don't add it.
-- Help-centre links (`helpUrl`): WonderJobs, WonderArk and WonderAgent are
+- WonderAgent was renamed **WonderID** on 2026-09-26 by the founder (repo
+  `wonder-agent`, domain `agent.wonderapps.biz` unchanged). Slug is `wonderid`;
+  `/startups/wonderagent` redirects permanently (next.config.ts) and the contact
+  page maps `?interest=wonderagent`. Say "formerly WonderAgent" once per page at
+  most, not everywhere.
+- Completion percentages are floored, never rounded up: 223 of 224 is 99%.
+- Help-centre links (`helpUrl`): WonderJobs, WonderArk and WonderID are
   public; WonderHome still redirects to sign-in (checked 2026-09-19). Keep
   the link regardless — the founder is making it public.
 - Each product's `url`/`helpUrl` point to its custom domain (`home.`, `jobs.`,

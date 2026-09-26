@@ -8,11 +8,12 @@ import { startups } from "@/content/startups";
 
 export const metadata: Metadata = {
   title: "Contact the founder",
-  description: "Investors, partners and design customers: start a conversation about WonderHome, WonderJobs, WonderArk or WonderAgent.",
+  description: "Investors, partners and design customers: start a conversation about WonderHome, WonderJobs, WonderArk or WonderID.",
 };
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ interest?: string }> }) {
-  const { interest } = await searchParams;
+  const { interest: raw } = await searchParams;
+  const interest = raw === "wonderagent" ? "wonderid" : raw;
   const valid = startups.some((s) => s.slug === interest) ? interest : undefined;
   return (
     <section className="theme-light bg-bg-soft text-fg">
@@ -30,7 +31,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             </div>
             <div>
               <dt className="font-semibold">Design partners &amp; customers</dt>
-              <dd className="mt-1 text-fg-muted">Families for WonderHome, enterprises with agents in production for WonderAgent, field-service and distribution businesses for WonderArk, career services for WonderJobs.</dd>
+              <dd className="mt-1 text-fg-muted">Families for WonderHome, enterprises governing people, machines and AI agents for WonderID, field-service and distribution businesses for WonderArk, career services for WonderJobs.</dd>
             </div>
             <div>
               <dt className="font-semibold">Response time</dt>

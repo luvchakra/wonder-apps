@@ -32,7 +32,7 @@ export default async function OG() {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         <div style={{ fontSize: 82, fontWeight: 700, letterSpacing: -4, lineHeight: 0.98 }}>Four products. One chassis.</div>
-        <div style={{ fontSize: 28, color: "#a1a1a6" }}>WonderHome · WonderJobs · WonderArk · WonderAgent</div>
+        <div style={{ fontSize: 28, color: "#a1a1a6" }}>WonderHome · WonderJobs · WonderArk · WonderID</div>
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 8 }}>
           <div style={{ width: 120, height: 4, borderRadius: 2, background: "linear-gradient(90deg, #1ba7fe, #6132fd, #a94ad1, #ff7a45)" }} />
           <div style={{ fontSize: 18, letterSpacing: 5, color: "#86868b" }}>IDEAS FOR A BRIGHTER TOMORROW</div>

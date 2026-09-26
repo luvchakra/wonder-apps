@@ -88,9 +88,9 @@ export function Hero() {
             transition={{ duration: 0.9, ease, delay: 0.6 }}
             className="lede mx-auto mt-7 max-w-2xl text-[clamp(1.0625rem,1.7vw,1.375rem)] text-fg-muted"
           >
-            WonderHome runs the household. WonderJobs runs the job search. WonderArk runs the business. WonderAgent governs
-            the AI agents doing all of it. Four AI-native products on one security-first architecture — shipped by one
-            founder-operator in a single season.
+            WonderHome runs the household. WonderJobs runs the job search. WonderArk runs the business. WonderID governs
+            every identity with access — the people and the AI agents doing all of it. Four AI-native products on one
+            security-first architecture — shipped by one founder-operator in a single season.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}

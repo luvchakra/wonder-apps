@@ -155,12 +155,12 @@ const products = [
     },
   },
   {
-    slug: "wonderagent", name: "WonderAgent", repo: "wonder-agent", groupLabel: "Module (agent)",
+    slug: "wonderid", name: "WonderID", repo: "wonder-agent", groupLabel: "Module (agent)",
     sources: ["docs/PROGRESS.md"],
     async load() {
       const md = await read(this.repo, "docs/PROGRESS.md");
       const ts = tables(md, ["Story", "Title", "Status"]);
-      if (ts.length === 0) throw new Error("wonderagent: story tables missing");
+      if (ts.length === 0) throw new Error("wonderid: story tables missing");
       const groups = ts.map((t) => ({
         name: t.h3 || t.h2,
         stories: t.rows.map(([id, title, status]) => {
@@ -185,7 +185,7 @@ function tally(stories) {
     else if (ACTIVE_EXCLUDED.has(s.status)) c.setAside++;
     else c.other++;
   }
-  c.activePct = c.total - c.setAside > 0 ? Math.round((c.done / (c.total - c.setAside)) * 100) : 0;
+  c.activePct = c.total - c.setAside > 0 ? Math.floor((c.done / (c.total - c.setAside)) * 100) : 0;
   return c;
 }
 const esc = (s) => String(s ?? "").replace(/\|/g, "\\|").replace(/\r?\n/g, " ").trim();

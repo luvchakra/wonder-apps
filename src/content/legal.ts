@@ -15,7 +15,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "1. Who we are",
         paragraphs: [
-          `${site.legalName} operates this website to present the WonderHome, WonderJobs, WonderArk and WonderAgent products to prospective investors and partners. Each product has its own privacy policy governing its own users; this policy covers only this portfolio site.`,
+          `${site.legalName} operates this website to present the WonderHome, WonderJobs, WonderArk and WonderID products to prospective investors and partners. Each product has its own privacy policy governing its own users; this policy covers only this portfolio site.`,
         ],
       },
       {
@@ -124,7 +124,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "3. Linked products",
         paragraphs: [
-          "When you follow a link to WonderHome, WonderJobs, WonderArk or WonderAgent, you leave this site and that product's own cookie policy applies.",
+          "When you follow a link to WonderHome, WonderJobs, WonderArk or WonderID, you leave this site and that product's own cookie policy applies.",
         ],
       },
       { heading: "4. Changes", paragraphs: [`If this ever changes, we will update this page and the date. Last updated ${site.lastUpdated}.`] },

@@ -6,7 +6,7 @@ export const site = {
   /** Descriptive line for investors. */
   positioning: "Four AI-native products. One engineering chassis. One founder-operator.",
   description:
-    "WonderApps is the portfolio of WonderHome, WonderJobs, WonderArk and WonderAgent — four AI-native software products built on one shared, security-first architecture. Investor overview and contact.",
+    "WonderApps is the portfolio of WonderHome, WonderJobs, WonderArk and WonderID — four AI-native software products built on one shared, security-first architecture. Investor overview and contact.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://wonderapps.biz",
   /** Shown in legal pages. Set to the operating entity and jurisdiction before going live. */
   jurisdiction: "India",
@@ -27,5 +27,5 @@ export const site = {
     { href: "/accessibility", label: "Accessibility" },
     { href: "/security", label: "Security" },
   ],
-  lastUpdated: "25 September 2026",
+  lastUpdated: "26 September 2026",
 } as const;
