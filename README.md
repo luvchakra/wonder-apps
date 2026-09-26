@@ -1,7 +1,7 @@
 # WonderApps
 
 Investor portfolio site for **WonderHome**, **WonderJobs**, **WonderArk** and
-**WonderAgent** — four AI-native products built on one shared, security-first
+**WonderID** — four AI-native products built on one shared, security-first
 architecture.
 
 Static Next.js site with Apple-style presentation. The only server-side code is
@@ -47,4 +47,4 @@ Screenshots live in `public/screenshots/<product>/`; add a file and reference it
 
 ## Pages
 
-`/` · `/startups/wonderhome` · `/startups/wonderjobs` · `/startups/wonderark` · `/startups/wonderagent` · `/contact` · `/privacy` · `/terms` · `/cookies` · `/disclaimer` · `/accessibility` · `/security`
+`/` · `/startups/wonderhome` · `/startups/wonderjobs` · `/startups/wonderark` · `/startups/wonderid` · `/contact` · `/privacy` · `/terms` · `/cookies` · `/disclaimer` · `/accessibility` · `/security`

@@ -50,20 +50,32 @@ function need<T>(v: T | null | undefined, what: string): T {
   return v;
 }
 
+/**
+ * Reads WonderHome's generated docs/PROGRESS.md "By module" table. Its hand-kept
+ * tracking/PROGRESS.md module table drifts from the backlogs, and the repo itself
+ * says the generated file is the one to trust. "Left" reads like
+ * "3 in progress, 2 not started" or "1 deferred"; deferred counts as set aside,
+ * everything else still open counts as remaining.
+ */
 export function parseWonderHome(md: string): ParsedTracker {
-  const table = need(findTable(md, ["#", "Module", "Stories", "P0", "P1", "P2", "Done", "Status"]), "wonderhome module table");
-  if (table.length === 0) throw new Error("wonderhome: module table matched but had no rows");
+  const table = need(findTable(md, ["Module", "Progress", "Done", "Total", "Left"]), "wonderhome by-module table");
+  if (table.length === 0) throw new Error("wonderhome: by-module table matched but had no rows");
   const rows: ProgressRow[] = table.map((c) => {
-    const [id, name, total, , , , done, status] = c;
+    const [moduleCell, , done, total, left] = c;
+    const m = moduleCell.match(/^(\d+)\s+(.+)$/);
+    if (!m) throw new Error(`wonderhome: unexpected module cell "${moduleCell}"`);
+    const [, id, name] = m;
     const t = Number(total);
     const d = Number(done);
     if (!Number.isFinite(t) || !Number.isFinite(d)) throw new Error(`wonderhome: non-numeric row for ${id}`);
-    return { id, name, total: t, done: d, partial: 0, notStarted: t - d, setAside: 0, status };
+    const setAside = Number(left.match(/(\d+)\s+deferred/)?.[1] ?? 0);
+    const remaining = t - d - setAside;
+    if (remaining < 0) throw new Error(`wonderhome: counts don't add up for ${id}`);
+    const note = setAside > 0 ? `${setAside} deferred` : undefined;
+    return { id, name, total: t, done: d, partial: 0, notStarted: remaining, setAside, status: remaining === 0 ? "Done" : "In Progress", note };
   });
-  const lastUpdated = md.match(/\|\s*Last updated\s*\|\s*([\d-]+)\s*\|/)?.[1] ?? null;
-  const currentModule = md.match(/\|\s*Current module\s*\|\s*([^|]+?)\s*\|/)?.[1] ?? null;
-  const currentStory = md.match(/\|\s*Current story\s*\|\s*([^|]+?)\s*\|/)?.[1] ?? null;
-  return { rows, lastUpdated, currentFocus: currentModule ? `Module ${currentModule}${currentStory ? ` — ${currentStory}` : ""}` : null };
+  const lastUpdated = md.match(/_Generated\s+([\d-]+)\s+from/)?.[1] ?? null;
+  return { rows, lastUpdated, currentFocus: null };
 }
 
 export function parseWonderJobs(md: string): ParsedTracker {
@@ -116,9 +128,9 @@ export function parseWonderArk(md: string): ParsedTracker {
   return { rows, lastUpdated: null, currentFocus: null };
 }
 
-export function parseWonderAgent(md: string): ParsedTracker {
-  const table = need(findTable(md, ["#", "Agent", "Done", "Partial", "Deferred", "Not Started", "Total", "Progress"]), "wonderagent by-module table");
-  if (table.length === 0) throw new Error("wonderagent: by-module table matched but had no rows");
+export function parseWonderID(md: string): ParsedTracker {
+  const table = need(findTable(md, ["#", "Agent", "Done", "Partial", "Deferred", "Not Started", "Total", "Progress"]), "wonderid by-module table");
+  if (table.length === 0) throw new Error("wonderid: by-module table matched but had no rows");
   const rows: ProgressRow[] = table.map((c) => {
     const [id, nameLinked, done, partial, deferred, notStarted, total] = c;
     const { text: nameRaw } = stripLink(nameLinked);
@@ -127,7 +139,7 @@ export function parseWonderAgent(md: string): ParsedTracker {
     const def = Number(deferred);
     const ns = Number(notStarted);
     const t = Number(total);
-    if (![d, p, def, ns, t].every(Number.isFinite)) throw new Error(`wonderagent: non-numeric row for ${nameRaw}`);
+    if (![d, p, def, ns, t].every(Number.isFinite)) throw new Error(`wonderid: non-numeric row for ${nameRaw}`);
     return { id, name: nameRaw.replace(/\s*Agent$/, ""), total: t, done: d, partial: p, notStarted: ns, setAside: def, status: ns + p === 0 && def === 0 ? "Done" : "In Progress" };
   });
   const gen = md.match(/^Generated\s+([\d-]+)\s+from/m);
@@ -135,8 +147,8 @@ export function parseWonderAgent(md: string): ParsedTracker {
 }
 
 export const TRACKER_SOURCES: Record<string, { raw: string; parse: (md: string) => ParsedTracker }> = {
-  wonderhome: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-home/main/tracking/PROGRESS.md", parse: parseWonderHome },
+  wonderhome: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-home/main/docs/PROGRESS.md", parse: parseWonderHome },
   wonderjobs: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-jobs/main/docs/PROGRESS.md", parse: parseWonderJobs },
   wonderark: { raw: "https://raw.githubusercontent.com/luvchakra/founder-collab/main/docs/PROGRESS-TRACKER.md", parse: parseWonderArk },
-  wonderagent: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-agent/main/docs/PROGRESS.md", parse: parseWonderAgent },
+  wonderid: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-agent/main/docs/PROGRESS.md", parse: parseWonderID },
 };

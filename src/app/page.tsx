@@ -8,6 +8,10 @@ import { Stat } from "@/components/Stats";
 import { ContactForm } from "@/components/ContactForm";
 import { SectionHeading } from "@/components/ui";
 import { startups } from "@/content/startups";
+import { portfolioTotals } from "@/content/progress";
+import { site } from "@/content/site";
+
+const shipped = portfolioTotals();
 
 const chassis = [
   { icon: Database, title: "One data layer", body: "Supabase PostgreSQL with row-level security on every tenant-scoped table. Tenant context is resolved server-side; a client-supplied identifier is never trusted." },
@@ -55,7 +59,7 @@ export default function Home() {
               { n: "01", t: "Agents, not chatbots", b: "WonderHome, WonderJobs and WonderArk each run background loops that hold an outcome and interrupt only when a decision is needed. The value is the work that gets done, not the conversation." },
               { n: "02", t: "Trust is the product", b: "Consent-first design, deterministic policy and audit trails are not compliance theatre. They are why a family lets software pay a bill, a candidate lets it draft an application, and an enterprise lets it near its IAM." },
               { n: "03", t: "One chassis, four wedges", b: "Shared architecture means each new product costs a fraction of the first. Consumer, prosumer, SMB and enterprise wedges de-risk one another without sharing a customer." },
-              { n: "04", t: "Governance is the picks-and-shovels play", b: "As agent adoption compounds, so does the need to inventory, scope and certify them. WonderAgent sits vendor-neutral above the IAM stack every enterprise already owns." },
+              { n: "04", t: "Governance is the picks-and-shovels play", b: "As agent adoption compounds, so does the need to inventory, scope and certify every identity that holds access. WonderID starts with AI agents, extends to people and machines, and sits vendor-neutral above the IAM stack every enterprise already owns." },
             ].map((x, i) => (
               <Reveal key={x.n} delay={i * 0.07} className="card p-7 sm:p-9">
                 <p className="eyebrow text-accent">{x.n}</p>
@@ -69,7 +73,7 @@ export default function Home() {
               <Stat label="Products live" value="4" note="All deployed, all free to try today" />
             </Reveal>
             <Reveal delay={0.06}>
-              <Stat label="Tracked stories shipped" value="271+" note="WonderHome 132 · WonderAgent 139, from public trackers" />
+              <Stat label="Tracked stories shipped" value={shipped.done.toLocaleString("en-US")} note={`Across all four products' public trackers, as of ${site.lastUpdated}`} />
             </Reveal>
             <Reveal delay={0.12}>
               <Stat label="Market wedges" value="4" note="Consumer · Prosumer · SMB · Enterprise" />

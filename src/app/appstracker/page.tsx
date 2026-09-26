@@ -9,7 +9,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "Portfolio engineering tracker",
   description:
-    "High-level and story-level build progress across WonderHome, WonderJobs, WonderArk and WonderAgent, read live from each product's own public engineering tracker.",
+    "High-level and story-level build progress across WonderHome, WonderJobs, WonderArk and WonderID, read live from each product's own public engineering tracker.",
 };
 
 export default function AppsTrackerPage() {
