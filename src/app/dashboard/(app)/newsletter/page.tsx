@@ -39,7 +39,7 @@ export default async function NewsletterPage({ searchParams }: { searchParams: P
   ];
 
   return (
-    <div className="grid gap-8">
+    <div className="grid grid-cols-1 gap-8">
       <header className="dash-rise">
         <p className="dash-eyebrow">Newsletter</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Briefings that write themselves.</h1>
@@ -48,8 +48,8 @@ export default async function NewsletterPage({ searchParams }: { searchParams: P
         </p>
       </header>
 
-      <div className="grid gap-6 xl:grid-cols-[1fr_340px]">
-        <div className="grid gap-4">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_340px]">
+        <div className="grid grid-cols-1 gap-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div role="tablist" aria-label="Period" className="inline-flex flex-wrap gap-1 rounded-full p-1" style={{ background: "rgba(255,255,255,0.06)" }}>
               {PERIODS.map((p) => (
@@ -72,9 +72,9 @@ export default async function NewsletterPage({ searchParams }: { searchParams: P
           <SendButtons period={period} recipientCount={recipients.length} />
         </div>
 
-        <div className="grid content-start gap-4">
+        <div className="grid grid-cols-1 content-start gap-4">
           <Card title="Automatic sends" hint="Scheduled by Vercel Cron; switch either on or off with NEWSLETTER_CADENCE.">
-            <ul className="grid gap-3 text-sm">
+            <ul className="grid grid-cols-1 gap-3 text-sm">
               {(["weekly", "monthly"] as const).map((k) => (
                 <li key={k} className="flex items-start gap-3">
                   <CalendarClock className="mt-0.5 size-4 shrink-0" style={{ color: cadence.has(k) ? "#199e70" : "#8c8b84" }} />
@@ -87,7 +87,7 @@ export default async function NewsletterPage({ searchParams }: { searchParams: P
             </ul>
           </Card>
           <Card title="Setup check">
-            <ul className="grid gap-2.5 text-sm">
+            <ul className="grid grid-cols-1 gap-2.5 text-sm">
               {checks.map((c) => (
                 <li key={c.env} className="flex items-start gap-3">
                   {c.ok ? <Check className="mt-0.5 size-4 shrink-0" style={{ color: "#0ca30c" }} /> : <X className="mt-0.5 size-4 shrink-0" style={{ color: "#e66767" }} />}
@@ -100,7 +100,7 @@ export default async function NewsletterPage({ searchParams }: { searchParams: P
             </ul>
           </Card>
           <Card title="Recipients" hint="NEWSLETTER_RECIPIENTS, comma-separated. Falls back to the people allowed to sign in.">
-            <ul className="grid gap-1.5 text-sm" style={{ color: "#c3c2b7" }}>
+            <ul className="grid grid-cols-1 gap-1.5 text-sm" style={{ color: "#c3c2b7" }}>
               {recipients.length ? recipients.map((r) => <li key={r}>{r === session.email ? r : mask(r)}</li>) : <li style={{ color: "#8c8b84" }}>None yet.</li>}
             </ul>
           </Card>

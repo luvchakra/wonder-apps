@@ -69,7 +69,7 @@ export function TimeChart({
   const maxV = niceMax(Math.max(...(stacked ? totals : series.flatMap((s) => s.values)), 0));
   const x = (i: number) => padL + (kind === "bars" ? (iw / n) * (i + 0.5) : n === 1 ? iw / 2 : (iw / (n - 1)) * i);
   const y = (v: number) => padT + ih - (v / maxV) * ih;
-  const ticks = [0, 0.5, 1].map((t) => t * maxV);
+  const ticks = format === "int" && maxV < 2 ? [0, maxV] : [0, 0.5, 1].map((t) => t * maxV);
   const every = Math.max(1, Math.ceil(n / Math.max(2, Math.floor(iw / 76))));
 
   const onMove = (e: React.PointerEvent<SVGSVGElement>) => {

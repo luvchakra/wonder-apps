@@ -12,7 +12,7 @@ export function DeltaChip({ d, good = "up", suffix = "vs previous" }: { d: Delta
   const Icon = d.dir === "up" || d.dir === "new" ? ArrowUpRight : d.dir === "down" ? ArrowDownRight : Minus;
   return (
     <span className="inline-flex items-center gap-1 text-xs" style={{ color: "#c3c2b7" }}>
-      <span className="grid size-4 place-items-center rounded-full" style={{ background: `color-mix(in oklab, ${TONE[t]} 22%, transparent)` }}>
+      <span className="grid grid-cols-1 size-4 place-items-center rounded-full" style={{ background: `color-mix(in oklab, ${TONE[t]} 22%, transparent)` }}>
         <Icon className="size-3" style={{ color: TONE[t] }} aria-hidden />
       </span>
       <strong className="font-semibold tabular-nums" style={{ color: "#fff" }}>{d.text}</strong>
@@ -67,7 +67,7 @@ export function StatTile({
 }) {
   const d = snapshot ? null : delta(value, prev);
   return (
-    <div className="dash-card flex flex-col p-5" title={value != null ? formatExact(value, format) : undefined}>
+    <div className="dash-card flex flex-col p-4 sm:p-5" title={value != null ? formatExact(value, format) : undefined}>
       <div className="flex items-start justify-between gap-2">
         <p className="dash-eyebrow">{label}</p>
         {hint ? (
@@ -76,7 +76,7 @@ export function StatTile({
           </span>
         ) : null}
       </div>
-      <p className={`mt-3 font-semibold tabular-nums tracking-tight ${big ? "text-5xl" : "text-[2rem]"}`} style={{ color: "#fff", lineHeight: 1 }}>
+      <p className={`mt-3 font-semibold tabular-nums tracking-tight ${big ? "text-[2rem] sm:text-5xl" : "text-[1.6rem] sm:text-[2rem]"}`} style={{ color: "#fff", lineHeight: 1 }}>
         {formatValue(value, format)}
       </p>
       <div className="mt-3 min-h-5">{snapshot ? <span className="text-xs" style={{ color: "#8c8b84" }}>as of now</span> : <DeltaChip d={d} good={good} />}</div>
@@ -112,7 +112,7 @@ export function BreakdownBars({ items, color, format }: { items: { label: string
   const max = Math.max(...items.map((i) => i.value), 1);
   if (!items.length) return <Empty />;
   return (
-    <ul className="grid gap-2.5">
+    <ul className="grid grid-cols-1 gap-2.5">
       {items.map((i) => (
         <li key={i.label} title={`${i.label}: ${formatExact(i.value, format)} (${((i.value / total) * 100).toFixed(1)}%)`}>
           <div className="mb-1 flex items-baseline justify-between gap-3 text-xs">
@@ -135,7 +135,7 @@ export function FunnelBars({ steps, color }: { steps: { label: string; value: nu
   if (!steps.length) return <Empty />;
   const top = Math.max(steps[0].value, 1);
   return (
-    <ol className="grid gap-2.5">
+    <ol className="grid grid-cols-1 gap-2.5">
       {steps.map((s, i) => {
         const fromTop = (s.value / top) * 100;
         const fromPrev = i === 0 ? null : steps[i - 1].value > 0 ? (s.value / steps[i - 1].value) * 100 : 0;

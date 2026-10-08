@@ -19,6 +19,15 @@
 --
 -- Not used on purpose: auth.users. Every signal comes from app tables, so no grant on the auth schema is needed.
 --
+-- Connecting: use the project's pooled (Supavisor) connection string with the user
+-- wonderapps_dashboard.<project-ref> and this password; put it in WONDERARK_DATABASE_URL.
+-- Existing row policies on these tables call helper functions this role may not execute; the
+-- permissive wonderapps_dashboard_read policy below makes them irrelevant (checked: the role runs
+-- every dashboard query with no further grant). Do not add RESTRICTIVE policies to these tables.
+--
+-- Quick check afterwards (should return a number, then fail with "permission denied"):
+--   SET ROLE wonderapps_dashboard;  SELECT count(*) FROM core.businesses;  SELECT name FROM core.businesses;  RESET ROLE;
+--
 -- To remove everything:  DROP OWNED BY wonderapps_dashboard;  DROP ROLE wonderapps_dashboard;
 
 -- 1. The role --------------------------------------------------------------------------------

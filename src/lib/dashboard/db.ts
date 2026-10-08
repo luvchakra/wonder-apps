@@ -109,7 +109,12 @@ function paramsFor(sql: string, w: Window) {
 }
 
 async function runMetric(pool: Pool, def: MetricDef, w: Window): Promise<MetricResult> {
-  const client = await pool.connect();
+  let client;
+  try {
+    client = await pool.connect();
+  } catch (e) {
+    return { id: def.id, kind: "error", message: clean(e instanceof Error ? e.message : "could not connect") };
+  }
   try {
     await client.query("BEGIN READ ONLY");
     await client.query(`SET LOCAL statement_timeout = '${STATEMENT_TIMEOUT}'`);
@@ -156,7 +161,10 @@ export function getSnapshot(app: AppDashboard, w: Window, opts?: { fresh?: boole
   const key = `${app.slug}|${w.start.toISOString()}|${w.end.toISOString()}|${w.tz}`;
   const hit = cache.get(key);
   if (!opts?.fresh && hit && Date.now() - hit.at < TTL_MS) return hit.p;
-  const p = snapshot(app, w);
+  // A snapshot never rejects: any surprise becomes an "unreachable" card, not a failed page.
+  const p = snapshot(app, w).catch(
+    (e): AppSnapshot => ({ slug: app.slug, status: "unreachable", note: clean(e instanceof Error ? e.message : "unexpected error"), results: {}, fetchedAt: new Date().toISOString() }),
+  );
   cache.set(key, { at: Date.now(), p });
   if (cache.size > 60) for (const [k, v] of cache) if (Date.now() - v.at > TTL_MS) cache.delete(k);
   return p;

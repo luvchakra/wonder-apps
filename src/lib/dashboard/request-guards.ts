@@ -4,16 +4,20 @@ import { dashboardConfig } from "./config";
 export const clientIp = (req: Request) => (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
 
 /**
- * Same-origin check for state-changing requests. Browsers always send Origin on
- * cross-site POSTs, so a missing or foreign Origin is refused.
+ * Same-origin check for state-changing requests. `Sec-Fetch-Site` is set by the browser and cannot be
+ * forged by page script, so "same-origin" is trusted when present; otherwise (older clients) the Origin
+ * header must match our host. A missing or foreign Origin is refused.
  */
 export function sameOrigin(req: Request): boolean {
+  const site = req.headers.get("sec-fetch-site");
+  if (site) return site === "same-origin";
   const origin = req.headers.get("origin");
   if (!origin) return false;
   try {
     const o = new URL(origin);
+    const canonical = new URL(dashboardConfig.origin()).host.replace(/^www\./, "");
+    const allowed = new Set<string>([canonical, `www.${canonical}`]);
     const host = req.headers.get("host");
-    const allowed = new Set<string>([new URL(dashboardConfig.origin()).host, new URL(dashboardConfig.origin()).host.replace(/^www\./, ""), `www.${new URL(dashboardConfig.origin()).host.replace(/^www\./, "")}`]);
     if (host) allowed.add(host);
     return allowed.has(o.host);
   } catch {

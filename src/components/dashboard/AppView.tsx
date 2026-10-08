@@ -46,7 +46,7 @@ export function SetupPanel({ app, snap }: { app: AppDashboard; snap: AppSnapshot
   const unreachable = snap.status === "unreachable";
   return (
     <div className="dash-card p-6 sm:p-8">
-      <span className="grid size-11 place-items-center rounded-2xl" style={{ background: "rgba(255,255,255,0.07)" }}>
+      <span className="grid grid-cols-1 size-11 place-items-center rounded-2xl" style={{ background: "rgba(255,255,255,0.07)" }}>
         {unreachable ? <DatabaseZap className="size-5" style={{ color: "#e66767" }} /> : <PlugZap className="size-5" style={{ color: "#c3c2b7" }} />}
       </span>
       <h2 className="mt-5 text-xl font-semibold">{unreachable ? "The database didn't answer" : "Connect this product"}</h2>
@@ -59,15 +59,15 @@ export function SetupPanel({ app, snap }: { app: AppDashboard; snap: AppSnapshot
           <p className="mt-2 max-w-xl text-sm leading-relaxed" style={{ color: "#c3c2b7" }}>
             WonderApps keeps no database of its own. It reads this product&apos;s numbers live through a read-only connection that you control.
           </p>
-          <ol className="mt-6 grid max-w-xl gap-4 text-sm" style={{ color: "#c3c2b7" }}>
+          <ol className="mt-6 grid grid-cols-1 max-w-xl gap-4 text-sm" style={{ color: "#c3c2b7" }}>
             <li className="flex gap-3">
-              <span className="grid size-6 shrink-0 place-items-center rounded-full text-xs font-semibold" style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>1</span>
+              <span className="grid grid-cols-1 size-6 shrink-0 place-items-center rounded-full text-xs font-semibold" style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>1</span>
               <span>
                 In the product&apos;s database run <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">docs/dashboard/{app.slug}-readonly.sql</code>. It creates a role that can only <em>count</em> rows, with no access to emails, names or content.
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="grid size-6 shrink-0 place-items-center rounded-full text-xs font-semibold" style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>2</span>
+              <span className="grid grid-cols-1 size-6 shrink-0 place-items-center rounded-full text-xs font-semibold" style={{ background: "rgba(255,255,255,0.1)", color: "#fff" }}>2</span>
               <span>
                 In Vercel (WonderApps project → Settings → Environment Variables) add <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">{app.envVar}</code> with that role&apos;s pooled connection string, then redeploy.
               </span>
@@ -90,8 +90,8 @@ export function AppView({ app, snap, w }: { app: AppDashboard; snap: AppSnapshot
   const heroSeries = app.metrics.find((m): m is SeriesDef => m.kind === "series" && m.section === "audience");
 
   return (
-    <div className="grid gap-8">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
         {headline.map((m) => {
           if (m.kind !== "stat") return null;
           const r = result(snap, m.id, "stat");
@@ -116,13 +116,13 @@ export function AppView({ app, snap, w }: { app: AppDashboard; snap: AppSnapshot
         const stats = defs.filter((m) => m.kind === "stat");
         const rest = defs.filter((m) => m.kind !== "stat");
         return (
-          <section key={sec} aria-labelledby={`sec-${sec}`} className="grid gap-4">
+          <section key={sec} aria-labelledby={`sec-${sec}`} className="grid grid-cols-1 gap-4">
             <div className="mt-2">
               <h2 id={`sec-${sec}`} className="text-xl font-semibold tracking-tight">{SECTION_TITLES[sec].title}</h2>
               <p className="mt-1 text-sm" style={{ color: "#8c8b84" }}>{SECTION_TITLES[sec].blurb}</p>
             </div>
             {stats.length ? (
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 2xl:grid-cols-4">
                 {stats.map((m) => {
                   if (m.kind !== "stat") return null;
                   const r = result(snap, m.id, "stat");
@@ -130,11 +130,14 @@ export function AppView({ app, snap, w }: { app: AppDashboard; snap: AppSnapshot
                 })}
               </div>
             ) : null}
-            <div className="grid gap-4 lg:grid-cols-2">
-              {rest.map((m) => {
+            <div className="grid grid-cols-1 grid-flow-dense gap-4 lg:grid-cols-2">
+              {rest.map((m, idx) => {
                 const r = snap.results[m.id];
                 if (!r) return null;
-                const wide = m.kind === "cohort" || (m.kind === "series" && (m.stacked || false));
+                const narrow = rest.filter((x) => x.kind === "breakdown" || x.kind === "funnel");
+                const lastNarrow = narrow.length % 2 === 1 && narrow[narrow.length - 1]?.id === m.id;
+                const wide = m.kind === "cohort" || (m.kind === "series" && (m.stacked || false)) || lastNarrow;
+                void idx;
                 const body =
                   r.kind === "error" ? (
                     <Unavailable message={r.message} />
@@ -164,7 +167,7 @@ export function AppView({ app, snap, w }: { app: AppDashboard; snap: AppSnapshot
       {errors.length ? (
         <details className="dash-card p-5 text-sm" style={{ color: "#c3c2b7" }}>
           <summary className="cursor-pointer font-medium">{errors.length} metric{errors.length > 1 ? "s" : ""} couldn&apos;t be read</summary>
-          <ul className="mt-3 grid gap-2 text-xs">
+          <ul className="mt-3 grid grid-cols-1 gap-2 text-xs">
             {errors.map((e) => (
               <li key={e.id}>
                 <code className="rounded bg-white/10 px-1.5 py-0.5">{e.id}</code> {e.kind === "error" ? e.message : ""}
@@ -188,9 +191,14 @@ export function AppHeader({ app, name, snap, tagline }: { app: AppDashboard; nam
         <StatusPill status={snap.status} />
       </div>
       <p className="mt-2 max-w-2xl text-[15px] leading-relaxed" style={{ color: "#c3c2b7" }}>{tagline}</p>
-      <p className="mt-3 max-w-2xl text-xs leading-relaxed" style={{ color: "#8c8b84" }}>
-        <strong style={{ color: "#c3c2b7" }}>Watch first:</strong> {app.focus} <span className="mx-1">·</span> <strong style={{ color: "#c3c2b7" }}>How &ldquo;active&rdquo; is counted:</strong> {app.activeDefinition}
-      </p>
+      <div className="mt-3 grid grid-cols-1 max-w-2xl gap-1.5 text-xs leading-relaxed" style={{ color: "#8c8b84" }}>
+        <p>
+          <strong style={{ color: "#c3c2b7" }}>Watch first:</strong> {app.focus}
+        </p>
+        <p>
+          <strong style={{ color: "#c3c2b7" }}>How &ldquo;active&rdquo; is counted:</strong> {app.activeDefinition}
+        </p>
+      </div>
       <Link href={`/startups/${app.slug}`} className="mt-3 inline-flex items-center gap-1 text-xs underline-offset-4 hover:underline" style={{ color: "#8c8b84" }}>
         Public page <ArrowUpRight className="size-3" />
       </Link>

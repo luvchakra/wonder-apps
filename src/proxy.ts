@@ -16,7 +16,7 @@ export function proxy(req: NextRequest) {
     "Cache-Control": "no-store, max-age=0",
     "X-Robots-Tag": "noindex, nofollow",
     "X-Frame-Options": "DENY",
-    "Referrer-Policy": "no-referrer",
+    "Referrer-Policy": "same-origin",
     "X-Content-Type-Options": "nosniff",
   };
 

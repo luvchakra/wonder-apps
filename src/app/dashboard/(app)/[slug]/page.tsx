@@ -19,7 +19,7 @@ export default async function AppPage({ params, searchParams }: { params: Promis
   const data = await loadOne(slug, w, sp.fresh === "1");
   if (!data) notFound();
   return (
-    <div className="grid gap-8">
+    <div className="grid grid-cols-1 gap-8">
       <div className="flex flex-wrap items-end justify-between gap-5">
         <AppHeader app={data.app} name={startup.name} snap={data.snap} tagline={startup.oneLiner} />
         <RangeTabs base={`/dashboard/${slug}`} current={key} stamp={`${windowLabel(w)} · ${w.tz.replace("_", " ")}`} />

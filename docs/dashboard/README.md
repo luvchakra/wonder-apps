@@ -43,6 +43,20 @@ A product whose variable is unset shows "Not connected"; one that can't be reach
 If new tables are added to a product later, add them to its SQL file, re-run it, and add a
 metric. Metrics that read a table the role can't see show as "couldn't be read".
 
+### Product-specific notes
+
+- **WonderJobs** keeps almost everything in one JSON document per account, which holds career
+  profiles and drafts, so its role is *not* granted that table. `wonderjobs-readonly.sql` instead
+  creates a private schema `wonderapps_dashboard` of views that emit only ids, timestamps, enum labels
+  and numbers. **Run that script as `postgres` (the table owner)**; it checks. Test or demo accounts
+  can be excluded by inserting their ids into `wonderapps_dashboard.excluded_accounts` (the script shows how).
+  The JobsLake metrics need that product's migration 0007 applied; until then two metrics show as unavailable.
+- **WonderArk and WonderID** need nothing special beyond the script.
+- **No billing data exists yet** for WonderJobs and Wonder Creator (free today), so they show no revenue; WonderHome,
+  WonderArk and WonderID derive MRR/ARR only from real subscription amounts.
+- Metrics that need data a product doesn't store (AI cost on WonderHome, region on WonderID, and so on) were left out
+  rather than guessed. Each module header states what it assumes.
+
 ## Access
 
 Sign-in is a **one-time emailed link**, with no passwords.

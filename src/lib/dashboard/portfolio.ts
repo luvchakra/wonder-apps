@@ -1,4 +1,5 @@
 import { appColor } from "./colors";
+import { formatValue } from "./format";
 import { result } from "./load";
 import { apps } from "./registry";
 import type { AppDashboard, AppSnapshot, Window } from "./types";
@@ -22,7 +23,18 @@ export type PortfolioKeys = {
   signups?: string;
 };
 
-export const PORTFOLIO_KEYS: Record<string, PortfolioKeys> = {};
+/**
+ * "Users" is people for the consumer products and for WonderID/WonderArk the people inside customer
+ * organisations; "signups" is a person for consumer products and a business or tenant for
+ * WonderArk and WonderID (that is what a B2B signup is). The tile hints say so.
+ */
+export const PORTFOLIO_KEYS: Record<string, PortfolioKeys> = {
+  wonderhome: { users: "total-users", newUsers: "new-users", mau: "mau", paying: "paying-households", signups: "signups-per-day" },
+  wonderjobs: { users: "total-accounts", newUsers: "new-accounts", mau: "mau", signups: "signups-per-day" },
+  wondercreator: { users: "total-creators", newUsers: "new-creators", mau: "mau", signups: "signups" },
+  wonderark: { users: "user-seats", newUsers: "new-businesses", mau: "mau", paying: "paying-businesses", signups: "signups-per-day" },
+  wonderid: { users: "total-users", newUsers: "new-tenants", mau: "mau", paying: "paid-tier-tenants", signups: "tenant-signups" },
+};
 
 const stat = (snap: AppSnapshot | undefined, id?: string) => (id ? result(snap, id, "stat") : null);
 
@@ -91,7 +103,7 @@ export function attention(snaps: Record<string, AppSnapshot>): Attention[] {
     for (const m of a.metrics) {
       if (m.kind !== "stat" || m.good !== "down" || m.section !== "health") continue;
       const r = result(s, m.id, "stat");
-      if (r?.value && r.value > 0) out.push({ slug: a.slug, level: m.headline ? "critical" : "warn", title: m.label, detail: String(Math.round(r.value * 10) / 10) });
+      if (r?.value && r.value > 0) out.push({ slug: a.slug, level: m.headline ? "critical" : "warn", title: m.label, detail: formatValue(r.value, m.format) });
     }
   }
   const rank = { critical: 0, warn: 1, info: 2 } as const;

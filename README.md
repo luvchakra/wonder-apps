@@ -46,6 +46,14 @@ All copy lives in `src/content/`:
 
 Screenshots live in `public/screenshots/<product>/`; add a file and reference it in the product's `screens` array.
 
+## Founder dashboard
+
+A private page at `/dashboard` shows activity across all five products and sends a weekly and monthly
+emailed briefing. WonderApps has no database of its own: each product is read live through a read-only
+role you create with `docs/dashboard/<product>-readonly.sql`, with its connection string in a Vercel
+environment variable. Sign-in is a one-time emailed link for an allow-list of addresses. Setup, security
+model and every variable are in [`docs/dashboard/README.md`](docs/dashboard/README.md).
+
 ## Investor decks
 
 Each startup's deck is one slide model rendered two ways: the embedded full-screen viewer on `/startups/<slug>#deck` and a printable route (`/decks/<slug>/print`) that becomes the PDF in `public/decks/`. The PDFs are committed, so **after changing any content that feeds a deck, rebuild them**:

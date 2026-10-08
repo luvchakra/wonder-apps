@@ -37,7 +37,7 @@ function highlights(snaps: Record<string, AppSnapshot>): string[] {
   }
   const moves = out.sort((x, y) => y.score - x.score).slice(0, 4).map((h) => h.text);
   const flags = attention(snaps)
-    .filter((t) => t.level !== "info")
+    .filter((t) => t.level !== "info" && !moves.some((m) => m.toLowerCase().includes(t.title.toLowerCase())))
     .slice(0, 3)
     .map((t) => `${nameOf(t.slug)}: ${t.title.toLowerCase()}${t.detail ? ` (${t.detail})` : ""}.`);
   return [...moves, ...flags];
@@ -75,15 +75,15 @@ export function buildNewsletter(opts: { snaps: Record<string, AppSnapshot>; w: W
   const newD = delta(roll.newUsers, roll.prevNewUsers);
   const summary =
     roll.newUsers != null
-      ? `${formatValue(roll.newUsers, "int")} new people joined across the portfolio${newD && newD.dir !== "flat" && newD.pct != null ? `, ${newD.dir === "new" ? "from none" : `${newD.pct > 0 ? "up" : "down"} ${Math.abs(Math.round(newD.pct))}%`} on the previous period` : ""}.`
+      ? `${formatValue(roll.newUsers, "int")} new signups across the portfolio${newD && newD.dir !== "flat" && newD.pct != null ? `, ${newD.dir === "new" ? "from none" : `${newD.pct > 0 ? "up" : "down"} ${Math.abs(Math.round(newD.pct))}%`} on the previous period` : ""}.`
       : "Here is how the portfolio moved.";
   const preheader = hl[0] ?? summary;
   const first = hl.find((h) => /\d+%/.test(h));
   const subject = `WonderApps ${kicker.toLowerCase().replace(" briefing", "")} · ${title}${first ? `: ${first.replace(/^[^:]+: /, "").replace(/\.$/, "")}` : ""}`.slice(0, 120);
 
   const strip = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #ececef;border-radius:14px;background:#fff"><tr>${[
-    cell("People", formatValue(roll.users, "int"), null, "up"),
-    cell("New people", formatValue(roll.newUsers, "int"), newD, "up"),
+    cell("Users", formatValue(roll.users, "int"), null, "up"),
+    cell("New signups", formatValue(roll.newUsers, "int"), newD, "up"),
     cell("Monthly active", formatValue(roll.mau, "int"), null, "up"),
     cell("Paying", formatValue(roll.paying, "int"), null, "up", true),
   ].join("")}</tr></table>`;
@@ -114,7 +114,7 @@ export function buildNewsletter(opts: { snaps: Record<string, AppSnapshot>; w: W
             const i = idx.get(p.day);
             if (i != null) vals[i] += p.value;
           }
-          chart = `<div style="padding:4px 14px 14px"><div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8f;margin-top:10px">New people per day</div>${bars(vals, color)}</div>`;
+          chart = `<div style="padding:4px 14px 14px"><div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8f;margin-top:10px">New signups per day</div>${bars(vals, color)}</div>`;
         }
         const flags = attention({ [a.slug]: s }).filter((t) => t.level !== "info").slice(0, 2);
         const flagHtml = flags.length
@@ -160,7 +160,7 @@ ${hl.map((h) => `<div style="margin-top:9px;font-size:14px;line-height:1.5;color
     `WonderApps ${kicker} · ${title}`,
     summary,
     "",
-    `People ${formatValue(roll.users, "int")} · New ${formatValue(roll.newUsers, "int")} · Monthly active ${formatValue(roll.mau, "int")} · Paying ${formatValue(roll.paying, "int")}`,
+    `Users ${formatValue(roll.users, "int")} · New signups ${formatValue(roll.newUsers, "int")} · Monthly active ${formatValue(roll.mau, "int")} · Paying ${formatValue(roll.paying, "int")}`,
     ...(hl.length ? ["", "Highlights", ...hl.map((h) => `- ${h}`)] : []),
     ...apps.flatMap((a) => {
       const s = snaps[a.slug];

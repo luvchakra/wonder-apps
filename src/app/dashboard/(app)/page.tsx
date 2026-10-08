@@ -33,7 +33,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
   const unplugged = apps.filter((a) => snaps[a.slug]?.status === "not_configured");
 
   return (
-    <div className="grid gap-8">
+    <div className="grid grid-cols-1 gap-8">
       <header className="dash-rise flex flex-wrap items-end justify-between gap-5">
         <div>
           <p className="dash-eyebrow">Portfolio pulse · {RANGES[key].label.toLowerCase()}</p>
@@ -54,15 +54,15 @@ export default async function Overview({ searchParams }: { searchParams: Promise
         </div>
       ) : null}
 
-      <section aria-label="Portfolio totals" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatTile label="People on the platforms" value={roll.users} format="int" snapshot color="#fff" big hint="Accounts that exist today across the products that report a user count." />
-        <StatTile label="New people" value={roll.newUsers} prev={roll.prevNewUsers} format="int" color="#fff" big hint="Signups in the window, summed across products." />
-        <StatTile label="Monthly active people" value={roll.mau} format="int" snapshot color="#fff" big hint="People active in the last 30 days, summed across products (each product defines 'active' itself)." />
-        <StatTile label="Paying customers" value={roll.paying} format="int" snapshot color="#fff" big hint="Accounts on a paid plan today." />
+      <section aria-label="Portfolio totals" className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <StatTile label="Users" value={roll.users} format="int" snapshot color="#fff" big hint="People with an account today, summed across products (for WonderArk and WonderID, the people inside customer businesses)." />
+        <StatTile label="New signups" value={roll.newUsers} prev={roll.prevNewUsers} format="int" color="#fff" big hint="Signups in the window, summed. A signup is a person for the consumer products and a business or tenant for WonderArk and WonderID." />
+        <StatTile label="Monthly active users" value={roll.mau} format="int" snapshot color="#fff" big hint="Users active in the last 30 days, summed across products (each product defines 'active' itself)." />
+        <StatTile label="Paying customers" value={roll.paying} format="int" snapshot color="#fff" big hint="Accounts on a paid plan today, for the products that report one (WonderJobs and Wonder Creator are free today)." />
       </section>
 
-      <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
-        <Card title="New people per day, by product" hint="Each product keeps its colour everywhere on this dashboard.">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.6fr_1fr]">
+        <Card title="New signups per day, by product" hint="Each product keeps its colour everywhere on this dashboard.">
           {roll.signups.series.length ? (
             <TimeChart
               days={roll.signups.days}
@@ -71,7 +71,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
               kind="bars"
               stacked
               label="portfolio-signups"
-              height={260}
+              height={300}
             />
           ) : (
             <Empty>Connect a product to see signups here.</Empty>
@@ -84,8 +84,8 @@ export default async function Overview({ searchParams }: { searchParams: Promise
               <CheckCircle2 className="size-4 shrink-0" style={{ color: "#0ca30c" }} /> Nothing needs you right now.
             </p>
           ) : (
-            <ul className="grid gap-2">
-              {todo.slice(0, 8).map((t, i) => {
+            <ul className="grid grid-cols-1 gap-2">
+              {todo.slice(0, 6).map((t, i) => {
                 const Icon = t.level === "critical" ? AlertOctagon : t.level === "warn" ? AlertTriangle : Info;
                 const c = t.level === "critical" ? "#e66767" : t.level === "warn" ? "#fab219" : "#8c8b84";
                 return (
@@ -111,7 +111,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
         </Card>
       </div>
 
-      <section aria-label="Products" className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+      <section aria-label="Products" className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
         {apps.map((a) => {
           const s = snaps[a.slug];
           const color = appColor(a.slug);
