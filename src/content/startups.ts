@@ -266,6 +266,7 @@ export const startups: Startup[] = [
     geography: "Global, browser-based",
     stage: "Live product · sign-up open",
     url: "https://creator.wonderapps.biz/",
+    helpUrl: "https://creator.wonderapps.biz/help",
     accent: "oklch(0.6 0.21 350)",
     accentSoft: "oklch(0.95 0.03 350)",
     logo: { light: "/brands/wondercreator/wondercreator-logo-light.webp", dark: "/brands/wondercreator/wondercreator-logo-dark.webp", mark: "/brands/wondercreator/wondercreator-mark.webp" },
