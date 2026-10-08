@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { startups } from "@/content/startups";
-import { Device } from "./Device";
+import { DevicePair } from "./DevicePair";
 import { Button } from "./ui";
 import { Logo } from "./Logo";
 import { WordRotator } from "./WordRotator";
@@ -26,11 +26,10 @@ export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const stageY = useTransform(scrollYProgress, [0, 1], [0, 160]);
-  const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
-  const phoneY = useTransform(scrollYProgress, [0, 1], [0, -90]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5, 0.9], [1, 1, 0]);
+  const stageY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
   
   // One startup on stage at a time: each is shown on its own merits, never composed with another.
   const [active, setActive] = useState(0);
@@ -134,14 +133,7 @@ export function Hero() {
               transition={{ duration: 0.7, ease }}
               className="relative"
             >
-              <div className="relative mx-auto w-[88%] sm:w-[78%]">
-                <Device shot={laptop} priority={active === 0} sizes="(min-width: 1024px) 860px, 88vw" />
-              </div>
-              {phone ? (
-                <motion.div style={reduce ? undefined : { y: phoneY }} className="absolute -left-2 bottom-[-8%] w-[26%] max-w-[190px] sm:left-[2%] sm:w-[19%]">
-                  <Device shot={phone} priority={active === 0} sizes="190px" />
-                </motion.div>
-              ) : null}
+              <DevicePair desktop={laptop} mobile={phone} priority={active === 0} sizes="(min-width: 1024px) 760px, 80vw" className="mx-auto max-w-4xl" />
             </motion.div>
           </AnimatePresence>
           <p className="mt-10 text-center text-sm text-fg-muted" aria-live="off">

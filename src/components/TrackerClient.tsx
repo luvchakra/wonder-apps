@@ -1,5 +1,6 @@
 "use client";
 
+import { scrub } from "@/lib/scrub";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
@@ -49,7 +50,7 @@ export function TrackerClient({ initial }: { initial: ProductProgress[] }) {
             return p;
           }
           // Keep editorial notes from the curated snapshot where the row still exists.
-          const rows = r.rows.map((row) => ({ ...row, note: row.note ?? p.rows.find((x) => x.id === row.id)?.note }));
+          const rows = r.rows.map((row) => ({ ...row, name: scrub(row.name), note: scrub(row.note ?? p.rows.find((x) => x.id === row.id)?.note) }));
           return { ...p, rows, lastUpdated: r.lastUpdated ?? p.lastUpdated, currentFocus: r.currentFocus ?? p.currentFocus };
         }),
       );

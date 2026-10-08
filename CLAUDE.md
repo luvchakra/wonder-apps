@@ -86,6 +86,19 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
   a platform, chassis, customers or team; the legal security paragraph is per
   product on purpose. The tracker and footer are the only places they sit together.
 - Wonder Creator has no public help centre yet; leave `helpUrl` unset (UI hides it).
+- **No internal tech stack in public copy.** No database, framework, cloud or
+  payment-provider names (Supabase, Postgres, RLS, Vercel, Razorpay/Stripe, model
+  vendors), no test-framework or route/migration counts, in pages, decks or legal
+  text. Say what the product does, not what it is built with. Product features that
+  name a third party (WhatsApp, Alexa, Greenhouse, Okta…) are fine.
+- **Keep readers on the site.** The only outbound links are one "Open the live
+  product" per startup (deep-dive hero), each figure's source, and the tracker's
+  repo link. Help-centre links are not rendered anywhere (`helpUrl` is kept as data).
+- **Screenshots:** one phone capture per startup (`home-mobile`), the rest desktop.
+  Devices are shown by `DevicePair` side by side — never overlapped or
+  parallax-stacked, so no screenshot or page text is covered.
+- Every `mailto:` goes through `enquiryMailto()` (`src/lib/mailto.ts`) so it opens
+  with a subject and a short template body.
 
 ## The tracker (/appstracker)
 

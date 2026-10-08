@@ -42,7 +42,7 @@ export function buildDeck(s: Startup): Deck {
   slides.push({ kind: "list", eyebrow: "The problem", title: s.problem.title, items: copy.problem });
   slides.push({ kind: "cards", eyebrow: "The product", title: s.solution.title, items: copy.solution });
   slides.push({ kind: "product", eyebrow: "In the product", title: `${s.name}, live today`, desktop: desktops[0], mobile: mobiles[0] });
-  const inside = [desktops[1], desktops[2], mobiles[1]].filter(Boolean) as Screenshot[];
+  const inside = [desktops[1], desktops[2]].filter(Boolean) as Screenshot[];
   if (inside.length >= 2) slides.push({ kind: "gallery", eyebrow: "In the product", title: "A closer look", shots: inside });
   slides.push({ kind: "steps", eyebrow: "How it works", title: "From first touch to outcome", items: copy.how });
 

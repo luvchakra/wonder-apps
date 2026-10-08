@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpen, ExternalLink, Presentation } from "lucide-react";
+import { ArrowRight, Presentation } from "lucide-react";
 import type { Startup } from "@/content/types";
-import { Device } from "./Device";
+import { DevicePair } from "./DevicePair";
 import { EmailCTA } from "./EmailCTA";
-import { Parallax } from "./Parallax";
 import { Reveal } from "./Reveal";
 
 /**
@@ -62,43 +61,16 @@ export function Showcase({ s, index }: { s: Startup; index: number }) {
               <Link href={`/startups/${s.slug}`} className="inline-flex items-center gap-1.5 rounded-full bg-fg px-5 py-2.5 text-bg transition-opacity hover:opacity-85">
                 Investor deep dive <ArrowRight className="size-4" />
               </Link>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:underline underline-offset-4" style={{ color: s.accent }}>
-                Live product <ExternalLink className="size-4" />
-              </a>
               <Link href={`/startups/${s.slug}#deck`} className="inline-flex items-center gap-1.5 text-fg-muted hover:text-fg hover:underline underline-offset-4">
                 <Presentation className="size-4" /> Deck
               </Link>
-              {s.helpUrl ? (
-                <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-fg-muted hover:text-fg hover:underline underline-offset-4">
-                  <BookOpen className="size-4" /> Help centre
-                </a>
-              ) : null}
               <EmailCTA name={s.name} tone="outline" />
             </div>
           </Reveal>
         </div>
 
         <div className="relative lg:col-span-7">
-          <div className="relative mx-auto max-w-[760px] pb-14 pt-6">
-            <Parallax speed={0.12} scale={[0.96, 1.02]}>
-              <Device shot={desktop[0]} sizes="(min-width: 1024px) 700px, 92vw" />
-            </Parallax>
-            {mobile[0] ? (
-              <Parallax speed={-0.35} className={`absolute bottom-0 w-[28%] max-w-[210px] ${flip ? "right-[-2%] sm:right-[-4%]" : "left-[-2%] sm:left-[-4%]"}`}>
-                <Device shot={mobile[0]} sizes="210px" />
-              </Parallax>
-            ) : null}
-            {desktop[1] ? (
-              <Parallax speed={0.3} className={`absolute top-[46%] hidden w-[46%] md:block ${flip ? "left-[-6%]" : "right-[-6%]"}`}>
-                <Device shot={desktop[1]} sizes="380px" />
-              </Parallax>
-            ) : null}
-            {mobile[1] ? (
-              <Parallax speed={0.5} className={`absolute -top-2 hidden w-[22%] max-w-[170px] lg:block ${flip ? "left-[4%]" : "right-[4%]"}`}>
-                <Device shot={mobile[1]} sizes="170px" />
-              </Parallax>
-            ) : null}
-          </div>
+          <DevicePair desktop={desktop[0]} mobile={mobile[0]} flip={flip} sizes="(min-width: 1024px) 560px, 80vw" />
         </div>
       </div>
     </section>

@@ -100,9 +100,9 @@ function Cover({ s, deck, index }: { s: Startup; deck: Deck; index: number }) {
             Investor overview <span style={{ color: subtle }}>· {s.stage}</span>
           </p>
         </div>
-        <div style={{ position: "relative", height: 640 }}>
-          <Shot shot={hero} style={{ position: "absolute", left: 0, top: 20, width: 780, height: 500 }} />
-          {phone ? <Shot shot={phone} style={{ position: "absolute", right: 14, top: 150, width: 250, height: 520 }} /> : null}
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 28, height: 640 }}>
+          <Shot shot={hero} style={{ width: phone ? 590 : 800, height: phone ? 410 : 520, flex: "none" }} />
+          {phone ? <Shot shot={phone} style={{ width: 230, height: 480, flex: "none" }} /> : null}
         </div>
       </div>
     </Frame>
@@ -170,9 +170,9 @@ function Product({ s, deck, index, slide }: { s: Startup; deck: Deck; index: num
     <Frame s={s} deck={deck} index={index} eyebrow={slide.eyebrow}>
       <H size={56}>{slide.title}</H>
       <div style={{ position: "relative", marginTop: 34, height: 640 }}>
-        <Shot shot={slide.desktop} style={{ position: "absolute", left: 0, top: 0, width: 1100, height: 640 }} />
-        {slide.mobile ? <Shot shot={slide.mobile} style={{ position: "absolute", left: 1010, top: 40, width: 290, height: 600 }} /> : null}
-        <div style={{ position: "absolute", left: 1370, top: 60, width: 320 }}>
+        <Shot shot={slide.desktop} style={{ position: "absolute", left: 0, top: 0, width: 1000, height: 620 }} />
+        {slide.mobile ? <Shot shot={slide.mobile} style={{ position: "absolute", left: 1040, top: 60, width: 260, height: 560 }} /> : null}
+        <div style={{ position: "absolute", left: 1350, top: 60, width: 330 }}>
           <p style={{ margin: 0, fontSize: 20, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: s.accent }}>Live product</p>
           <p style={{ margin: "14px 0 0", fontSize: 26, lineHeight: 1.4, color: muted }}>{slide.desktop.caption ?? ""}</p>
           <p style={{ margin: "34px 0 0", fontSize: 22, color: ink }}>{s.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</p>
@@ -191,8 +191,8 @@ function Gallery({ s, deck, index, slide }: { s: Startup; deck: Deck; index: num
           const phone = shot.kind === "mobile";
           return (
             <figure key={shot.src} style={{ margin: 0, textAlign: "center" }}>
-              <Shot shot={shot} style={phone ? { width: 300, height: 600 } : { width: 700, height: 500 }} />
-              <figcaption style={{ marginTop: 22, fontSize: 22, color: muted, maxWidth: phone ? 300 : 700, marginInline: "auto" }}>{shot.caption}</figcaption>
+              <Shot shot={shot} style={phone ? { width: 300, height: 600 } : { width: 790, height: 520 }} />
+              <figcaption style={{ marginTop: 22, fontSize: 22, color: muted, maxWidth: phone ? 300 : 790, marginInline: "auto" }}>{shot.caption}</figcaption>
             </figure>
           );
         })}

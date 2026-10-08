@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Check, Download, ExternalLink, Lock, Presentation } from "lucide-react";
+import { ArrowRight, Check, Download, ExternalLink, Lock, Presentation } from "lucide-react";
 import { deckBySlug } from "@/content/decks";
 import type { Startup } from "@/content/types";
 import { DeckViewer } from "./DeckViewer";
 import { Device } from "./Device";
+import { DevicePair } from "./DevicePair";
 import { EmailCTA } from "./EmailCTA";
-import { Parallax } from "./Parallax";
 import { Reveal } from "./Reveal";
 import { Stat } from "./Stats";
 import { Eyebrow, SectionHeading } from "./ui";
@@ -49,16 +49,7 @@ export function StartupHero({ s }: { s: Startup }) {
           </div>
         </Reveal>
         <div className="relative mx-auto mt-16 max-w-5xl">
-          <Parallax speed={0.08} scale={[1, 0.96]}>
-            <div className="mx-auto w-[92%] sm:w-[82%]">
-              <Device shot={desktop} priority sizes="(min-width: 1024px) 900px, 92vw" />
-            </div>
-          </Parallax>
-          {mobile ? (
-            <Parallax speed={-0.3} className="absolute bottom-[-6%] right-[-1%] w-[24%] max-w-[200px] sm:right-[2%]">
-              <Device shot={mobile} priority sizes="200px" />
-            </Parallax>
-          ) : null}
+          <DevicePair desktop={desktop} mobile={mobile} priority sizes="(min-width: 1024px) 800px, 80vw" />
         </div>
       </div>
       <div className="h-24 bg-gradient-to-b from-transparent to-bg" aria-hidden />
@@ -71,7 +62,7 @@ export function FactsStrip({ s }: { s: Startup }) {
   return (
     <section className="theme-dark bg-bg text-fg">
       <div className="container">
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4">
+        <dl className={`grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line ${s.facts.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
           {s.facts.map((f) => (
             <div key={f.label} className="bg-bg p-5 sm:p-6">
               <dt className="eyebrow text-fg-subtle">{f.label}</dt>
@@ -155,27 +146,22 @@ export function HowItWorks({ s }: { s: Startup }) {
 
 /* --- Screens gallery ----------------------------------------------------- */
 export function Gallery({ s }: { s: Startup }) {
-  const shots = s.screens;
+  const shots = s.screens.filter((x) => x.kind === "desktop").slice(1);
+  if (!shots.length) return null;
   return (
     <section className="theme-dark section overflow-hidden bg-bg text-fg" aria-labelledby="screens">
       <div className="container">
         <Reveal>
-          <SectionHeading eyebrow="Product tour" title={<span id="screens">Desktop and mobile, one product.</span>} lede="Captured from the deployed product. Some views show demonstration data." accent={s.accent} align="center" />
+          <SectionHeading eyebrow="Product tour" title={<span id="screens">Inside the product.</span>} lede="Captured from the deployed product. Some views show demonstration data." accent={s.accent} align="center" />
         </Reveal>
-      </div>
-      <div className="container mt-16 grid grid-cols-6 gap-4 sm:gap-6 lg:gap-8">
-        {shots.map((shot, i) => {
-          const wide = shot.kind === "desktop";
-          const span = wide ? "col-span-6 md:col-span-4" : "col-span-3 md:col-span-2";
-          return (
-            <Reveal key={shot.src} delay={(i % 3) * 0.06} className={`${span} flex flex-col items-center justify-end`}>
-              <Parallax speed={wide ? 0.06 : -0.14 - (i % 2) * 0.08} className={wide ? "w-full" : "w-[78%] sm:w-[68%]"}>
-                <Device shot={shot} sizes={wide ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 20vw, 40vw"} />
-              </Parallax>
-              {shot.caption ? <p className="mt-4 text-center text-sm text-fg-subtle">{shot.caption}</p> : null}
+        <div className="mt-16 grid gap-x-8 gap-y-14 md:grid-cols-2">
+          {shots.map((shot, i) => (
+            <Reveal key={shot.src} delay={(i % 2) * 0.06}>
+              <Device shot={shot} sizes="(min-width: 768px) 560px, 92vw" />
+              {shot.caption ? <p className="mt-5 text-center text-sm text-fg-muted">{shot.caption}</p> : null}
             </Reveal>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -374,14 +360,6 @@ export function RoadmapAndAsk({ s }: { s: Startup }) {
               <Link href={`/contact?interest=${s.slug}`} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 font-medium text-black transition-transform hover:-translate-y-0.5">
                 Start a conversation <ArrowRight className="size-4" />
               </Link>
-              <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white/15 px-6 font-medium text-white ring-1 ring-white/25 hover:bg-white/20">
-                Try {s.name} <ExternalLink className="size-4" />
-              </a>
-              {s.helpUrl ? (
-                <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 px-4 font-medium text-white/80 hover:text-white">
-                  <BookOpen className="size-4" /> Help centre
-                </a>
-              ) : null}
               <EmailCTA name={s.name} tone="onGradient" className="h-12" />
             </div>
           </div>

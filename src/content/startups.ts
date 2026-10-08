@@ -57,7 +57,6 @@ export const startups: Startup[] = [
       { src: "/screenshots/wonderhome/home-desktop.webp", alt: "WonderHome landing page on desktop showing the hero 'WonderHome takes care, so you can live more' and a household dashboard preview", kind: "desktop", caption: "The product site — same design language as the app" },
       { src: "/screenshots/wonderhome/home-mobile.webp", alt: "WonderHome on a phone, showing the mobile hero and Today view", kind: "mobile", caption: "Installs like an app on iPhone and Android" },
       { src: "/screenshots/wonderhome/features-desktop.webp", alt: "WonderHome features grid: 16 household domains from Family & Profiles to HomeSend and Your language", kind: "desktop", caption: "Sixteen features, each a household outcome" },
-      { src: "/screenshots/wonderhome/pricing-mobile.webp", alt: "WonderHome plans on a phone: Free, Pro and Max", kind: "mobile", caption: "Three plans, from a quiet watcher to a home that runs itself" },
       { src: "/screenshots/wonderhome/security-desktop.webp", alt: "WonderHome security section: private by default, tenant isolation, child privacy, governed AI", kind: "desktop", caption: "Private by default — security as a family feature" },
     ],
     market: {
@@ -99,7 +98,7 @@ export const startups: Startup[] = [
     },
     businessModel: {
       title: "Consumer subscription with billing built end-to-end.",
-      lede: "Plans are data, not code: Free, Pro and Max are rows in a live catalogue with server-side entitlements and atomic usage metering already shipped. Multi-provider billing (Razorpay for India, Stripe internationally) is code-complete — real prices seeded (Pro ₹299/month, Max ₹599/month), checkout, webhooks and a refund ledger all built — and switches on the moment a provider's keys are set; every plan is free during early access until then.",
+      lede: "Three plans — Free, Pro and Max — with real prices set (Pro ₹299/month, Max ₹599/month). Billing for India and international customers, with refunds, is built and switches on when payments go live; every plan is free during early access until then.",
       plans: [
         { name: "Free", tagline: "Run the Home", bullets: ["Household basics with WonderHome watching quietly", "Outcomes, routines, notifications", "Maintenance, laundry, pet care", "Text conversation and background runs"] },
         { name: "Pro", tagline: "Let WonderHome Think", featured: true, bullets: ["The full household: school, commerce, meals, bills, family time", "Voice conversation", "School and homework intelligence", "Ordering and groceries"] },
@@ -116,18 +115,17 @@ export const startups: Startup[] = [
       { label: "Stories shipped", value: "223 / 225", note: "99.1% of a 24-module backlog, per the live tracker; one story waits on the owner and one was deliberately deferred" },
       { label: "Modules complete", value: "22 of 24", note: "Voice release gates need a real Alexa and Gemini Live run; right-to-left layouts are deferred" },
       { label: "Languages", value: "8", note: "English, Hindi, Marathi, Spanish, French, German, Arabic and Mandarin across every screen and HomeTalk" },
-      { label: "Billing & payments", value: "Razorpay + Stripe", note: "Checkout, webhooks, refunds and nightly reconciliation code-complete; free during early access until provider keys are set" },
+      { label: "Billing & payments", value: "India + international", note: "Checkout, refunds and reconciliation built; free during early access until payments go live" },
     ],
     roadmap: [
-      { horizon: "Now", items: ["Turn on WhatsApp, Alexa and Gemini voice as each account is connected", "Voice release gates: a real Alexa and Gemini Live end-to-end run", "Activate payments (Razorpay/Stripe) as plans go live"] },
+      { horizon: "Now", items: ["Turn on WhatsApp, Alexa and Gemini voice as each account is connected", "Voice release gates: a real Alexa and Gemini Live end-to-end run", "Activate payments as plans go live"] },
       { horizon: "Next", items: ["First partners on the developer platform (scoped keys and a sandbox are built)", "Right-to-left layouts on the remaining screens", "Forwarded-email intake once a receiving domain is set up"] },
       { horizon: "Later", items: ["Regional expansion beyond India", "More languages from the same catalog"] },
     ],
     ask: "Seeking design-partner families and early-stage investors who believe the household is the next operating system.",
     facts: [
-      { label: "Platform", value: "Web · PWA · iPhone · Android · Desktop" },
-      { label: "AI", value: "Anthropic Claude primary; Gemini and OpenAI supported; BYOK" },
-      { label: "Data", value: "Supabase PostgreSQL, RLS per household, ap-south-1" },
+      { label: "Platform", value: "Web · installs on iPhone, Android and desktop" },
+      { label: "AI", value: "Plans and acts only with household consent" },
       { label: "Pricing", value: "Free · Pro · Max (no card for Free)" },
     ],
   },
@@ -168,7 +166,7 @@ export const startups: Startup[] = [
         { title: "JobsLake: a job-data layer, not a scraper", body: "A platform layer behind the search — canonical opportunities deduplicated across sources with per-field provenance, a REST/stream/MCP protocol, and an admin console with source health. 'Where this job was found' is always one click away." },
         { title: "Apply with Wonder, never on your behalf", body: "Fills the employer's own Greenhouse, Lever, Ashby or generic form through the candidate's browser — AI drafts, a guided mode, a downloadable pack — and stops for whatever only the candidate should answer. Structurally unable to submit; the candidate always does." },
         { title: "Résumé Studio", body: "Eight ATS-friendly templates rendered from one structured Career Profile, each a real PDF or Word download, plus a job-specific version generated straight from the Application Pack." },
-        { title: "Your AI, your keys", body: "WonderJobs AI (Anthropic Claude) by default, or bring an Anthropic, OpenAI or Gemini key. Keys are AES-256-GCM encrypted, used only server-side, never returned." },
+        { title: "Your AI, your keys", body: "Use WonderJobs AI by default, or bring your own AI key. Keys are encrypted and never shown again." },
       ],
     },
     howItWorks: [
@@ -180,18 +178,13 @@ export const startups: Startup[] = [
     screens: [
       { src: "/screenshots/wonderjobs/home-desktop.webp", alt: "WonderJobs landing page on desktop: a plain-language search, today's priorities and an application ready for the candidate's final action", kind: "desktop", caption: "Scroll-linked hero on the product site" },
       { src: "/screenshots/wonderjobs/how-it-works-desktop.webp", alt: "WonderJobs Find, Decide, Apply, Progress outcome sections on desktop", kind: "desktop", caption: "Find · Decide · Apply · Progress — the whole app reorganised around outcomes" },
-      { src: "/screenshots/wonderjobs/outcome-mobile.webp", alt: "WonderJobs Find, Decide, Apply, Progress outcome sections on a phone", kind: "mobile", caption: "The same outcomes, on mobile" },
       { src: "/screenshots/wonderjobs/app-desktop.webp", alt: "WonderJobs Home dashboard showing what deserves the candidate's attention today", kind: "desktop", caption: "Home — what deserves your attention today" },
       { src: "/screenshots/wonderjobs/jobs-desktop.webp", alt: "WonderJobs jobs list in demo mode with fit labels, filters and why-surfaced reasons", kind: "desktop", caption: "Jobs view — every match explains itself" },
       { src: "/screenshots/wonderjobs/extension-desktop.webp", alt: "WonderJobs Apply with Wonder / browser extension page explaining what it fills and where it works", kind: "desktop", caption: "Apply with Wonder — fills the employer's own form, never submits it" },
-      { src: "/screenshots/wonderjobs/extension-mobile.webp", alt: "WonderJobs Apply with Wonder page on a phone", kind: "mobile", caption: "Install it from the landing page or any application" },
       { src: "/screenshots/wonderjobs/applications-desktop.webp", alt: "WonderJobs applications dashboard with a needs-attention list and pipeline board", kind: "desktop", caption: "Applications — a real pipeline, not a spreadsheet" },
       { src: "/screenshots/wonderjobs/resume-studio-desktop.webp", alt: "WonderJobs Résumé Studio showing eight ATS-friendly templates", kind: "desktop", caption: "Résumé Studio — eight ATS-friendly templates, PDF or Word" },
-      { src: "/screenshots/wonderjobs/career-dna-mobile.webp", alt: "WonderJobs Career Profile on a phone", kind: "mobile", caption: "Career Profile — what every match, ranking and draft starts from" },
-      { src: "/screenshots/wonderjobs/runs-mobile.webp", alt: "WonderJobs Wonder tab on a phone showing search history and scheduled searches", kind: "mobile", caption: "Wonder — search history and what it found, on mobile" },
       { src: "/screenshots/wonderjobs/home-mobile.webp", alt: "WonderJobs landing on a phone", kind: "mobile", caption: "Installable PWA" },
       { src: "/screenshots/wonderjobs/insights-desktop.webp", alt: "WonderJobs insights view in demo mode", kind: "desktop", caption: "Insights derived from real runs and applications" },
-      { src: "/screenshots/wonderjobs/ai-mobile.webp", alt: "WonderJobs AI provider section on a phone: WonderJobs AI or bring your own Anthropic, OpenAI or Gemini key", kind: "mobile", caption: "Your AI, your keys" },
     ],
     market: {
       title: "Every active job seeker, every few years.",
@@ -246,20 +239,19 @@ export const startups: Startup[] = [
     ],
     traction: [
       { label: "Epics complete", value: "11 / 15", note: "Remaining four are partial, with operator steps or provider config outstanding" },
-      { label: "Apply with Wonder", value: "95 tests", note: "75 unit/API + 20 Playwright end-to-end on mock Greenhouse, Lever, Ashby and generic ATS forms" },
-      { label: "Résumé Studio", value: "8 ATS templates", note: "PDF and Word downloads from one structured Career Profile; 304 unit + 30 Playwright tests" },
+      { label: "Apply with Wonder", value: "95 tests", note: "Including end-to-end runs against mock Greenhouse, Lever, Ashby and generic application forms" },
+      { label: "Résumé Studio", value: "8 ATS templates", note: "PDF and Word downloads from one structured Career Profile, covered by automated tests" },
       { label: "Live job sources", value: "7 families", note: "Greenhouse/Lever/Ashby boards across 20+ companies plus six aggregators, now behind JobsLake" },
     ],
     roadmap: [
-      { horizon: "Now", items: ["JobsLake production rollout: pending migration and a real-account verification pass", "Email delivery for follow-ups and thank-you notes", "Custom SMTP and Google sign-in provider configuration"] },
+      { horizon: "Now", items: ["JobsLake production rollout and a real-account verification pass", "Email delivery for follow-ups and thank-you notes", "Google sign-in and a custom email sender"] },
       { horizon: "Next", items: ["Pro plan billing", "Chrome Web Store listing for Apply with Wonder", "Two-way calendar sync"] },
       { horizon: "Later", items: ["Additional regional sources", "Mock-interview AI and deeper coaching", "Platform admin for usage and key rotation"] },
     ],
     ask: "Seeking early-stage investors and distribution partners — universities, bootcamps and career services — who want candidates to have an agent of their own.",
     facts: [
-      { label: "Platform", value: "Web · PWA · desktop, tablet, mobile" },
-      { label: "AI", value: "Anthropic Claude (platform) · Anthropic / OpenAI / Gemini BYOK" },
-      { label: "Data", value: "Supabase PostgreSQL, dedicated schema, RLS, service-role only" },
+      { label: "Platform", value: "Web · installable · desktop, tablet, mobile" },
+      { label: "AI", value: "Drafts and explains; never submits for you" },
       { label: "Pricing", value: "Free today · Pro in development" },
     ],
   },
@@ -314,12 +306,10 @@ export const startups: Startup[] = [
       { src: "/screenshots/wondercreator/home-desktop.webp", alt: "Wonder Creator landing page: 'Everything begins with a little wonder' above a photo, a note, a voice memo and a carousel", kind: "desktop", caption: "A personal creative universe" },
       { src: "/screenshots/wondercreator/home-mobile.webp", alt: "Wonder Creator landing page on a phone", kind: "mobile", caption: "Made for the phone in your pocket" },
       { src: "/screenshots/wondercreator/studio-desktop.webp", alt: "CreativeStudio with four sources on the canvas and a CreativeMind suggestion to use two photos together", kind: "desktop", caption: "CreativeStudio, with CreativeMind beside you" },
-      { src: "/screenshots/wondercreator/studio-mobile.webp", alt: "CreativeStudio on a phone showing formats and a CreativeMind suggestion", kind: "mobile", caption: "One useful connection at a time" },
       { src: "/screenshots/wondercreator/world-desktop.webp", alt: "Ideas, Materials, Moments, DejaVu and personal sources shown as small product scenes", kind: "desktop", caption: "Your world: ideas, materials, moments and sources" },
       { src: "/screenshots/wondercreator/journey-desktop.webp", alt: "The journey from Capture to Discover, Explore, Create, Refine and Share", kind: "desktop", caption: "From inspiration to Creation" },
       { src: "/screenshots/wondercreator/together-desktop.webp", alt: "Pulse, Communities and live Huddles", kind: "desktop", caption: "Feedback, not applause — no likes, no trending, no ranking" },
       { src: "/screenshots/wondercreator/publish-desktop.webp", alt: "A public Creator Page with a poem, a video, audio and a carousel each shown in its own form", kind: "desktop", caption: "A beautiful home for finished work" },
-      { src: "/screenshots/wondercreator/signin-mobile.webp", alt: "Wonder Creator sign-in on a phone with Google and email options", kind: "mobile", caption: "Ideas become real" },
     ],
     market: {
       title: "Everyone who makes things is a creator now.",
@@ -359,10 +349,10 @@ export const startups: Startup[] = [
     },
     businessModel: {
       title: "Free to start. Creator income built in.",
-      lede: "No paid plan is published yet. The product is free to start and already contains the machinery a creator business needs: usage allowances per generation tier, bring-your-own AI key, a licensing marketplace built behind a flag, and licence-fee collection through Razorpay and Stripe that switches on when provider keys are set. Revenue terms will be finalised with the first creators.",
+      lede: "No paid plan is published yet. The product is free to start and already contains the machinery a creator business needs: usage allowances per generation tier, bring-your-own AI key, a licensing marketplace built behind a flag, and licence-fee collection that switches on when payments go live. Revenue terms will be finalised with the first creators.",
       plans: [
-        { name: "Creators", tagline: "Free to start", featured: true, bullets: ["Capture, connect, create and publish", "A public Creator Page", "Pulse, Communities and live Huddles", "Bring your own Gemini or Anthropic key, or use the platform's"] },
-        { name: "Licensing & payments", tagline: "Built, provider-gated", bullets: ["Licences with terms, territory and dates", "Licence fees via Razorpay (INR) and Stripe", "A creator-side income ledger", "A licence marketplace, built behind a flag"] },
+        { name: "Creators", tagline: "Free to start", featured: true, bullets: ["Capture, connect, create and publish", "A public Creator Page", "Pulse, Communities and live Huddles", "Bring your own AI key, or use the platform's"] },
+        { name: "Licensing & payments", tagline: "Built, provider-gated", bullets: ["Licences with terms, territory and dates", "Licence fees in INR and international currencies", "A creator-side income ledger", "A licence marketplace, built behind a flag"] },
       ],
     },
     moat: [
@@ -373,7 +363,7 @@ export const startups: Startup[] = [
     traction: [
       { label: "Tracked deliverables", value: "143 / 146", note: "97.9% done; 3 partial, none not started — from the product's own delivery log" },
       { label: "P0 capabilities", value: "24 built", note: "Identity, material, CreatorSend, CreatorTalk, CreatorBrain, Studio, versions, lineage, rights, Huddles and more; one partial" },
-      { label: "Security tests (P0 gate)", value: "278 DB · 28 E2E", note: "Row-level-security and authorisation tests against a real database, plus browser flows at desktop and 360px" },
+      { label: "Security tests (P0 gate)", value: "306 tests", note: "Authorisation and data-isolation tests against a real database, plus browser flows at desktop and 360px" },
       { label: "Product", value: "Live, sign-up open", note: "AI, live voice/video and payments switch on when their providers are connected; the product says 'not connected' until then" },
     ],
     roadmap: [
@@ -384,8 +374,7 @@ export const startups: Startup[] = [
     ask: "Seeking early-stage investors and creator-economy partners who believe makers deserve a studio that remembers where their work came from.",
     facts: [
       { label: "Platform", value: "Web · installable on phone and desktop" },
-      { label: "AI", value: "Gemini or Anthropic Claude, provider-neutral; bring your own key" },
-      { label: "Data", value: "Supabase PostgreSQL, row-level security, private by default" },
+      { label: "AI", value: "Suggests directions; you decide. Bring your own AI key" },
       { label: "Pricing", value: "Free to start · revenue terms being finalised" },
     ],
   },
@@ -438,7 +427,6 @@ export const startups: Startup[] = [
       { src: "/screenshots/wonderark/home-desktop.webp", alt: "WonderArk landing page on desktop with the new brand: one login, every part of your business, zero duplicate data", kind: "desktop", caption: "Business in one place — the new WonderArk identity" },
       { src: "/screenshots/wonderark/home-mobile.webp", alt: "WonderArk landing on a phone", kind: "mobile", caption: "Responsive across devices" },
       { src: "/screenshots/wonderark/modules-desktop.webp", alt: "WonderArk Discovery module: scored prospects per offering, with Marketing and Funding alongside", kind: "desktop", caption: "Discovery now finds customers, markets to them and funds the growth" },
-      { src: "/screenshots/wonderark/pricing-mobile.webp", alt: "WonderArk pricing on a phone: Free, Pro at ₹2,999 a month, Max at ₹9,999 a month", kind: "mobile", caption: "Published pricing in rupees" },
       { src: "/screenshots/wonderark/how-it-works-desktop.webp", alt: "WonderArk how-it-works: create the business once, license modules independently, data connects automatically", kind: "desktop", caption: "License what you need; add modules in place" },
     ],
     market: {
@@ -479,7 +467,7 @@ export const startups: Startup[] = [
     },
     businessModel: {
       title: "License by module. Expand in place.",
-      lede: "Published pricing in Indian Rupees: Free, Pro at ₹2,999/month and Max at ₹9,999/month, plus AI credit packs (₹1,000 for 500 runs up to ₹6,000 for 4,000) or bring-your-own-key. Razorpay and Stripe billing is built and in its production-readiness review, so Pro and Max are sold by conversation today. Enforcement is four layers deep — RLS, route guard, server action and UI — so an unlicensed module is genuinely off, not merely hidden.",
+      lede: "Published pricing in Indian Rupees: Free, Pro at ₹2,999/month and Max at ₹9,999/month, plus AI credit packs (₹1,000 for 500 runs up to ₹6,000 for 4,000) or bring-your-own-key. Billing is built and in its production-readiness review, so Pro and Max are sold by conversation today. Licensing is enforced at every layer, so an unlicensed module is genuinely off, not merely hidden.",
       plans: [
         { name: "Free", tagline: "Start with discovery", bullets: ["Core discovery tools at no cost", "One login, one business", "Team members with roles and permissions"] },
         { name: "Pro", tagline: "₹2,999 / month", featured: true, bullets: ["Every module, more usage headroom", "Up to 200 AI runs a month per Discovery offering", "Cancel a module any time: 30 days read-only, data never deleted"] },
@@ -505,8 +493,7 @@ export const startups: Startup[] = [
     ask: "Seeking design customers in field service and distribution, and investors who understand vertical SaaS in India's GST-native SMB market.",
     facts: [
       { label: "Platform", value: "Web · responsive · mobile-friendly field work" },
-      { label: "AI", value: "OpenAI, Anthropic, Google — BYOK or platform key" },
-      { label: "Data", value: "Supabase PostgreSQL, schema-per-module, RLS tenant AND licensed" },
+      { label: "AI", value: "AI-assisted prospecting and queries; bring your own key or use ours" },
       { label: "Pricing", value: "Free · Pro (per module) · Max (bundle)" },
     ],
   },
@@ -560,9 +547,7 @@ export const startups: Startup[] = [
       { src: "/screenshots/wonderid/home-desktop.webp", alt: "WonderID product site on desktop: 'Govern every identity. Verify every access.' above a tenant overview", kind: "desktop", caption: "The product site — every identity governed, starting with AI agents" },
       { src: "/screenshots/wonderid/home-mobile.webp", alt: "WonderID product site on a phone with the tenant overview preview", kind: "mobile", caption: "The same, on a phone" },
       { src: "/screenshots/wonderid/product-desktop.webp", alt: "WonderID risk list ordered by severity and the governed AI agent inventory", kind: "desktop", caption: "Risk ordered by what to do first; an agent inventory that is actually governed" },
-      { src: "/screenshots/wonderid/signin-mobile.webp", alt: "WonderID sign-in on a phone with email, Google and SSO options", kind: "mobile", caption: "Sign in with email, Google or enterprise SSO" },
       { src: "/screenshots/wonderid/model-desktop.webp", alt: "WonderID SHOULD, CAN and DID comparison raising an excessive-access finding for FinanceBot", kind: "desktop", caption: "SHOULD · CAN · DID — a critical finding, with the evidence attached" },
-      { src: "/screenshots/wonderid/model-mobile.webp", alt: "WonderID SHOULD, CAN and DID model on a phone", kind: "mobile", caption: "The governance model, on mobile" },
       { src: "/screenshots/wonderid/platform-desktop.webp", alt: "WonderID platform capabilities: agent lifecycle, effective access, runtime assurance, risk, certification and IAM integration", kind: "desktop", caption: "A governance layer over the IAM you already run" },
       { src: "/screenshots/wonderid/signin-desktop.webp", alt: "WonderID sign-in page with the new brand lockup", kind: "desktop", caption: "The WonderID brand, rolled out across every surface" },
     ],
@@ -614,12 +599,11 @@ export const startups: Startup[] = [
       { title: "Agent-first, identity-wide", body: "Incumbent suites bolt agents onto a human model. WonderID started from the agent — owner, purpose, effective access, observed behaviour — and extends outward, so an AI agent is a first-class identity rather than a column on a service-account table." },
       { title: "Deterministic by architecture", body: "No authorisation, risk, policy or remediation decision depends on a language model. AI writes advisory summaries and proposals only. That is an auditable promise competitors chasing 'AI security' cannot easily make." },
       { title: "Vendor-neutral canonical model", body: "Saviynt, SailPoint, Entra, Okta, custom IAM and MCP map into one model without any becoming the internal architecture." },
-      { title: "Built to enterprise bar from line one", body: "Tenant RLS on every table, server-side tenant context, immutable audit, encrypted credentials, CSP headers, rate-limited auth — verified by a dedicated QA module." },
+      { title: "Built to enterprise bar from line one", body: "Strict tenant isolation, an immutable audit trail, encrypted credentials and hardened sign-in from the first commit — verified by a dedicated QA module." },
     ],
     traction: [
       { label: "Stories complete", value: "193 / 245", note: "79% across 11 modules; the tracker grew by 74 stories when WonderID's identity roadmap was adopted" },
       { label: "WonderID roadmap", value: "14 of 36 done", note: "Identity directory, reconciliation, application onboarding, account inventory, requests, approvals and access packages shipped; 4 more partial" },
-      { label: "API surface", value: "168 routes", note: "143 call requirePermission directly; 100 database migrations" },
       { label: "Screens", value: "78 + 8", note: "Customer pages plus the vendor platform-admin console" },
     ],
     roadmap: [
@@ -630,8 +614,7 @@ export const startups: Startup[] = [
     ask: "Seeking two to three enterprise design partners with agents in production or an identity estate to consolidate, and investors focused on security and identity infrastructure.",
     facts: [
       { label: "Platform", value: "Web · responsive · vendor platform-admin console" },
-      { label: "AI", value: "Advisory summaries only — OpenAI / Gemini, platform or BYOK" },
-      { label: "Data", value: "Supabase PostgreSQL, tenant_id + RLS on every table" },
+      { label: "AI", value: "Advisory summaries only; decisions are rule-based" },
       { label: "Pricing", value: "Pilot · Enterprise (packaging with design partners)" },
     ],
   },

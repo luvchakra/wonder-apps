@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Download, ExternalLink, FileText, Presentation } from "lucide-react";
+import { ArrowRight, Download, FileText, Presentation } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { Showcase } from "@/components/Showcase";
 import { Reveal } from "@/components/Reveal";
@@ -45,9 +45,9 @@ export default function Home() {
                       {s.market.figures[0]?.figure}
                     </p>
                     <p className="mt-2 text-sm leading-snug text-fg-muted">{s.market.figures[0]?.label}</p>
-                    <a href={s.market.figures[0]?.source.url} target="_blank" rel="noopener noreferrer" className="mt-1.5 inline-flex items-center gap-1 text-xs text-fg-subtle underline-offset-4 hover:underline">
-                      {s.market.figures[0]?.source.publisher}, {s.market.figures[0]?.source.year} <ExternalLink className="size-3" />
-                    </a>
+                    <p className="mt-1.5 text-xs text-fg-subtle">
+                      {s.market.figures[0]?.source.publisher}, {s.market.figures[0]?.source.year}
+                    </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium lg:col-span-4 lg:justify-end">
                     <Link href={`/startups/${s.slug}`} className="inline-flex items-center gap-1.5 rounded-full bg-fg px-4 py-2 text-bg transition-opacity hover:opacity-85">

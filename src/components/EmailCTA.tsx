@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react";
-import { site } from "@/content/site";
+import { enquiryMailto } from "@/lib/mailto";
 
 const TONES = {
   /** Light surfaces — a quiet outlined pill (Showcase chapters). */
@@ -12,13 +12,13 @@ const TONES = {
 
 /**
  * "Email {name}" as a pill button, not a printed address. The address only
- * ever appears in the `mailto:` href, so it can't be scraped straight off
+ * ever appears in the `mailto:` href (with a prefilled subject and body), so it can't be scraped straight off
  * the rendered page — clicking is the only way to see or copy it.
  */
 export function EmailCTA({ name, tone = "outline", className = "" }: { name: string; tone?: keyof typeof TONES; className?: string }) {
   return (
     <a
-      href={`mailto:${site.contactEmail}`}
+      href={enquiryMailto(name)}
       className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${TONES[tone]} ${className}`}
     >
       <Mail className="size-4" />
