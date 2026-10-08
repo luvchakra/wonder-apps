@@ -102,12 +102,18 @@ function shape(def: MetricDef, rows: Record<string, unknown>[], w: Window): Metr
   }
 }
 
+/** Postgres rejects extra bound parameters, so bind only as many as the query references ($1..$4). */
+function paramsFor(sql: string, w: Window) {
+  const max = Math.max(0, ...[...sql.matchAll(/\$(\d)/g)].map((m) => Number(m[1])));
+  return [w.start, w.end, w.prevStart, w.tz].slice(0, Math.min(4, max));
+}
+
 async function runMetric(pool: Pool, def: MetricDef, w: Window): Promise<MetricResult> {
   const client = await pool.connect();
   try {
     await client.query("BEGIN READ ONLY");
     await client.query(`SET LOCAL statement_timeout = '${STATEMENT_TIMEOUT}'`);
-    const { rows } = await client.query(def.sql, [w.start, w.end, w.prevStart, w.tz]);
+    const { rows } = await client.query(def.sql, paramsFor(def.sql, w));
     return shape(def, rows, w);
   } catch (e) {
     return { id: def.id, kind: "error", message: clean(e instanceof Error ? e.message : "query failed") };

@@ -96,10 +96,10 @@ FROM p CROSS JOIN ua JOIN rb ON rb.id = ua.bid`;
 
 /** Both AI ledgers. NOTE: core.ai_runs is keyed by business, discovery.ai_runs by workspace. Rows from the two are distinct. */
 const RUNS = `runs AS (
-    SELECT r.created_at AS ts, r.provider, r.model, r.status, r.input_tokens, r.output_tokens, r.estimated_cost, r.business_id AS bid
+    SELECT r.created_at AS ts, r.provider, r.status, r.estimated_cost, r.business_id AS bid
     FROM core.ai_runs r
     UNION ALL
-    SELECT r.created_at, r.provider, r.model, r.status, r.input_tokens, r.output_tokens, r.estimated_cost, dp.business_id
+    SELECT r.created_at, r.provider, r.status, r.estimated_cost, dp.business_id
     FROM discovery.ai_runs r ${WS.replaceAll("{t}", "r")}
   )`;
 
@@ -395,7 +395,7 @@ WHERE s.provider <> 'internal' AND s.environment = 'live' AND s.status = 'triali
     sql: `WITH ${P}, ${RB}
 -- NOTE: platform.subscriptions.amount is in major units (rupees) per billing interval. Only INR subscriptions are summed;
 -- USD/EUR/GBP subscriptions (Stripe) are not converted. Whether the price includes GST is whatever the plan price was set to.
-SELECT coalesce(sum(CASE s.billing_interval WHEN 'year' THEN s.amount / 12 ELSE s.amount END), 0)::numeric AS value
+SELECT round(coalesce(sum(CASE s.billing_interval WHEN 'year' THEN s.amount / 12 ELSE s.amount END), 0), 2)::numeric AS value
 FROM platform.subscriptions s JOIN rb ON rb.id = s.business_id
 WHERE s.provider <> 'internal' AND s.environment = 'live'
   AND s.status IN ('active', 'past_due', 'cancel_scheduled')
@@ -405,7 +405,7 @@ WHERE s.provider <> 'internal' AND s.environment = 'live'
     kind: "stat", id: "arr", section: "revenue", label: "ARR", format: "inr", snapshot: true,
     hint: "Annual recurring revenue: MRR times 12, same rules as MRR.",
     sql: `WITH ${P}, ${RB}
-SELECT (coalesce(sum(CASE s.billing_interval WHEN 'year' THEN s.amount / 12 ELSE s.amount END), 0) * 12)::numeric AS value
+SELECT round(coalesce(sum(CASE s.billing_interval WHEN 'year' THEN s.amount ELSE s.amount * 12 END), 0), 2)::numeric AS value
 FROM platform.subscriptions s JOIN rb ON rb.id = s.business_id
 WHERE s.provider <> 'internal' AND s.environment = 'live'
   AND s.status IN ('active', 'past_due', 'cancel_scheduled')

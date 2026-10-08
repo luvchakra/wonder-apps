@@ -6,8 +6,8 @@
 -- role that owns the `wonderjobs` tables). Safe to re-run: every statement is idempotent,
 -- and a re-run first revokes everything the role had and then grants exactly what is below.
 --
--- BEFORE YOU RUN IT: replace '<<set-a-long-random-password>>' (one place, in section 1)
--- with a long random password (`openssl rand -base64 36`). The script refuses to create the
+-- BEFORE YOU RUN IT: in section 1, replace the password placeholder (the text between the angle
+-- brackets, brackets included) with a long random password (`openssl rand -base64 36`). The script refuses to create the
 -- role while the placeholder is still there. Then build the connection string from the
 -- Supabase "Connect" page (use the pooler host; the user is `wonderapps_dashboard.<project-ref>`)
 -- and put it in the WonderApps environment as WONDERJOBS_DATABASE_URL.

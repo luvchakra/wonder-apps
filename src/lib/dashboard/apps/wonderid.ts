@@ -488,24 +488,26 @@ FROM f`,
     },
     {
       kind: "stat", id: "stuck-jobs", section: "health", label: "Stuck sync and import jobs", format: "int", snapshot: true, good: "down",
-      hint: "Sync jobs and reconciliation runs still queued or running more than an hour after they were created, as of the window end.",
+      hint: "Sync jobs and reconciliation runs still queued or running more than an hour after they were created, as of now.",
       sql: `WITH ${RT}
--- NOTE: status is read as it is now; for a historical window end this reflects current state, not the state back then.
+-- NOTE: status is read as it is now, so this is "stuck as of now" (the window end is capped at now(), since
+-- a window usually ends at tomorrow's midnight); it does not reconstruct the state at a past window end.
 SELECT (
   (SELECT count(*) FROM public.integration_sync_jobs j JOIN rt ON rt.id = j.tenant_id
-    WHERE j.status IN ('queued', 'running') AND j.created_at < $2::timestamptz - interval '1 hour')
+    WHERE j.status IN ('queued', 'running') AND j.created_at < LEAST($2::timestamptz, now()) - interval '1 hour')
   +
   (SELECT count(*) FROM public.identity_reconciliation_runs r JOIN rt ON rt.id = r.tenant_id
-    WHERE r.status IN ('queued', 'running') AND r.created_at < $2::timestamptz - interval '1 hour')
+    WHERE r.status IN ('queued', 'running') AND r.created_at < LEAST($2::timestamptz, now()) - interval '1 hour')
 )::numeric AS value`,
     },
     {
       kind: "stat", id: "overdue-approvals", section: "health", label: "Approvals overdue", format: "int", snapshot: true, good: "down",
-      hint: "Approval steps still pending past their due date as of the window end; customers' requesters are blocked on these.",
+      hint: "Approval steps still pending past their due date as of now (or the window end, if earlier); customers' requesters are blocked on these.",
       sql: `WITH ${RT}
+-- NOTE: "pending" is the current status, so this is overdue as of now, not reconstructed for a past window end.
 SELECT count(*)::numeric AS value
 FROM public.access_request_approvals ap JOIN rt ON rt.id = ap.tenant_id
-WHERE ap.status = 'pending' AND ap.due_at IS NOT NULL AND ap.due_at < $2`,
+WHERE ap.status = 'pending' AND ap.due_at IS NOT NULL AND ap.due_at < LEAST($2::timestamptz, now())`,
     },
     {
       kind: "stat", id: "past-due-subscriptions", section: "health", label: "Past-due subscriptions", format: "int", snapshot: true, good: "down",
