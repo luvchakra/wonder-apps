@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { site } from "@/content/site";
+import { ScrollMemory } from "@/components/ScrollMemory";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Motion } from "@/components/Motion";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             Skip to content
           </a>
+          <ScrollMemory />
           <Nav />
           <main id="main" className="flex-1">
             {children}

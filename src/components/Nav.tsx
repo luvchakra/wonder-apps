@@ -8,11 +8,11 @@ import { site } from "@/content/site";
 import { startups } from "@/content/startups";
 import { Wordmark } from "./Logo";
 import { AnimatedMark } from "./AnimatedMark";
+import { BackToMain } from "./BackToMain";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -32,10 +32,13 @@ export function Nav() {
       {/* Always a dark translucent bar, whatever sits beneath it — the one constant across light and dark bands. */}
       <div className={`glass transition-shadow duration-500 ${scrolled || open ? "shadow-[0_1px_0_var(--line)]" : ""}`}>
         <nav className="container flex h-[var(--nav-h)] items-center justify-between" aria-label="Primary">
+          <div className="flex items-center gap-3">
+          <BackToMain onNavigate={() => setOpen(false)} />
           <Link href="/" className="flex items-center gap-2 text-[15px] font-semibold tracking-tight" onClick={() => setOpen(false)}>
             <AnimatedMark className="h-5" priority />
             <Wordmark className="text-[16px]" />
           </Link>
+          </div>
           <ul className="hidden items-center gap-7 xl:flex">
             {startups.map((s) => (
               <li key={s.slug}>

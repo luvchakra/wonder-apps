@@ -220,30 +220,104 @@ video {
   overflow: hidden;
   background: #000;
 }
+/* iPhone: titanium rim, black bezel, Dynamic Island, side buttons, status strip and
+   home indicator. Everything scales with the frame's width (cqw), so one set of
+   numbers works from a 90px thumbnail to a 300px hero phone. */
 .device-phone {
   position: relative;
-  border-radius: 44px;
-  background: linear-gradient(180deg, #2a2a2e, #101012);
-  padding: 10px;
-  box-shadow: var(--shadow-device);
-}
-.device-phone::before {
-  content: "";
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  width: 34%;
-  height: 22px;
-  border-radius: 999px;
-  background: #000;
-  transform: translateX(-50%);
-  z-index: 2;
+  container-type: inline-size;
+  padding: 3.2%;
+  border-radius: 15% / 7.6%;
+  background: #0b0b0d;
+  box-shadow:
+    0 0 0 0.9cqw #7b7b82,
+    0 0 0 1.5cqw #26262a,
+    var(--shadow-device);
 }
 .device-phone .screen {
+  container-type: inline-size;
+  position: relative;
   aspect-ratio: 9 / 19.5;
-  border-radius: 36px;
+  border-radius: 12.6% / 6.2%;
   overflow: hidden;
   background: #000;
+}
+.phone-island {
+  position: absolute;
+  top: 5.4cqw;
+  left: 50%;
+  z-index: 3;
+  width: 27cqw;
+  height: 7.6cqw;
+  border-radius: 99px;
+  background: #000;
+  transform: translateX(-50%);
+}
+/* The page capture starts below the status strip, so the island never covers its header. */
+.device-phone .screen img {
+  inset: 10.5cqw 0 0 0 !important;
+  height: calc(100% - 10.5cqw) !important;
+}
+.phone-btn {
+  position: absolute;
+  width: 1.4cqw;
+  border-radius: 1cqw;
+  background: linear-gradient(90deg, #5d5d64, #3a3a40);
+}
+.phone-btn-r { right: -2.3cqw; top: 29%; height: 12%; }
+.phone-btn-l1 { left: -2.3cqw; top: 16%; height: 4%; }
+.phone-btn-l2 { left: -2.3cqw; top: 23%; height: 8%; }
+.phone-btn-l3 { left: -2.3cqw; top: 33%; height: 8%; }
+.device-phone .phone-status {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  height: 10.5cqw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7.5cqw 0 9.5cqw;
+  background: #fff;
+  color: #111;
+  font-size: 4.1cqw;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.phone-battery {
+  display: block;
+  position: relative;
+  width: 6.6cqw;
+  height: 3cqw;
+  border: 0.35cqw solid rgba(17, 17, 17, 0.55);
+  border-radius: 0.9cqw;
+}
+.phone-battery::before {
+  content: "";
+  position: absolute;
+  inset: 0.45cqw;
+  border-radius: 0.4cqw;
+  background: #111;
+}
+.phone-battery::after {
+  content: "";
+  position: absolute;
+  right: -1.1cqw;
+  top: 0.7cqw;
+  width: 0.5cqw;
+  height: 1.2cqw;
+  border-radius: 0 0.4cqw 0.4cqw 0;
+  background: rgba(17, 17, 17, 0.55);
+}
+.phone-home {
+  position: absolute;
+  bottom: 2.2cqw;
+  left: 50%;
+  z-index: 3;
+  width: 30cqw;
+  height: 1.2cqw;
+  border-radius: 99px;
+  background: rgba(17, 17, 17, 0.82);
+  transform: translateX(-50%);
 }
 .screen img {
   width: 100%;

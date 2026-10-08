@@ -97,6 +97,14 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 - **Screenshots:** one phone capture per startup (`home-mobile`), the rest desktop.
   Devices are shown by `DevicePair` side by side — never overlapped or
   parallax-stacked, so no screenshot or page text is covered.
+- **Phones are iPhones.** `.device-phone` (globals.css) draws the titanium rim,
+  Dynamic Island, side buttons, status strip and home indicator, all in `cqw` so it
+  scales with the frame; the capture sits below the strip so the island never
+  covers a site header. `DeckSlides.tsx` has the same frame in inline styles.
+- **Always a way back to the main page.** `BackToMain` (nav bar + above the footer,
+  hidden on `/`) returns to `/` at the scroll position the reader left it;
+  `ScrollMemory` (in the layout) stores the main page's `scrollY` and restores it
+  after the Back button or the browser's back. External links open in a new tab.
 - Every `mailto:` goes through `enquiryMailto()` (`src/lib/mailto.ts`) so it opens
   with a subject and a short template body.
 
