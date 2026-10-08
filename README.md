@@ -1,8 +1,8 @@
 # WonderApps
 
-Investor portfolio site for **WonderHome**, **WonderJobs**, **WonderArk** and
-**WonderID** — four AI-native products built on one shared, security-first
-architecture.
+Investor portfolio site for five independent AI-native startups: **WonderHome**,
+**WonderJobs**, **Wonder Creator**, **WonderArk** and **WonderID**. Each has its
+own deep-dive page, cited market figures and a downloadable investor deck.
 
 Static Next.js site with Apple-style presentation. The only server-side code is
 the contact form, which emails submissions through [Resend](https://resend.com).
@@ -40,11 +40,21 @@ the data residency of the products themselves.
 All copy lives in `src/content/`:
 
 - `startups.ts` — one record per product (problem, solution, how it works, market, business model, moat, execution facts, roadmap, ask, screenshots, live + help-centre links).
+- `deck-copy.ts` / `decks.ts` — the investor decks. Slides are derived from `startups.ts` (market figures, traction, plans, roadmap) plus the short copy in `deck-copy.ts`.
 - `site.ts` — site name, navigation, legal links, jurisdiction, "last updated" date.
 - `legal.ts` — Privacy, Terms, Cookies, Investor Disclaimer, Accessibility, Security.
 
 Screenshots live in `public/screenshots/<product>/`; add a file and reference it in the product's `screens` array.
 
+## Investor decks
+
+Each startup's deck is one slide model rendered two ways: the embedded full-screen viewer on `/startups/<slug>#deck` and a printable route (`/decks/<slug>/print`) that becomes the PDF in `public/decks/`. The PDFs are committed, so **after changing any content that feeds a deck, rebuild them**:
+
+```bash
+npm run build && npm run decks    # writes public/decks/*.pdf (uses the Playwright Chromium already on the machine)
+npm run build                     # so the freshly written PDFs are served
+```
+
 ## Pages
 
-`/` · `/startups/wonderhome` · `/startups/wonderjobs` · `/startups/wonderark` · `/startups/wonderid` · `/contact` · `/privacy` · `/terms` · `/cookies` · `/disclaimer` · `/accessibility` · `/security`
+`/` · `/startups/wonderhome` · `/startups/wonderjobs` · `/startups/wondercreator` · `/startups/wonderark` · `/startups/wonderid` · `/decks` · `/contact` · `/privacy` · `/terms` · `/cookies` · `/disclaimer` · `/accessibility` · `/security`

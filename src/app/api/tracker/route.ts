@@ -22,7 +22,7 @@ async function fetchOne(slug: string, source: (typeof TRACKER_SOURCES)[string]):
   }
 }
 
-// GET only: this reads four public GitHub files server-side (avoids browser CORS) and
+// GET only: this reads five public GitHub files server-side (avoids browser CORS) and
 // never accepts input, so there is nothing here for a caller to inject or abuse.
 export async function GET() {
   const entries = Object.entries(TRACKER_SOURCES);

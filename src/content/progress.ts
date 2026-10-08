@@ -1,10 +1,10 @@
 /**
  * The portfolio engineering tracker (/appstracker). Every number here is
- * copied from the four products' own tracking documents in their public
+ * copied from the five products' own tracking documents in their public
  * repositories on the date noted per product — never computed from a guess,
  * never rounded up. Re-sync by re-reading each `sourceUrl` below.
  *
- * Row shape is normalized across four differently-structured trackers:
+ * Row shape is normalized across five differently-structured trackers:
  *   - WonderHome groups by 24 backlog "modules" (docs/PROGRESS.md, generated)
  *   - WonderJobs groups by 15 "epics" (docs/PROGRESS.md)
  *   - WonderArk groups by 5 backlog documents (docs/PROGRESS-TRACKER.md, generated)
@@ -114,6 +114,37 @@ export const productProgress: ProductProgress[] = [
     ],
   },
   {
+    slug: "wondercreator",
+    name: "Wonder Creator",
+    accent: "oklch(0.6 0.21 350)",
+    stage: "Live product · sign-up open",
+    currentFocus: "Creative Room parts, Creation pages and the UI redesign canvas; AI and live voice/video switch on with provider keys",
+    lastUpdated: "2026-10-07",
+    sourceLabel: "docs/progress.md",
+    sourceUrl: "https://github.com/luvchakra/wonder-creator/blob/main/docs/progress.md",
+    rowLabel: "Workstream",
+    methodology:
+      "Wonder Creator keeps one running delivery log rather than a numbered backlog: each dated deliverable is a row with a status, grouped by workstream. Every row is counted once; a row marked partial or in progress is counted as partial. Rows differ in size (one is a whole phase, another a single screen), so this is a tally of tracked deliverables, not of equally sized stories.",
+    rows: [
+      { id: "01", name: "P0 progress", total: 24, done: 23, partial: 1, notStarted: 0, setAside: 0, status: "In Progress", note: "AI and live voice/video are built and need provider keys to be live; the product says 'not connected' otherwise" },
+      { id: "02", name: "P0.1 / P1 progress", total: 54, done: 52, partial: 2, notStarted: 0, setAside: 0, status: "In Progress" },
+      { id: "03", name: "Compliance & platform hardening", total: 5, done: 5, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "04", name: "Personal Sources", total: 6, done: 6, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "05", name: "Communities", total: 2, done: 2, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "06", name: "Home: Scrapbook strip", total: 1, done: 1, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "07", name: "Testimonials", total: 1, done: 1, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "08", name: "Pulse rename", total: 1, done: 1, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "09", name: "Photo album and Messages in the top bar", total: 2, done: 2, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "10", name: "Landing page redesign", total: 1, done: 1, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "11", name: "Routes follow the design; community pictures", total: 2, done: 2, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "12", name: "About and Contact", total: 1, done: 1, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "13", name: "Community privacy, members-only posting, Communities on Home", total: 8, done: 8, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "14", name: "Creation pages", total: 18, done: 18, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "15", name: "Creative Room parts", total: 7, done: 7, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+      { id: "16", name: "Owner requests, 4 Oct 2026", total: 13, done: 13, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
+    ],
+  },
+  {
     slug: "wonderark",
     name: "WonderArk",
     accent: "oklch(0.605 0.217 257)",
@@ -126,7 +157,7 @@ export const productProgress: ProductProgress[] = [
     methodology:
       "Generated from the repository itself: a story counts as done only when its id is cited by the code, migration or test that implements it. “Set aside” stories were deliberately deferred or superseded by later work, not abandoned — the whole 30-story “opportunity intelligence” backlog was superseded by the “offering-centric” backlog that followed it. The one story the tracker marks unverified (written about, but not cited by code) is counted as remaining.",
     rows: [
-      { id: "04", name: "Platform build-out (core, tenancy, licensing, Inventory, Service, Finance foundations)", total: 65, done: 64, partial: 0, notStarted: 0, setAside: 1, status: "Done", note: "Finance now posts automatically, with statements and drill-down, cash flow, bank rules and reporting dimensions; AI bank-line categorisation deliberately deferred" },
+      { id: "04", name: "Platform build-out (core, tenancy, licensing, Inventory, Service, Finance foundations)", total: 75, done: 74, partial: 0, notStarted: 0, setAside: 1, status: "Done", note: "Finance now posts automatically, with statements and drill-down, cash flow, bank rules and reporting dimensions; AI bank-line categorisation deliberately deferred" },
       { id: "09", name: "Platform Administration Portal", total: 110, done: 84, partial: 0, notStarted: 26, setAside: 0, status: "In Progress", note: "AI feature kill switch, configuration history and least-privilege controls now cited in code" },
       { id: "10", name: "Discovery — offering-centric upgrade", total: 58, done: 52, partial: 0, notStarted: 6, setAside: 0, status: "In Progress" },
       { id: "08", name: "Discovery — opportunity intelligence", total: 30, done: 0, partial: 0, notStarted: 0, setAside: 30, status: "Superseded", note: "Fully superseded by backlog 10 (offering-centric); no story here is abandoned work" },
@@ -151,15 +182,15 @@ export const productProgress: ProductProgress[] = [
     methodology:
       "Generated from the per-module backlog tables. WonderAgent became WonderID on 2026-09-26, and its identity-governance roadmap added 74 stories to the same modules, so totals grew while earlier work stayed done. “Deferred” rows are named, reasoned decisions recorded in the module's own backlog, not silent gaps. Beyond these tracked stories, the backlogs list 52 forward-looking P1 and 32 P2 items not yet in scope.",
     rows: [
-      { id: "01", name: "Foundation — auth, tenancy, security, RBAC", total: 40, done: 35, partial: 2, notStarted: 3, setAside: 0, status: "In Progress", note: "Scoped WonderID permissioning shipped; SAML SSO waits on a paid hosting plan; passkeys and permission simulation not started" },
+      { id: "01", name: "Foundation — auth, tenancy, security, RBAC", total: 43, done: 38, partial: 2, notStarted: 3, setAside: 0, status: "In Progress", note: "Scoped WonderID permissioning shipped; SAML SSO waits on a paid hosting plan; passkeys and permission simulation not started" },
       { id: "02", name: "Identity — every identity type & lifecycle", total: 20, done: 17, partial: 2, notStarted: 1, setAside: 0, status: "In Progress", note: "Unified identity model and relationships shipped; directory and joiner/mover/leaver partial" },
       { id: "03", name: "Integration — sources, connectors, MCP", total: 20, done: 16, partial: 3, notStarted: 1, setAside: 0, status: "In Progress", note: "Identity reconciliation, app discovery and AI onboarding proposals shipped; provisioning pipeline not started" },
       { id: "04", name: "Access — effective access, catalog, requests", total: 26, done: 21, partial: 0, notStarted: 5, setAside: 0, status: "In Progress", note: "Application onboarding, account inventory, request catalog, approvals and access packages shipped; roles, SoD, delegations and the access ledger are next" },
       { id: "05", name: "Runtime — SHOULD/CAN/DID assurance", total: 13, done: 13, partial: 0, notStarted: 0, setAside: 0, status: "Done" },
       { id: "06", name: "Risk — deterministic scoring & rogue detection", total: 16, done: 13, partial: 2, notStarted: 1, setAside: 0, status: "In Progress", note: "Rogue Access management not started" },
-      { id: "07", name: "Compliance — certification & controls", total: 15, done: 13, partial: 0, notStarted: 2, setAside: 0, status: "In Progress", note: "Certification for every identity type not started" },
+      { id: "07", name: "Compliance — certification & controls", total: 17, done: 15, partial: 0, notStarted: 2, setAside: 0, status: "In Progress", note: "Certification for every identity type not started" },
       { id: "08", name: "Experience — customer UI/UX", total: 31, done: 23, partial: 3, notStarted: 5, setAside: 0, status: "In Progress", note: "WonderID brand and navy navigation shipped; My Access portal and AI assistant not started" },
-      { id: "09", name: "Platform — vendor administration console", total: 16, done: 12, partial: 1, notStarted: 2, setAside: 1, status: "In Progress", note: "Support access deferred rather than shortcut; Configuration Studio not started" },
+      { id: "09", name: "Platform — vendor administration console", total: 17, done: 13, partial: 1, notStarted: 2, setAside: 1, status: "In Progress", note: "Support access deferred rather than shortcut; Configuration Studio not started" },
       { id: "10", name: "Operations — audit, reporting, notifications, search", total: 14, done: 11, partial: 1, notStarted: 2, setAside: 0, status: "In Progress", note: "Workflow designer and identity insights not started" },
       { id: "11", name: "QA — integration, security & production hardening", total: 28, done: 13, partial: 12, notStarted: 3, setAside: 0, status: "In Progress" },
     ],

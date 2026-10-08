@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm run build",
-    "progress": "node scripts/build-progress-doc.mjs"
+    "progress": "node scripts/build-progress-doc.mjs",
+    "decks": "node scripts/build-decks.mjs"
   },
   "dependencies": {
     "framer-motion": "^13.4.0",
@@ -27,6 +28,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "playwright-core": "1.56",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

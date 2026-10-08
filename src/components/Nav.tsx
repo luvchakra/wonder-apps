@@ -36,7 +36,7 @@ export function Nav() {
             <AnimatedMark className="h-5" priority />
             <Wordmark className="text-[16px]" />
           </Link>
-          <ul className="hidden items-center gap-7 md:flex">
+          <ul className="hidden items-center gap-7 xl:flex">
             {startups.map((s) => (
               <li key={s.slug}>
                 <Link href={`/startups/${s.slug}`} className="text-[13px] text-fg-muted transition-colors hover:text-fg">
@@ -50,8 +50,8 @@ export function Nav() {
               </Link>
             </li>
             <li>
-              <Link href="/#thesis" className="text-[13px] text-fg-muted transition-colors hover:text-fg">
-                Thesis
+              <Link href="/decks" className="text-[13px] text-fg-muted transition-colors hover:text-fg">
+                Decks
               </Link>
             </li>
             <li>
@@ -62,7 +62,7 @@ export function Nav() {
           </ul>
           <button
             type="button"
-            className="grid size-10 place-items-center rounded-full md:hidden"
+            className="grid size-10 place-items-center rounded-full xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -80,7 +80,7 @@ export function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25 }}
-            className="glass fixed inset-x-0 top-[var(--nav-h)] bottom-0 z-40 overflow-y-auto md:hidden"
+            className="glass fixed inset-x-0 top-[var(--nav-h)] bottom-0 z-40 overflow-y-auto xl:hidden"
           >
             <ul className="container flex flex-col gap-1 py-6">
               {startups.map((s, i) => (

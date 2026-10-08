@@ -4,9 +4,9 @@ export const site = {
   /** Brand line from the identity sheet. */
   tagline: "Ideas for a brighter tomorrow.",
   /** Descriptive line for investors. */
-  positioning: "Four AI-native products. One engineering chassis. One founder-operator.",
+  positioning: "Five AI-native startups across five markets. Investor decks, cited market data and live products.",
   description:
-    "WonderApps is the portfolio of WonderHome, WonderJobs, WonderArk and WonderID — four AI-native software products built on one shared, security-first architecture. Investor overview and contact.",
+    "WonderApps is an investor portfolio of five AI-native startups — WonderHome, WonderJobs, Wonder Creator, WonderArk and WonderID. Each has a live product, a cited market case and a downloadable investor deck.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://wonderapps.biz",
   /** Shown in legal pages. Set to the operating entity and jurisdiction before going live. */
   jurisdiction: "India",
@@ -15,8 +15,8 @@ export const site = {
   contactEmail: "connect@wonderapps.biz",
   nav: [
     { href: "/#portfolio", label: "Portfolio" },
-    { href: "/#thesis", label: "Thesis" },
-    { href: "/#chassis", label: "Platform" },
+    { href: "/#snapshot", label: "At a glance" },
+    { href: "/decks", label: "Investor decks" },
     { href: "/#founder", label: "Founder" },
   ],
   legal: [
@@ -27,5 +27,5 @@ export const site = {
     { href: "/accessibility", label: "Accessibility" },
     { href: "/security", label: "Security" },
   ],
-  lastUpdated: "26 September 2026",
+  lastUpdated: "8 October 2026",
 } as const;

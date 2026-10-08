@@ -27,7 +27,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <dl className="mt-10 grid gap-5 text-sm">
             <div>
               <dt className="font-semibold">Investors</dt>
-              <dd className="mt-1 text-fg-muted">Early-stage conversations across all four products, together or individually.</dd>
+              <dd className="mt-1 text-fg-muted">Early-stage conversations across all five startups, together or individually.</dd>
             </div>
             <div>
               <dt className="font-semibold">Design partners &amp; customers</dt>

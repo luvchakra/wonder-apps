@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpen, ExternalLink } from "lucide-react";
+import { ArrowRight, BookOpen, ExternalLink, Presentation } from "lucide-react";
 import type { Startup } from "@/content/types";
 import { Device } from "./Device";
 import { EmailCTA } from "./EmailCTA";
@@ -65,9 +65,14 @@ export function Showcase({ s, index }: { s: Startup; index: number }) {
               <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:underline underline-offset-4" style={{ color: s.accent }}>
                 Live product <ExternalLink className="size-4" />
               </a>
-              <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-fg-muted hover:text-fg hover:underline underline-offset-4">
-                <BookOpen className="size-4" /> Help centre
-              </a>
+              <Link href={`/startups/${s.slug}#deck`} className="inline-flex items-center gap-1.5 text-fg-muted hover:text-fg hover:underline underline-offset-4">
+                <Presentation className="size-4" /> Deck
+              </Link>
+              {s.helpUrl ? (
+                <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-fg-muted hover:text-fg hover:underline underline-offset-4">
+                  <BookOpen className="size-4" /> Help centre
+                </a>
+              ) : null}
               <EmailCTA name={s.name} tone="outline" />
             </div>
           </Reveal>

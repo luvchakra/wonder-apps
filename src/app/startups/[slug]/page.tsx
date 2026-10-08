@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { startupBySlug, startups } from "@/content/startups";
-import { BusinessModel, FactsStrip, Gallery, HowItWorks, Market, MoatAndTraction, Problem, RoadmapAndAsk, Solution, StartupHero } from "@/components/StartupSections";
+import { BusinessModel, DeckSection, FactsStrip, Gallery, HowItWorks, Market, MoatAndTraction, Problem, RoadmapAndAsk, Solution, StartupHero } from "@/components/StartupSections";
 
 type Params = { slug: string };
 
@@ -36,6 +36,7 @@ export default async function StartupPage({ params }: { params: Promise<Params> 
     <article style={{ "--accent": s.accent, "--accent-soft": s.accentSoft } as React.CSSProperties}>
       <StartupHero s={s} />
       <FactsStrip s={s} />
+      <DeckSection s={s} />
       <Problem s={s} />
       <Solution s={s} />
       <HowItWorks s={s} />
@@ -45,7 +46,7 @@ export default async function StartupPage({ params }: { params: Promise<Params> 
       <MoatAndTraction s={s} />
       <RoadmapAndAsk s={s} />
 
-      <nav className="theme-dark border-t border-line bg-bg text-fg" aria-label="Other products">
+      <nav className="theme-dark border-t border-line bg-bg text-fg" aria-label="More from the portfolio">
         <div className="container grid divide-y divide-line sm:grid-cols-2 sm:divide-x sm:divide-y-0">
           <Link href={`/startups/${prev.slug}`} className="group flex items-center gap-4 py-8 sm:pr-8">
             <ArrowLeft className="size-5 text-fg-subtle transition-transform group-hover:-translate-x-1" />

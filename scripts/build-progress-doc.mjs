@@ -4,7 +4,7 @@
  * from each repository's own tracking documents.
  *
  *   npm run progress                      # fetch from GitHub (raw.githubusercontent.com)
- *   npm run progress -- --local ~/luvchakra   # read local clones instead (dir containing the four repos)
+ *   npm run progress -- --local ~/luvchakra   # read local clones instead (dir containing the five repos)
  *
  * Deterministic: markdown tables are located by their header cells, never by
  * line number. A product whose source cannot be fetched or parsed is reported
@@ -155,6 +155,44 @@ const products = [
     },
   },
   {
+    slug: "wondercreator", name: "Wonder Creator", repo: "wonder-creator", groupLabel: "Workstream",
+    sources: ["docs/progress.md"],
+    async load() {
+      const md = await read(this.repo, "docs/progress.md");
+      const lines = md.split("\n");
+      const groups = [];
+      let heading = "";
+      for (let i = 0; i < lines.length; i++) {
+        const l = lines[i];
+        const h = l.match(/^#{1,3}\s+(.+?)\s*$/);
+        if (h) heading = h[1];
+        if (!l.startsWith("|") || !/^\|?\s*:?-{2,}/.test(lines[i + 1] ?? "")) continue;
+        const header = splitRow(l);
+        const statusAt = header.indexOf("Status");
+        const rows = [];
+        let j = i + 2;
+        for (; j < lines.length && lines[j].trim().startsWith("|"); j++) rows.push(splitRow(lines[j]));
+        i = j - 1;
+        if (statusAt === -1) continue;
+        const name = heading.replace(/\s*\([^)]*\)\s*$/, "").trim() || "Untitled";
+        let g = groups.find((x) => x.name === name);
+        if (!g) groups.push((g = { name, stories: [] }));
+        const numbered = /^\d+$/.test(rows[0]?.[0] ?? "");
+        for (const r of rows) {
+          if (r.length <= statusAt) continue;
+          const raw = r[statusAt].replace(/\*+/g, "").trim();
+          const s = raw.toLowerCase();
+          const status = /partial|partly|in progress|in-progress/.test(s) ? "In progress" : /^done|^phases .+ done$/.test(s) ? "Done" : /^not started|^backlog|^todo|^planned/.test(s) ? "Not started" : null;
+          if (!status) throw new Error(`wondercreator: unrecognised status "${raw}"`);
+          const note = [raw !== status ? raw : "", r[statusAt + 1] ?? ""].filter(Boolean).join(" — ");
+          g.stories.push(numbered ? { id: `P0-${r[0]}`, story: r[1], status, note: untick(unlink(note)) } : { id: r[0].split(" ")[0], story: r[0], status, note: untick(unlink(note)) });
+        }
+      }
+      if (groups.length === 0) throw new Error("wondercreator: status tables missing");
+      return { groups, updated: null };
+    },
+  },
+  {
     slug: "wonderid", name: "WonderID", repo: "wonder-agent", groupLabel: "Module (agent)",
     sources: ["docs/PROGRESS.md"],
     async load() {
@@ -191,6 +229,8 @@ function tally(stories) {
 const esc = (s) => String(s ?? "").replace(/\|/g, "\\|").replace(/\r?\n/g, " ").trim();
 const icon = (s) => ({ "Done": "✅", "In progress": "🟡", "Not started": "⬜", "Deferred": "⏸️", "Superseded": "🔁", "Unverified": "❔", "Blocked": "⛔", "Set aside": "⏸️" }[s] ?? "•");
 
+const ORDER = ["wonderhome", "wonderjobs", "wondercreator", "wonderark", "wonderid"];
+products.sort((a, b) => ORDER.indexOf(a.slug) - ORDER.indexOf(b.slug));
 const results = [];
 for (const p of products) {
   try {
@@ -252,7 +292,7 @@ for (const r of okResults) {
   const c = tally(r.groups.flatMap((g) => g.stories));
   lines.push(`| [${r.name}](#${r.slug}) | ${c.total} | ${c.done} | ${c.inProgress} | ${c.notStarted} | ${c.setAside} | **${c.activePct}%** | ${r.updated ?? "see source"} |`);
 }
-lines.push(`| **All four** | **${port.total}** | **${port.done}** | **${port.inProgress}** | **${port.notStarted}** | **${port.setAside}** | **${port.activePct}%** | ${today} |`);
+lines.push(`| **All ${okResults.length === 5 ? "five" : okResults.length}** | **${port.total}** | **${port.done}** | **${port.inProgress}** | **${port.notStarted}** | **${port.setAside}** | **${port.activePct}%** | ${today} |`);
 for (const r of results.filter((x) => !x.ok)) lines.push(`| ${r.name} | — | — | — | — | — | — | ⚠️ not fetched: ${esc(r.error)} |`);
 lines.push("");
 // Anything outside the five columns (e.g. Blocked) is still a story: say so rather than let the row not add up.

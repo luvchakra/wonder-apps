@@ -71,7 +71,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "2. Purpose of the site",
         paragraphs: [
-          "This site provides an informational overview of four software products for prospective investors, partners and the curious. Nothing on it is an offer to sell, or a solicitation of an offer to buy, any security in any jurisdiction. See the Investor Disclaimer.",
+          "This site provides an informational overview of five software startups for prospective investors, partners and the curious. Nothing on it is an offer to sell, or a solicitation of an offer to buy, any security in any jurisdiction. See the Investor Disclaimer.",
         ],
       },
       {
@@ -144,7 +144,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "2. Early-stage risk",
         paragraphs: [
-          "All four products are early-stage. They have limited operating history and, at the date of this site, are pre-revenue or early-revenue. Investing in early-stage companies involves a high degree of risk, including the total loss of capital. Past build velocity is not a guarantee of future commercial performance.",
+          "Each of the five startups is early-stage. They have limited operating history and, at the date of this site, are pre-revenue or early-revenue. Investing in early-stage companies involves a high degree of risk, including the total loss of capital. Past build velocity is not a guarantee of future commercial performance.",
         ],
       },
       {
@@ -211,7 +211,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "2. The products",
         paragraphs: [
-          "All four Wonder products share one security baseline: Supabase PostgreSQL with row-level security on every tenant-scoped table, server-side tenant resolution that never trusts a client-supplied identifier, encrypted-at-rest provider credentials, an immutable audit trail for consequential actions, and deterministic (non-LLM) authorisation. Each product publishes its own security page or help section with specifics.",
+          "Each product is built to a security baseline that includes: Supabase PostgreSQL with row-level security on every tenant-scoped table, server-side tenant resolution that never trusts a client-supplied identifier, encrypted-at-rest provider credentials, an immutable audit trail for consequential actions, and deterministic (non-LLM) authorisation. Each product publishes its own security page or help section with specifics.",
         ],
       },
       {

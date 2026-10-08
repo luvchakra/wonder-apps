@@ -35,7 +35,7 @@ export function ProgressRing({ pct, color, size = 120, stroke = 10, label, sub }
   );
 }
 
-/** Four concentric rings — the whole portfolio in one glance. Outer to inner follows the given order. */
+/** Concentric rings — the whole portfolio in one glance. Outer to inner follows the given order. */
 export function RingCluster({ items, size = 260 }: { items: { label: string; pct: number; color: string }[]; size?: number }) {
   const stroke = Math.max(8, Math.round(size / 22));
   const gap = 4;
