@@ -34,7 +34,7 @@ fetch at build time).
 src/content/        ALL copy lives here — edit these, not the components
   startups.ts       one typed record per product: problem, solution, market
                     (incl. sourced `figures`), model, moat, traction, roadmap,
-                    screens, links (helpUrl optional — Wonder Creator has none)
+                    screens, links (helpUrl is data only)
   deck-copy.ts      short slide copy per product for the investor decks
   decks.ts          the slide model (`buildDeck`) shared by viewer and PDF
   site.ts           name, nav, legal links, jurisdiction, lastUpdated, canonical
@@ -85,7 +85,7 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 - **Each startup stands alone.** Don't write copy that implies the products share
   a platform, chassis, customers or team; the legal security paragraph is per
   product on purpose. The tracker and footer are the only places they sit together.
-- Wonder Creator has no public help centre yet; leave `helpUrl` unset (UI hides it).
+- All five products now have a public help centre at `<product>/help` (Wonder Creator's went live 2026-10-08). `helpUrl` is kept as data, but no UI renders it (readers stay on the site).
 - **No internal tech stack in public copy.** No database, framework, cloud or
   payment-provider names (Supabase, Postgres, RLS, Vercel, Razorpay/Stripe, model
   vendors), no test-framework or route/migration counts, in pages, decks or legal
