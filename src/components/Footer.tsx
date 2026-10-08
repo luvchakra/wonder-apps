@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="theme-dark border-t border-line bg-bg text-fg">
       <div className="container py-14 sm:py-20">
-        <div className="grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Link href="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight">
               <Logo className="h-7 w-auto" />
@@ -45,27 +45,6 @@ export function Footer() {
                   Engineering tracker
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="eyebrow text-fg-subtle">Live products &amp; guides</p>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {startups.map((s) => (
-                <li key={s.slug} className="flex flex-wrap gap-x-2">
-                  <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-fg-muted transition-colors hover:text-fg">
-                    {s.name}
-                  </a>
-                  {s.helpUrl ? (
-                    <>
-                      <span className="text-fg-subtle">·</span>
-                      <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="text-fg-muted transition-colors hover:text-fg">
-                        Help centre
-                      </a>
-                    </>
-                  ) : null}
-                </li>
-              ))}
             </ul>
           </div>
 

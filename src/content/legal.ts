@@ -28,7 +28,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "3. How the contact form works",
         paragraphs: [
-          "Your submission is sent as an email to the founder's inbox using Resend, a transactional email provider. It is not stored in a database operated by us. Resend processes the message as our sub-processor solely to deliver it; see Resend's own privacy policy for its retention and security practices.",
+          "Your submission is sent as an email to the founder's inbox through a transactional email provider. It is not stored in a database operated by us. The provider processes the message as our sub-processor solely to deliver it, under its own retention and security practices; we can tell you which provider we use on request.",
           "We use your submission to reply to you. We do not add you to a mailing list and we do not share your details with third parties for marketing.",
         ],
       },
@@ -48,7 +48,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "6. Hosting and transfers",
         paragraphs: [
-          "The site is hosted on Vercel's global edge network, and email is delivered by Resend. Both may process data outside your country. We rely on their standard contractual protections for such transfers.",
+          "The site is served from a global hosting network, and email is delivered by a transactional email provider. Both may process data outside your country. We rely on their standard contractual protections for such transfers.",
         ],
       },
       {
@@ -77,7 +77,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "3. Intellectual property",
         paragraphs: [
-          `The text, design, screenshots, logos and code of this site are owned by ${site.legalName} or used with permission. You may view and share links freely. You may not reproduce the content commercially without written consent. Third-party marks (for example Supabase, Vercel, Anthropic, Saviynt, Okta or Microsoft Entra) belong to their owners and are referenced descriptively.`,
+          `The text, design, screenshots, logos and code of this site are owned by ${site.legalName} or used with permission. You may view and share links freely. You may not reproduce the content commercially without written consent. Third-party marks (for example Saviynt, Okta or Microsoft Entra) belong to their owners and are referenced descriptively.`,
         ],
       },
       {
@@ -118,7 +118,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "2. What our hosting provider may set",
         paragraphs: [
-          "Vercel, which serves the site, may set strictly necessary technical cookies to route traffic or protect against abuse. These are not used to identify you across sites.",
+          "Our hosting provider may set strictly necessary technical cookies to route traffic or protect against abuse. These are not used to identify you across sites.",
         ],
       },
       {
@@ -211,7 +211,7 @@ export const legalDocs: LegalDoc[] = [
       {
         heading: "2. The products",
         paragraphs: [
-          "Each product is built to a security baseline that includes: Supabase PostgreSQL with row-level security on every tenant-scoped table, server-side tenant resolution that never trusts a client-supplied identifier, encrypted-at-rest provider credentials, an immutable audit trail for consequential actions, and deterministic (non-LLM) authorisation. Each product publishes its own security page or help section with specifics.",
+          "Each product is built with security as a baseline: strict separation between customers' data, server-side checks that never trust a client-supplied identifier, encrypted credentials, an immutable audit trail for consequential actions, and rule-based (non-LLM) authorisation. Each product describes its own controls in more detail; ask us for specifics during diligence.",
         ],
       },
       {
