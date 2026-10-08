@@ -470,3 +470,50 @@ video {
   background-color: var(--track);
   background-image: repeating-linear-gradient(135deg, var(--set-aside) 0 3px, transparent 3px 7px);
 }
+
+/* ---------- Founder dashboard (dark only) ---------------------------------- */
+.dash {
+  --d-page: #0c0c0e;
+  --d-card: #1a1a19;
+  --d-card-2: #212120;
+  --d-line: rgba(255, 255, 255, 0.09);
+  --d-ink: #ffffff;
+  --d-ink-2: #c3c2b7;
+  --d-ink-3: #8c8b84;
+  --d-good: #0ca30c;
+  --d-warn: #fab219;
+  --d-bad: #e66767;
+  color-scheme: dark;
+  background: var(--d-page);
+  color: var(--d-ink);
+  min-height: 100dvh;
+}
+.dash-card {
+  background: var(--d-card);
+  border: 1px solid var(--d-line);
+  border-radius: 20px;
+}
+.dash-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--d-ink-3);
+}
+.dash-tip {
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+  min-width: 150px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #262625;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+}
+.dash-refetch { transition: opacity 0.2s; }
+@media (prefers-reduced-motion: no-preference) {
+  .dash-rise { animation: dash-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes dash-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}

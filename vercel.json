@@ -1,5 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "regions": ["bom1"]
+  "regions": [
+    "bom1"
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/newsletter?cadence=weekly",
+      "schedule": "30 3 * * 1"
+    },
+    {
+      "path": "/api/cron/newsletter?cadence=monthly",
+      "schedule": "45 3 1 * *"
+    }
+  ]
 }
