@@ -116,8 +116,8 @@ export function TrackerClient({ initial }: { initial: ProductProgress[] }) {
           </Reveal>
 
           <Reveal delay={0.1} className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Stat label="Products live" value={String(products.length)} note="All four, all free to try today" />
-            <Stat label="Tracked stories" value={String(portfolio.total)} note="Across every backlog, all four products" />
+            <Stat label="Products live" value={String(products.length)} note="All five, all free to try today" />
+            <Stat label="Tracked stories" value={String(portfolio.total)} note="Across every backlog, all five products" />
             <Stat label="Done" value={String(portfolio.done)} note={`${portfolio.partial} in progress · ${portfolio.setAside} set aside`} />
             <Stat label="Active completion" value={`${portfolio.activeCompletionPct}%`} note="Done ÷ (total − set-aside work)" accent="var(--good)" />
           </Reveal>
@@ -134,7 +134,7 @@ export function TrackerClient({ initial }: { initial: ProductProgress[] }) {
       <section className="theme-light section bg-bg text-fg" aria-labelledby="overview">
         <div className="container">
           <Reveal>
-            <SectionHeading eyebrow="High level" title={<span id="overview">Four products, one glance.</span>} lede="Active completion per product: done stories over everything that is still in scope. Outer ring to inner follows the order below." />
+            <SectionHeading eyebrow="High level" title={<span id="overview">Five products, one glance.</span>} lede="Active completion per product: done stories over everything that is still in scope. Outer ring to inner follows the order below." />
           </Reveal>
           <div className="mt-12 grid items-center gap-12 lg:grid-cols-2">
             <Reveal className="flex justify-center">
@@ -147,7 +147,7 @@ export function TrackerClient({ initial }: { initial: ProductProgress[] }) {
             </Reveal>
           </div>
 
-          <ul className="mt-16 grid gap-4 md:grid-cols-2">
+          <ul className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2">
             {perProduct.map(({ p, t }, i) => (
               <Reveal as="li" key={p.slug} delay={i * 0.05}>
                 <a href={`#${p.slug}`} className="card group block h-full p-6 transition-shadow hover:shadow-lg sm:p-7">

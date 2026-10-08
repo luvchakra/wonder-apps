@@ -1,7 +1,8 @@
 # WonderApps
 
-Investor-facing portfolio site for four AI-native products — **WonderHome**,
-**WonderJobs**, **WonderArk** and **WonderID** (formerly WonderAgent). Apple-style presentation:
+Investor-facing portfolio site for five independent AI-native startups —
+**WonderHome**, **WonderJobs**, **Wonder Creator**, **WonderArk** and **WonderID**
+(formerly WonderAgent). Apple-style presentation:
 dark/light bands, scroll-linked parallax, device frames, staged hero animation.
 Static except for one route handler that emails contact-form submissions via
 Resend. No database.
@@ -31,8 +32,11 @@ fetch at build time).
 
 ```
 src/content/        ALL copy lives here — edit these, not the components
-  startups.ts       one typed record per product: problem, solution, market,
-                    model, moat, traction, roadmap, screens, links (incl. helpUrl)
+  startups.ts       one typed record per product: problem, solution, market
+                    (incl. sourced `figures`), model, moat, traction, roadmap,
+                    screens, links (helpUrl optional — Wonder Creator has none)
+  deck-copy.ts      short slide copy per product for the investor decks
+  decks.ts          the slide model (`buildDeck`) shared by viewer and PDF
   site.ts           name, nav, legal links, jurisdiction, lastUpdated, canonical
                     url (wonderapps.biz) and contactEmail (connect@wonderapps.biz)
   legal.ts          privacy / terms / cookies / disclaimer / accessibility / security
@@ -43,18 +47,20 @@ src/components/     Hero, Showcase (landing chapter per product), StartupSection
 src/app/
   page.tsx                  landing
   startups/[slug]/page.tsx  deep dive, statically generated per product
+  decks/page.tsx            index of the five decks
+  decks/[slug]/print/       printable 1920x1080 slides → source of the PDFs
   (legal)/[slug]/page.tsx   legal pages, statically generated from legal.ts
   contact/page.tsx          contact page (?interest=<slug> preselects a product)
   appstracker/page.tsx      portfolio engineering tracker (TrackerClient)
   api/contact/route.ts      POST → Resend. Honeypot field, zod validation.
-  api/tracker/route.ts      GET → reads the four products' tracker markdown
+  api/tracker/route.ts      GET → reads the five products' tracker markdown
                             from raw.githubusercontent.com and returns parsed rows
 src/lib/tracker-parsers.ts  deterministic markdown-table parsers, one per product;
                             a parser THROWS when its table isn't found so the client
                             keeps the last good data instead of showing wrong numbers
 src/content/progress.ts     the curated snapshot the tracker renders before (and if)
                             the live fetch succeeds; editorial notes per row live here
-docs/progress.md            GENERATED story-by-story progress across all four
+docs/progress.md            GENERATED story-by-story progress across all five
                             products — regenerate with `npm run progress` (fetches
                             GitHub; `-- --local <dir>` reads local clones instead)
 scripts/build-progress-doc.mjs  the generator
@@ -64,6 +70,22 @@ public/screenshots/<slug>/  captures of the deployed products (desktop 1800w,
                             product's production to capture signed-in screens.
 public/brands/<slug>/       logo lockups shipped by the products themselves
 ```
+
+## Investor decks and market figures
+
+- Each product has a deck: embedded `DeckViewer` (full screen, keyboard, swipe)
+  on its page and a committed PDF in `public/decks/`. Slides are drawn at a fixed
+  1920x1080 by `DeckSlides.tsx`. After changing anything a deck reads
+  (`startups.ts`, `deck-copy.ts`, slide components): `npm run build && npm run
+  decks && npm run build` (Next only serves `public/` files that existed at build).
+- **Market figures** (`market.figures`) must each have a publisher URL you have
+  opened and a quote you have matched on the page. Label forecasts with their base
+  year and CAGR window; where publishers disagree, cite one with its definition —
+  never blend or average. Dated figures stay dated (e.g. 2023 estimates).
+- **Each startup stands alone.** Don't write copy that implies the products share
+  a platform, chassis, customers or team; the legal security paragraph is per
+  product on purpose. The tracker and footer are the only places they sit together.
+- Wonder Creator has no public help centre yet; leave `helpUrl` unset (UI hides it).
 
 ## The tracker (/appstracker)
 

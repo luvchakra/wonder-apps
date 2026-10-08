@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { startups } from "@/content/startups";
 import { Device } from "./Device";
@@ -12,8 +12,15 @@ import { WordRotator } from "./WordRotator";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-/** Each completes "Built for the …". Kept short so none wraps on a phone. */
-const ROTATING = ["agent era.", "household.", "job seeker.", "business.", "enterprise.", "next decade."] as const;
+/** Completes "Built for the …", one phrase per startup in portfolio order. Kept short so none wraps on a phone. */
+const ROTATING: Record<string, string> = {
+  wonderhome: "household.",
+  wonderjobs: "job seeker.",
+  wondercreator: "creator.",
+  wonderark: "business.",
+  wonderid: "enterprise.",
+};
+const DWELL = 4800;
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,21 +31,25 @@ export function Hero() {
   const stageY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
   const phoneY = useTransform(scrollYProgress, [0, 1], [0, -90]);
-  const phoneY2 = useTransform(scrollYProgress, [0, 1], [0, 60]);
-
-  const [home, jobs, ark, agent] = startups;
-  const laptop = agent.screens.find((s) => s.kind === "desktop")!;
-  const phoneA = jobs.screens.find((s) => s.kind === "mobile")!;
-  const phoneB = home.screens.find((s) => s.kind === "mobile")!;
-  const laptop2 = ark.screens.find((s) => s.kind === "desktop")!;
+  
+  // One startup on stage at a time: each is shown on its own merits, never composed with another.
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => setActive((n) => (n + 1) % startups.length), DWELL);
+    return () => window.clearInterval(id);
+  }, [reduce]);
+  const cur = startups[active];
+  const laptop = cur.screens.find((s) => s.kind === "desktop")!;
+  const phone = cur.screens.find((s) => s.kind === "mobile");
 
   return (
     <section ref={ref} className="theme-dark relative overflow-hidden bg-bg text-fg" aria-labelledby="hero-title">
-      {/* Ambient colour: one orb per product */}
+      {/* Ambient colour follows the startup on stage */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="orb orb-a left-[-10%] top-[-10%] size-[46vw] bg-[oklch(0.49_0.13_190)]" />
-        <div className="orb orb-b right-[-12%] top-[6%] size-[42vw] bg-[oklch(0.55_0.23_285)]" />
-        <div className="orb orb-a bottom-[-12%] left-[24%] size-[40vw] bg-[oklch(0.546_0.215_260)]" style={{ animationDelay: "-6s" }} />
+        <div className="orb orb-a left-[-10%] top-[-10%] size-[46vw] transition-[background-color] duration-[1400ms]" style={{ background: cur.accent }} />
+        <div className="orb orb-b right-[-12%] top-[6%] size-[42vw] opacity-60 transition-[background-color] duration-[1400ms]" style={{ background: cur.accent }} />
+        <div className="orb orb-a bottom-[-12%] left-[24%] size-[40vw] opacity-50" style={{ background: "oklch(0.55 0.23 285)", animationDelay: "-6s" }} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#000_85%)]" />
       </div>
 
@@ -61,7 +72,7 @@ export function Hero() {
             Ideas for a brighter tomorrow
           </motion.p>
           <h1 id="hero-title" className="display mt-6 text-[clamp(2.75rem,8.5vw,6.75rem)]">
-            {["Four products.", "One chassis.", "Built for the"].map((line, i) => (
+            {["Five startups.", "Five markets.", "Built for the"].map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span
                   className="block"
@@ -79,7 +90,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease, delay: 0.55 }}
             >
-              <WordRotator words={ROTATING} />
+              <WordRotator words={startups.map((s) => ROTATING[s.slug])} index={active} />
             </motion.span>
           </h1>
           <motion.p
@@ -88,9 +99,8 @@ export function Hero() {
             transition={{ duration: 0.9, ease, delay: 0.6 }}
             className="lede mx-auto mt-7 max-w-2xl text-[clamp(1.0625rem,1.7vw,1.375rem)] text-fg-muted"
           >
-            WonderHome runs the household. WonderJobs runs the job search. WonderArk runs the business. WonderID governs
-            every identity with access — the people and the AI agents doing all of it. Four AI-native products on one
-            security-first architecture — shipped by one founder-operator in a single season.
+            An investor portfolio of five AI-native startups, each in a different market and each live today. Read the case for
+            the one that fits your thesis: problem, market with cited sources, model, traction and a downloadable deck.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -102,7 +112,7 @@ export function Hero() {
               Explore the portfolio <ArrowRight className="size-4" />
             </Button>
             <Button href="/contact" size="lg" variant="secondary" className="bg-white/10 text-white ring-white/15 hover:bg-white/15">
-              Request the deck
+              Talk to the founder
             </Button>
           </motion.div>
         </motion.div>
@@ -115,24 +125,31 @@ export function Hero() {
           transition={{ duration: 1.2, ease, delay: 0.5 }}
           className="relative mx-auto mt-14 w-full max-w-5xl sm:mt-20"
         >
-          <div className="relative mx-auto w-[88%] sm:w-[78%]">
-            <Device shot={laptop} priority sizes="(min-width: 1024px) 860px, 88vw" />
-          </div>
-          <motion.div style={reduce ? undefined : { y: phoneY }} className="absolute -left-2 bottom-[-8%] w-[26%] max-w-[190px] sm:left-[2%] sm:w-[19%]">
-            <Device shot={phoneA} priority sizes="190px" />
-          </motion.div>
-          <motion.div style={reduce ? undefined : { y: phoneY2 }} className="absolute -right-2 top-[18%] w-[24%] max-w-[180px] sm:right-[1%] sm:w-[18%]">
-            <Device shot={phoneB} priority sizes="180px" />
-          </motion.div>
-          <motion.div
-            style={reduce ? undefined : { y: phoneY2 }}
-            className="absolute -bottom-[14%] right-[6%] hidden w-[38%] lg:block"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.1, ease, delay: 0.9 }}
-          >
-            <Device shot={laptop2} sizes="420px" />
-          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={cur.slug}
+              initial={reduce ? false : { opacity: 0, y: 24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={reduce ? undefined : { opacity: 0, y: -16 }}
+              transition={{ duration: 0.7, ease }}
+              className="relative"
+            >
+              <div className="relative mx-auto w-[88%] sm:w-[78%]">
+                <Device shot={laptop} priority={active === 0} sizes="(min-width: 1024px) 860px, 88vw" />
+              </div>
+              {phone ? (
+                <motion.div style={reduce ? undefined : { y: phoneY }} className="absolute -left-2 bottom-[-8%] w-[26%] max-w-[190px] sm:left-[2%] sm:w-[19%]">
+                  <Device shot={phone} priority={active === 0} sizes="190px" />
+                </motion.div>
+              ) : null}
+            </motion.div>
+          </AnimatePresence>
+          <p className="mt-10 text-center text-sm text-fg-muted" aria-live="off">
+            <span className="font-semibold text-fg">{cur.name}</span> · {cur.category} ·{" "}
+            <Link href={`/startups/${cur.slug}`} className="underline underline-offset-4 hover:text-fg">
+              Read the case
+            </Link>
+          </p>
         </motion.div>
 
         {/* Product index */}
@@ -140,11 +157,11 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-24 grid grid-cols-2 gap-3 sm:mt-32 lg:grid-cols-4"
+          className="mt-24 grid grid-cols-2 gap-3 sm:mt-32 lg:grid-cols-5"
         >
-          {startups.map((s) => (
-            <li key={s.slug}>
-              <Link href={`/startups/${s.slug}`} className="group block rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-colors hover:bg-white/[0.08]">
+          {startups.map((s, n) => (
+            <li key={s.slug} className="last:col-span-2 lg:last:col-span-1">
+              <Link href={`/startups/${s.slug}`} className={`group block h-full rounded-2xl border p-4 transition-colors hover:bg-white/[0.08] ${n === active ? "border-white/30 bg-white/[0.08]" : "border-white/10 bg-white/[0.04]"}`}>
                 <span className="flex items-center gap-2">
                   <span className="size-2 rounded-full" style={{ background: s.accent }} />
                   <span className="text-[15px] font-semibold">{s.name}</span>

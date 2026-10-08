@@ -13,16 +13,20 @@ export function WordRotator({
   words,
   interval = 2600,
   className = "",
+  index,
 }: {
   words: readonly string[];
   interval?: number;
   className?: string;
+  /** Drive the ticker from outside (e.g. in step with another animation); the internal timer is then off. */
+  index?: number;
 }) {
-  const [i, setI] = useState(0);
+  const [own, setI] = useState(0);
+  const i = index ?? own;
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || index !== undefined) return;
     const id = window.setInterval(() => setI((n) => (n + 1) % words.length), interval);
     // Don't advance while the tab is hidden, so the reader never returns mid-slide.
     const onVis = () => (document.hidden ? window.clearInterval(id) : undefined);
@@ -31,7 +35,7 @@ export function WordRotator({
       window.clearInterval(id);
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, [interval, words.length, reduce]);
+  }, [interval, words.length, reduce, index]);
 
   return (
     <span className={`word-rotator ${className}`}>

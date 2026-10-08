@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Check, ExternalLink, Lock } from "lucide-react";
+import { ArrowRight, BookOpen, Check, Download, ExternalLink, Lock, Presentation } from "lucide-react";
+import { deckBySlug } from "@/content/decks";
 import type { Startup } from "@/content/types";
+import { DeckViewer } from "./DeckViewer";
 import { Device } from "./Device";
 import { EmailCTA } from "./EmailCTA";
 import { Parallax } from "./Parallax";
@@ -38,8 +40,8 @@ export function StartupHero({ s }: { s: Startup }) {
             <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 font-medium text-black transition-transform hover:-translate-y-0.5">
               Open the live product <ExternalLink className="size-4" />
             </a>
-            <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center gap-2 rounded-full bg-white/10 px-6 font-medium text-white ring-1 ring-white/15 transition-colors hover:bg-white/15">
-              <BookOpen className="size-4" /> User guide &amp; help centre
+            <a href="#deck" className="inline-flex h-12 items-center gap-2 rounded-full bg-white/10 px-6 font-medium text-white ring-1 ring-white/15 transition-colors hover:bg-white/15">
+              <Presentation className="size-4" /> Investor deck
             </a>
             <Link href={`/contact?interest=${s.slug}`} className="inline-flex h-12 items-center gap-2 px-4 font-medium text-fg-muted hover:text-fg">
               Talk to the founder <ArrowRight className="size-4" />
@@ -207,6 +209,58 @@ export function Market({ s }: { s: Startup }) {
           ))}
         </div>
       </div>
+      {s.market.figures.length ? (
+        <div className="container mt-20">
+          <Reveal>
+            <p className="eyebrow text-fg-subtle">By the numbers</p>
+            <h3 className="title mt-3 max-w-2xl text-2xl sm:text-3xl">The market, with the receipts.</h3>
+            <p className="mt-3 max-w-2xl text-sm text-fg-muted">Every figure links to its publisher. Forecasts are labelled as such; where publishers disagree we cite one, with its definition, and never blend them.</p>
+          </Reveal>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {s.market.figures.map((f, i) => (
+              <Reveal key={f.label} as="li" delay={(i % 3) * 0.06} className="card flex flex-col p-6 sm:p-7">
+                <p className="display text-[clamp(2rem,3.4vw,2.75rem)] leading-none tracking-tight" style={{ color: s.accent }}>
+                  {f.figure}
+                </p>
+                <p className="mt-3 text-[15px] font-medium leading-snug">{f.label}</p>
+                {f.detail ? <p className="mt-2 text-sm leading-relaxed text-fg-muted">{f.detail}</p> : null}
+                <div className="mt-auto pt-5 text-xs leading-relaxed text-fg-subtle">
+                  {f.note ? <p className="mb-2">{f.note}</p> : null}
+                  <a href={f.source.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1.5 font-medium underline-offset-4 hover:underline" style={{ color: s.accent }}>
+                    <ExternalLink className="mt-0.5 size-3 shrink-0" />
+                    <span>
+                      {f.source.publisher}, {f.source.year}
+                    </span>
+                  </a>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+/* --- Investor deck ------------------------------------------------------- */
+export function DeckSection({ s }: { s: Startup }) {
+  const deck = deckBySlug(s.slug);
+  if (!deck) return null;
+  return (
+    <section id="deck" className="theme-dark section scroll-mt-20 bg-bg text-fg" aria-labelledby="deck-title">
+      <div className="container">
+        <Reveal>
+          <SectionHeading eyebrow="Investor deck" title={<span id="deck-title">{deck.slides.length} slides. Read it here or take it with you.</span>} lede="Use the arrow keys or swipe to move through it, and press F or the expand button for full screen." accent={s.accent} align="center" />
+        </Reveal>
+        <Reveal delay={0.08} className="mx-auto mt-12 max-w-5xl">
+          <DeckViewer deck={deck} />
+          <p className="mt-4 text-center text-sm text-fg-subtle">
+            <a href={deck.file} download={deck.fileName} className="inline-flex items-center gap-1.5 font-medium underline-offset-4 hover:underline" style={{ color: s.accent }}>
+              <Download className="size-3.5" /> Download the PDF
+            </a>
+          </p>
+        </Reveal>
+      </div>
     </section>
   );
 }
@@ -323,9 +377,11 @@ export function RoadmapAndAsk({ s }: { s: Startup }) {
               <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white/15 px-6 font-medium text-white ring-1 ring-white/25 hover:bg-white/20">
                 Try {s.name} <ExternalLink className="size-4" />
               </a>
-              <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 px-4 font-medium text-white/80 hover:text-white">
-                <BookOpen className="size-4" /> Help centre
-              </a>
+              {s.helpUrl ? (
+                <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex h-12 items-center justify-center gap-2 px-4 font-medium text-white/80 hover:text-white">
+                  <BookOpen className="size-4" /> Help centre
+                </a>
+              ) : null}
               <EmailCTA name={s.name} tone="onGradient" className="h-12" />
             </div>
           </div>

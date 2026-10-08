@@ -14,6 +14,27 @@ export type Plan = {
   featured?: boolean;
 };
 
+/** One third-party number, shown with the publisher and a link anyone can check. */
+export type MarketFigure = {
+  /** Display value, e.g. "$480B". */
+  figure: string;
+  /** What it measures, in plain words. */
+  label: string;
+  /** One investor-facing sentence of context. */
+  detail?: string;
+  source: { publisher: string; title: string; url: string; year: string };
+  /** Caveat such as "forecast, base year 2024" or a definition. */
+  note?: string;
+};
+
+/** Short-form copy for the pitch deck, where a slide holds a line, not a paragraph. */
+export type DeckCopy = {
+  problem: string[];
+  solution: { title: string; body: string }[];
+  how: { step: string; body: string }[];
+  moat: { title: string; body: string }[];
+};
+
 export type Startup = {
   slug: string;
   name: string;
@@ -26,7 +47,8 @@ export type Startup = {
   geography: string;
   stage: string;
   url: string;
-  helpUrl: string;
+  /** The product's own help centre, when it has one. */
+  helpUrl?: string;
   /** Brand accent as OKLCH so it holds up in both themes. */
   accent: string;
   accentSoft: string;
@@ -37,7 +59,7 @@ export type Startup = {
   solution: { title: string; lede: string; pillars: { title: string; body: string }[] };
   howItWorks: { step: string; body: string }[];
   screens: Screenshot[];
-  market: { title: string; lede: string; segments: string[]; whyNow: string[] };
+  market: { title: string; lede: string; segments: string[]; whyNow: string[]; figures: MarketFigure[] };
   businessModel: { title: string; lede: string; plans: Plan[] };
   moat: { title: string; body: string }[];
   /** Verifiable build/execution facts pulled from the product's own trackers. */

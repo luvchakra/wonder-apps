@@ -36,13 +36,8 @@ export function Footer() {
                 </li>
               ))}
               <li>
-                <Link href="/#thesis" className="text-fg-muted transition-colors hover:text-fg">
-                  Investment thesis
-                </Link>
-              </li>
-              <li>
-                <Link href="/#chassis" className="text-fg-muted transition-colors hover:text-fg">
-                  Shared platform
+                <Link href="/decks" className="text-fg-muted transition-colors hover:text-fg">
+                  Investor decks
                 </Link>
               </li>
               <li>
@@ -61,10 +56,14 @@ export function Footer() {
                   <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-fg-muted transition-colors hover:text-fg">
                     {s.name}
                   </a>
-                  <span className="text-fg-subtle">·</span>
-                  <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="text-fg-muted transition-colors hover:text-fg">
-                    Help centre
-                  </a>
+                  {s.helpUrl ? (
+                    <>
+                      <span className="text-fg-subtle">·</span>
+                      <a href={s.helpUrl} target="_blank" rel="noopener noreferrer" className="text-fg-muted transition-colors hover:text-fg">
+                        Help centre
+                      </a>
+                    </>
+                  ) : null}
                 </li>
               ))}
             </ul>

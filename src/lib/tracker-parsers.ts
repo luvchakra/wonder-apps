@@ -146,9 +146,65 @@ export function parseWonderID(md: string): ParsedTracker {
   return { rows, lastUpdated: gen?.[1] ?? null, currentFocus: null };
 }
 
+/**
+ * Wonder Creator keeps one running log: every dated deliverable is a table row
+ * under a heading, with a Status cell. Each section becomes one row here and
+ * every status row inside it is counted; a status this parser doesn't recognise
+ * throws, so a changed vocabulary never turns into wrong numbers.
+ */
+export function classifyCreatorStatus(raw: string): "done" | "partial" | "notStarted" {
+  const s = raw.replace(/\*+/g, "").trim().toLowerCase();
+  if (/partial|partly|in progress|in-progress/.test(s)) return "partial";
+  if (/^done/.test(s) || /^phases .+ done$/.test(s)) return "done";
+  if (/^not started|^backlog|^todo|^planned/.test(s)) return "notStarted";
+  throw new Error(`wondercreator: unrecognised status "${raw}"`);
+}
+
+export function parseWonderCreator(md: string): ParsedTracker {
+  const lines = md.split("\n");
+  const sections: { name: string; counts: { done: number; partial: number; notStarted: number } }[] = [];
+  let heading = "";
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    const h = l.match(/^#{1,3}\s+(.+?)\s*$/);
+    if (h) heading = h[1];
+    if (!l.startsWith("|") || !/^\|?\s*:?-{2,}/.test(lines[i + 1] ?? "")) continue;
+    const header = splitRow(l);
+    const statusAt = header.indexOf("Status");
+    let j = i + 2;
+    const rows: string[][] = [];
+    for (; j < lines.length && lines[j].trim().startsWith("|"); j++) rows.push(splitRow(lines[j]));
+    i = j - 1;
+    if (statusAt === -1) continue;
+    const name = heading.replace(/\s*\([^)]*\)\s*$/, "").trim() || "Untitled";
+    let sec = sections.find((s) => s.name === name);
+    if (!sec) sections.push((sec = { name, counts: { done: 0, partial: 0, notStarted: 0 } }));
+    for (const r of rows) {
+      if (r.length <= statusAt) continue;
+      sec.counts[classifyCreatorStatus(r[statusAt])]++;
+    }
+  }
+  if (sections.length === 0) throw new Error("tracker parse: wondercreator status tables not found");
+  const rows: ProgressRow[] = sections.map((s, i) => {
+    const total = s.counts.done + s.counts.partial + s.counts.notStarted;
+    return {
+      id: String(i + 1).padStart(2, "0"),
+      name: s.name,
+      total,
+      done: s.counts.done,
+      partial: s.counts.partial,
+      notStarted: s.counts.notStarted,
+      setAside: 0,
+      status: s.counts.done === total ? "Done" : "In Progress",
+    };
+  });
+  return { rows, lastUpdated: null, currentFocus: null };
+}
+
 export const TRACKER_SOURCES: Record<string, { raw: string; parse: (md: string) => ParsedTracker }> = {
   wonderhome: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-home/main/docs/PROGRESS.md", parse: parseWonderHome },
   wonderjobs: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-jobs/main/docs/PROGRESS.md", parse: parseWonderJobs },
   wonderark: { raw: "https://raw.githubusercontent.com/luvchakra/founder-collab/main/docs/PROGRESS-TRACKER.md", parse: parseWonderArk },
   wonderid: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-agent/main/docs/PROGRESS.md", parse: parseWonderID },
+  wondercreator: { raw: "https://raw.githubusercontent.com/luvchakra/wonder-creator/main/docs/progress.md", parse: parseWonderCreator },
 };
