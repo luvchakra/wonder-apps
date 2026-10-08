@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { site } from "@/content/site";
 import { startups } from "@/content/startups";
+import { BackToMain } from "./BackToMain";
 import { EmailCTA } from "./EmailCTA";
 import { Logo, Wordmark } from "./Logo";
 
@@ -9,6 +10,9 @@ export function Footer() {
   return (
     <footer className="theme-dark border-t border-line bg-bg text-fg">
       <div className="container py-14 sm:py-20">
+        <div className="mb-10 empty:hidden">
+          <BackToMain variant="footer" />
+        </div>
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Link href="/" className="flex items-center gap-2 text-lg font-semibold tracking-tight">

@@ -16,27 +16,58 @@ const panel = "rgba(255,255,255,0.045)";
 /* --- primitives ---------------------------------------------------------- */
 
 function Shot({ shot, style }: { shot: Screenshot; style?: CSSProperties }) {
-  const phone = shot.kind === "mobile";
+  if (shot.kind === "mobile") {
+    // iPhone: titanium rim, black bezel, Dynamic Island, status strip, home indicator.
+    // Height follows the 9:19.5 screen, so only the width matters to callers.
+    const w = Number(style?.width ?? 240);
+    const pad = Math.round(w * 0.032);
+    const screenW = w - pad * 2;
+    return (
+      <div
+        style={{
+          position: "relative",
+          flex: "none",
+          boxSizing: "border-box",
+          background: "#0b0b0d",
+          padding: pad,
+          borderRadius: w * 0.15,
+          boxShadow: `0 0 0 ${Math.max(2, w * 0.009)}px #7b7b82, 0 0 0 ${Math.max(3, w * 0.015)}px #26262a, 0 40px 90px -30px rgba(0,0,0,0.85)`,
+          ...style,
+          height: undefined,
+        }}
+      >
+        <div style={{ position: "relative", overflow: "hidden", width: screenW, aspectRatio: "9 / 19.5", borderRadius: w * 0.118, background: "#000" }}>
+          <img src={shot.src} alt={shot.alt} loading="eager" decoding="sync" style={{ position: "absolute", left: 0, top: screenW * 0.105, display: "block", width: "100%", height: `calc(100% - ${screenW * 0.105}px)`, objectFit: "cover", objectPosition: "top" }} />
+          <div style={{ position: "absolute", inset: "0 0 auto 0", height: screenW * 0.105, background: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", padding: `0 ${screenW * 0.075}px 0 ${screenW * 0.095}px`, color: "#111", fontSize: screenW * 0.041, fontWeight: 600 }}>
+            <span>9:41</span>
+            <span style={{ width: screenW * 0.066, height: screenW * 0.03, borderRadius: screenW * 0.009, border: `${Math.max(1, screenW * 0.0035)}px solid rgba(17,17,17,0.55)`, boxSizing: "border-box", padding: screenW * 0.0045 }}>
+              <span style={{ display: "block", width: "100%", height: "100%", borderRadius: screenW * 0.004, background: "#111" }} />
+            </span>
+          </div>
+          <span style={{ position: "absolute", top: screenW * 0.054, left: "50%", transform: "translateX(-50%)", width: screenW * 0.27, height: screenW * 0.076, borderRadius: 99, background: "#000" }} />
+          <span style={{ position: "absolute", bottom: screenW * 0.022, left: "50%", transform: "translateX(-50%)", width: screenW * 0.3, height: screenW * 0.012, borderRadius: 99, background: "rgba(17,17,17,0.82)" }} />
+        </div>
+      </div>
+    );
+  }
   return (
     <div
       style={{
         position: "relative",
         overflow: "hidden",
         background: "#0d0d12",
-        borderRadius: phone ? 46 : 22,
-        border: phone ? "10px solid #1b1b22" : `1px solid ${rule}`,
+        borderRadius: 22,
+        border: `1px solid ${rule}`,
         boxShadow: "0 40px 90px -30px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04)",
         ...style,
       }}
     >
-      {!phone ? (
-        <div style={{ height: 34, display: "flex", alignItems: "center", gap: 8, padding: "0 16px", background: "#14141a", borderBottom: `1px solid ${rule}` }}>
-          {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
-            <span key={c} style={{ width: 11, height: 11, borderRadius: 99, background: c, opacity: 0.85 }} />
-          ))}
-        </div>
-      ) : null}
-      <img src={shot.src} alt={shot.alt} loading="eager" decoding="sync" style={{ display: "block", width: "100%", height: phone ? "100%" : "calc(100% - 34px)", objectFit: "cover", objectPosition: "top" }} />
+      <div style={{ height: 34, display: "flex", alignItems: "center", gap: 8, padding: "0 16px", background: "#14141a", borderBottom: `1px solid ${rule}` }}>
+        {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
+          <span key={c} style={{ width: 11, height: 11, borderRadius: 99, background: c, opacity: 0.85 }} />
+        ))}
+      </div>
+      <img src={shot.src} alt={shot.alt} loading="eager" decoding="sync" style={{ display: "block", width: "100%", height: "calc(100% - 34px)", objectFit: "cover", objectPosition: "top" }} />
     </div>
   );
 }
