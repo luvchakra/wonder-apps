@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { site } from "@/content/site";
 import { ScrollMemory } from "@/components/ScrollMemory";
+import { SiteChrome } from "@/components/SiteChrome";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Motion } from "@/components/Motion";
@@ -42,12 +43,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             Skip to content
           </a>
-          <ScrollMemory />
-          <Nav />
+          <SiteChrome>
+            <ScrollMemory />
+            <Nav />
+          </SiteChrome>
           <main id="main" className="flex-1">
             {children}
           </main>
-          <Footer />
+          <SiteChrome>
+            <Footer />
+          </SiteChrome>
         </Motion>
       </body>
     </html>

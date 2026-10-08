@@ -108,6 +108,25 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 - Every `mailto:` goes through `enquiryMailto()` (`src/lib/mailto.ts`) so it opens
   with a subject and a short template body.
 
+## Founder dashboard (/dashboard) — private, dynamic
+
+The one place the site is not static. Full guide: `docs/dashboard/README.md`.
+
+- **No database of our own, ever.** Numbers are read live from each product through a read-only
+  Postgres role (`<APP>_DATABASE_URL` env vars; scripts in `docs/dashboard/*-readonly.sql`). Nothing is
+  stored in WonderApps except a two-minute in-memory cache.
+- **Aggregates only.** Metrics live in `src/lib/dashboard/apps/<slug>.ts` against the contract in
+  `src/lib/dashboard/types.ts`: single `SELECT`, only `$1..$4`, no user input in SQL, no emails/names/free
+  text (labels that look like emails are blanked). `registry.ts` rejects non-SELECT SQL at build time.
+  Adding a metric means adding its table/columns to that product's role script too.
+- **Access.** `DASHBOARD_ALLOWED_EMAILS` + emailed one-time link bound to the requesting browser, signed
+  12 h sessions (`DASHBOARD_SESSION_SECRET`). `src/proxy.ts` is the first gate and every page/route calls
+  `requireSession()`/`getSession()` again. Never link `/dashboard` from the public site.
+- **Newsletters** are built from the same live data (`newsletter.ts`), sent with Resend by Vercel Cron
+  (`vercel.json`, `CRON_SECRET`) or from `/dashboard/newsletter`. `DASHBOARD_DEMO=1` shows synthetic
+  numbers locally and is ignored in production.
+- The public-copy rules above (no tech stack names) apply to the marketing site, not to this private page.
+
 ## The tracker (/appstracker)
 
 - Renders the snapshot in `src/content/progress.ts` on the server, then fetches
@@ -164,3 +183,13 @@ Resend sender.
 
 `.claude/hooks/session-start.sh` installs dependencies on Claude Code on the web
 by detecting `package.json` (npm here). Nothing else is needed.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
