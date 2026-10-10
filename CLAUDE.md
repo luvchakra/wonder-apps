@@ -181,6 +181,16 @@ with WonderArk and WonderID. Every deployment Vercel *creates* counts, including
 ones an ignored-build step cancels. Running out blocks production, so treat
 deployments as a scarce budget with production first.
 
+- **Nothing builds on Vercel until the founder says "merge now" or "build now".**
+  Only a message from the founder containing one of those phrases allows a merge
+  to `main`, a redeploy, or any other action that makes Vercel build. Until then,
+  finish and verify the work, push the branch and open the pull request, then
+  wait, whatever CI or an earlier "merge without asking" says. When the phrase
+  comes, it covers every pull request that is unmerged or waiting at that moment.
+  Land them together so the batch costs one production deployment: put them
+  through one combined merge to `main` where you can. Work that arrives after the
+  phrase waits for the next one.
+
 - **Only `main` deploys.** `vercel.json` → `git.deploymentEnabled` turns off
   `claude/**`, `feature/**` and `dependabot/**`; keep it that way and add any new
   working-branch prefix there. No previews unless someone will open one. One
