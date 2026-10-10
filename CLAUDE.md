@@ -174,6 +174,32 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
   CSS variables — don't hardcode colours in components except per-product
   accents, which come from `startups[n].accent`.
 
+## Build-slot budget (Vercel deployments)
+
+The Vercel team (`luvchakras-projects`) caps deployments per day, and it is shared
+with WonderArk and WonderID. Every deployment Vercel *creates* counts, including
+ones an ignored-build step cancels. Running out blocks production, so treat
+deployments as a scarce budget with production first.
+
+- **Only `main` deploys.** `vercel.json` → `git.deploymentEnabled` turns off
+  `claude/**`, `feature/**` and `dependabot/**`; keep it that way and add any new
+  working-branch prefix there. No previews unless someone will open one. One
+  Vercel project per repo.
+- **One merge to `main` = one production deployment.** Squash-merge, and put docs,
+  `docs/progress.md`, decks and CLAUDE.md updates in the same pull request as the
+  code they describe. No docs-only pull requests while a code pull request is open
+  or about to open.
+- **Verify before pushing** — `npm run check` (lint + typecheck + production build),
+  and `npm run decks` locally when a deck changed — then push the branch once, when
+  it is ready. No fix-up pushes.
+- **Watch the budget.** Before deployment-heavy work, count the team's deployments
+  in the last 24 hours (all three projects). Above ~70% of the cap, stop docs-only
+  merges and keep the rest for production and hotfixes.
+- **When the cap is hit:** stop merging to `main` (refused deployments are not
+  queued), wait until the oldest counted deployment is 24 hours old, then redeploy
+  only the latest `main`, once. A "rate limited" status is infrastructure, not a
+  failure in this repo.
+
 ## Environment
 
 See `.env.example`. `RESEND_API_KEY` and `CONTACT_RECIPIENTS` (comma-separated)
