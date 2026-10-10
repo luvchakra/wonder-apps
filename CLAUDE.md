@@ -150,7 +150,9 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
 - **Never invent traction.** Every number on the site traces to a product's
   public engineering tracker or live site. If you cannot cite it, don't add it.
 - WonderAgent was renamed **WonderID** on 2026-09-26 by the founder (repo
-  `wonder-agent`, domain `agent.wonderapps.biz` unchanged). Slug is `wonderid`;
+  `wonder-agent` unchanged). Its address is `id.wonderapps.biz`; the old
+  `agent.wonderapps.biz` was retired by the founder on 2026-10-10 — never link,
+  redirect or re-add it. Slug is `wonderid`;
   `/startups/wonderagent` redirects permanently (next.config.ts) and the contact
   page maps `?interest=wonderagent`. Say "formerly WonderAgent" once per page at
   most, not everywhere.
@@ -159,7 +161,7 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
   public; WonderHome still redirects to sign-in (checked 2026-09-19). Keep
   the link regardless — the founder is making it public.
 - Each product's `url`/`helpUrl` point to its custom domain (`home.`, `jobs.`,
-  `ark.`, `agent.` — all `.wonderapps.biz`), the products' intended addresses.
+  `creator.`, `ark.`, `id.` — all `.wonderapps.biz`), the products' intended addresses.
   If a domain isn't cut over yet, that's an infra step outside this repo, not
   a reason to revert the copy — verify with a request before assuming stale.
 - `site.contactEmail` (`connect@wonderapps.biz`) is the one address for every
