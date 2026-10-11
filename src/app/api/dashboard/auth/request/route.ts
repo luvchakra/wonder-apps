@@ -2,6 +2,7 @@ import { NextResponse, after } from "next/server";
 import { z } from "zod";
 import { cookieNames, dashboardConfig, LOGIN_LINK_TTL_S } from "@/lib/dashboard/config";
 import { sendMail } from "@/lib/dashboard/mail";
+import { mailConfigured } from "@/lib/mailer";
 import { clientIp, limited, noStore, sameOrigin } from "@/lib/dashboard/request-guards";
 import { hashNonce, newNonce, signToken } from "@/lib/dashboard/tokens";
 
@@ -46,8 +47,8 @@ export async function POST(req: Request) {
       const link = `${dashboardConfig.origin()}/api/dashboard/auth/verify?t=${encodeURIComponent(token)}`;
       // Sent after the response so allowed and unknown addresses take the same time.
       after(async () => {
-        if (!process.env.RESEND_API_KEY && !dashboardConfig.isProd()) {
-          console.log(`[dashboard] RESEND_API_KEY not set; dev sign-in link for ${email}:\n${link}`);
+        if (!mailConfigured() && !dashboardConfig.isProd()) {
+          console.log(`[dashboard] SMTP_PASS not set; dev sign-in link for ${email}:\n${link}`);
           return;
         }
         const minutes = Math.round(LOGIN_LINK_TTL_S / 60);

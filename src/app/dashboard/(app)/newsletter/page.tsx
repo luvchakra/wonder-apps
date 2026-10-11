@@ -5,6 +5,7 @@ import { Card } from "@/components/dashboard/parts";
 import { dashboardConfig } from "@/lib/dashboard/config";
 import { compose, PERIODS, parsePeriod } from "@/lib/dashboard/newsletter-run";
 import { requireSession } from "@/lib/dashboard/session";
+import { mailConfigured } from "@/lib/mailer";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +34,7 @@ export default async function NewsletterPage({ searchParams }: { searchParams: P
   const recipients = dashboardConfig.recipients();
   const tz = dashboardConfig.timeZone();
   const checks = [
-    { ok: Boolean(process.env.RESEND_API_KEY), label: "Email service", env: "RESEND_API_KEY" },
+    { ok: mailConfigured(), label: "Email (SMTP)", env: "SMTP_PASS" },
     { ok: (process.env.CRON_SECRET ?? "").length >= 16, label: "Scheduler secret", env: "CRON_SECRET" },
     { ok: recipients.length > 0, label: `${recipients.length} recipient${recipients.length === 1 ? "" : "s"}`, env: "NEWSLETTER_RECIPIENTS" },
   ];

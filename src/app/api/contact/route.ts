@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { z } from "zod";
 import { startups } from "@/content/startups";
+import { mailConfigured, sendMail } from "@/lib/mailer";
 
 export const runtime = "nodejs";
 
@@ -46,12 +46,10 @@ export async function POST(req: Request) {
   if (data.website) return NextResponse.json({ ok: true });
 
   const to = recipients();
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.CONTACT_FROM ?? "WonderApps <onboarding@resend.dev>";
 
-  if (!apiKey || to.length === 0) {
-    console.error("[contact] RESEND_API_KEY or CONTACT_RECIPIENTS is not configured; message not sent.", {
-      hasKey: Boolean(apiKey),
+  if (!mailConfigured() || to.length === 0) {
+    console.error("[contact] SMTP_PASS or CONTACT_RECIPIENTS is not configured; message not sent.", {
+      hasPassword: mailConfigured(),
       recipients: to.length,
     });
     return NextResponse.json(
@@ -88,15 +86,9 @@ export async function POST(req: Request) {
       <p style="margin-top:20px;font-size:12px;color:#86868b">Sent from the WonderApps contact form · ${new Date().toUTCString()}</p>
     </div>`;
 
-  try {
-    const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({ from, to, replyTo: data.email, subject, text, html });
-    if (error) {
-      console.error("[contact] Resend rejected the message", error);
-      return NextResponse.json({ ok: false, error: "We couldn't send your message just now. Please try again in a minute." }, { status: 502 });
-    }
-  } catch (err) {
-    console.error("[contact] Resend call failed", err);
+  const sent = await sendMail({ to, replyTo: data.email, subject, text, html });
+  if (!sent.ok) {
+    console.error("[contact] the mail server refused the message:", sent.reason);
     return NextResponse.json({ ok: false, error: "We couldn't send your message just now. Please try again in a minute." }, { status: 502 });
   }
 

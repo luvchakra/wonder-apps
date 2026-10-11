@@ -28,7 +28,7 @@ export async function POST(req: Request) {
   const { result, subject } = await deliver(period as never, to, { test: mode === "test" });
   if (!result.ok) {
     console.error("[newsletter] manual send failed:", result.reason);
-    return NextResponse.json({ ok: false, error: result.reason.includes("RESEND_API_KEY") ? "Email isn't configured (RESEND_API_KEY)." : "The email service refused the send." }, { status: 502, headers: noStore });
+    return NextResponse.json({ ok: false, error: result.reason.includes("SMTP_PASS") ? "Email isn't configured (SMTP_PASS)." : "The mail server refused the send." }, { status: 502, headers: noStore });
   }
   return NextResponse.json({ ok: true, sent: to.length, subject }, { headers: noStore });
 }
