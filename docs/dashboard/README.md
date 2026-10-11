@@ -66,7 +66,7 @@ Sign-in is a **one-time emailed link**, with no passwords.
 | `DASHBOARD_ALLOWED_EMAILS` | The only addresses that can sign in. Remove one and its sessions stop working on the next request. |
 | `DASHBOARD_SESSION_SECRET` | 32+ random characters (`openssl rand -base64 48`). Signs sessions and links. Rotate it to sign everyone out. |
 | `DASHBOARD_SESSION_VERSION` | Optional. Change it to sign everyone out without rotating the secret. |
-| `RESEND_API_KEY`, `CONTACT_FROM` | Already used by the contact form; also send the sign-in links. |
+| `SMTP_PASS` (and optional `SMTP_HOST`/`SMTP_PORT`/`SMTP_USER`) | The WonderApps mailbox the contact form uses; also sends the sign-in links and newsletters. |
 
 What protects it:
 

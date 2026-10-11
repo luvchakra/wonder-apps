@@ -34,10 +34,10 @@ export async function compose(period: Period, fresh = true): Promise<{ n: Newsle
   return { n: buildNewsletter({ snaps, w, cadence }), w };
 }
 
-/** Sends to a list. The idempotency key (period + start day) means a retried cron can't double-send. */
+/** Sends to a list. The message key (period + start day) gives a retried send the same Message-ID, so inboxes show it once. */
 export async function deliver(period: Period, to: string[], opts?: { test?: boolean }) {
   const { n, w } = await compose(period, true);
   const key = `nl-${opts?.test ? "test" : "all"}-${period}-${zonedDate(w.start, w.tz)}-${zonedDate(new Date(), w.tz)}${opts?.test ? `-${to[0]}` : ""}`.slice(0, 250);
-  const r = await sendMail({ to, subject: `${opts?.test ? "[Test] " : ""}${n.subject}`, html: n.html, text: n.text, idempotencyKey: key });
+  const r = await sendMail({ to, subject: `${opts?.test ? "[Test] " : ""}${n.subject}`, html: n.html, text: n.text, messageKey: key });
   return { result: r, subject: n.subject };
 }

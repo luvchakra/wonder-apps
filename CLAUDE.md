@@ -4,8 +4,8 @@ Investor-facing portfolio site for five independent AI-native startups —
 **WonderHome**, **WonderJobs**, **Wonder Creator**, **WonderArk** and **WonderID**
 (formerly WonderAgent). Apple-style presentation:
 dark/light bands, scroll-linked parallax, device frames, staged hero animation.
-Static except for one route handler that emails contact-form submissions via
-Resend. No database.
+Static except for one route handler that emails contact-form submissions through
+the WonderApps mailbox (GoDaddy SMTP). No database.
 
 ## Commands
 
@@ -25,7 +25,7 @@ pre-push gate.
 ## Stack
 
 Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion ·
-lucide-react · zod · Resend. System font stack on purpose (no external font
+lucide-react · zod · nodemailer (GoDaddy SMTP). System font stack on purpose (no external font
 fetch at build time).
 
 ## Layout
@@ -52,7 +52,7 @@ src/app/
   (legal)/[slug]/page.tsx   legal pages, statically generated from legal.ts
   contact/page.tsx          contact page (?interest=<slug> preselects a product)
   appstracker/page.tsx      portfolio engineering tracker (TrackerClient)
-  api/contact/route.ts      POST → Resend. Honeypot field, zod validation.
+  api/contact/route.ts      POST → `src/lib/mailer.ts` (SMTP). Honeypot field, zod validation.
   api/tracker/route.ts      GET → reads the five products' tracker markdown
                             from raw.githubusercontent.com and returns parsed rows
 src/lib/tracker-parsers.ts  deterministic markdown-table parsers, one per product;
@@ -122,7 +122,7 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
 - **Access.** `DASHBOARD_ALLOWED_EMAILS` + emailed one-time link bound to the requesting browser, signed
   12 h sessions (`DASHBOARD_SESSION_SECRET`). `src/proxy.ts` is the first gate and every page/route calls
   `requireSession()`/`getSession()` again. Never link `/dashboard` from the public site.
-- **Newsletters** are built from the same live data (`newsletter.ts`), sent with Resend by Vercel Cron
+- **Newsletters** are built from the same live data (`newsletter.ts`), sent through `src/lib/mailer.ts` by Vercel Cron
   (`vercel.json`, `CRON_SECRET`) or from `/dashboard/newsletter`. `DASHBOARD_DEMO=1` shows synthetic
   numbers locally and is ignored in production.
 - The public-copy rules above (no tech stack names) apply to the marketing site, not to this private page.
@@ -212,10 +212,14 @@ deployments as a scarce budget with production first.
 
 ## Environment
 
-See `.env.example`. `RESEND_API_KEY` and `CONTACT_RECIPIENTS` (comma-separated)
-are required for the contact form to send; without them the route returns 503
-with a clear message and logs the reason. `CONTACT_FROM` must be a verified
-Resend sender.
+See `.env.example`. All email (contact form, dashboard sign-in links, newsletters)
+goes through one module, `src/lib/mailer.ts`: GoDaddy Workspace Email over SMTP,
+signed in as `connect@wonderapps.biz`. Never use Resend or another email API. `SMTP_PASS` and
+`CONTACT_RECIPIENTS` (comma-separated) are required for the contact form to send;
+without them the route returns 503 with a clear message and logs the reason.
+`SMTP_HOST`/`SMTP_PORT`/`SMTP_USER` default to `smtpout.secureserver.net`/`465`/
+`connect@wonderapps.biz`. GoDaddy only relays mail from the signed-in mailbox, so
+`CONTACT_FROM`/`NEWSLETTER_FROM` must stay on it.
 
 ## Session startup
 

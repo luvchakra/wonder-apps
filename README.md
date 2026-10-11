@@ -5,14 +5,15 @@ Investor portfolio site for five independent AI-native startups: **WonderHome**,
 own deep-dive page, cited market figures and a downloadable investor deck.
 
 Static Next.js site with Apple-style presentation. The only server-side code is
-the contact form, which emails submissions through [Resend](https://resend.com).
+the contact form, which emails submissions through the WonderApps mailbox
+(GoDaddy Workspace Email over SMTP).
 No database.
 
 ## Run it
 
 ```bash
 npm install
-cp .env.example .env.local     # fill in RESEND_API_KEY, CONTACT_RECIPIENTS, CONTACT_FROM
+cp .env.example .env.local     # fill in SMTP_PASS and CONTACT_RECIPIENTS
 npm run dev                    # http://localhost:3000
 npm run check                  # lint + typecheck + production build
 ```
@@ -21,9 +22,10 @@ npm run check                  # lint + typecheck + production build
 
 | Variable | Purpose |
 |---|---|
-| `RESEND_API_KEY` | Resend API key used server-side only. |
+| `SMTP_PASS` | Password of the sending mailbox (server-side only). |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER` | Optional; default to `smtpout.secureserver.net`, `465`, `connect@wonderapps.biz`. |
 | `CONTACT_RECIPIENTS` | Comma-separated inboxes that receive every contact-form message. |
-| `CONTACT_FROM` | Sender address on a Resend-verified domain, e.g. `WonderApps <hello@yourdomain.com>`. |
+| `CONTACT_FROM` | Optional From line; must be the SMTP mailbox, e.g. `WonderApps <connect@wonderapps.biz>`. |
 | `NEXT_PUBLIC_SITE_URL` | Optional canonical URL for metadata and the sitemap. |
 
 Set the same variables in Vercel → Project → Settings → Environment Variables.
