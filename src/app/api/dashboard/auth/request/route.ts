@@ -3,7 +3,7 @@ import { z } from "zod";
 import { cookieNames, dashboardConfig, LOGIN_LINK_TTL_S } from "@/lib/dashboard/config";
 import { sendMail } from "@/lib/dashboard/mail";
 import { mailConfigured } from "@/lib/mailer";
-import { clientIp, limited, noStore, sameOrigin } from "@/lib/dashboard/request-guards";
+import { clientIp, limited, maskEmail, noStore, sameOrigin } from "@/lib/dashboard/request-guards";
 import { hashNonce, newNonce, signToken } from "@/lib/dashboard/tokens";
 
 export const runtime = "nodejs";
@@ -27,7 +27,10 @@ export async function POST(req: Request) {
   }
 
   const ip = clientIp(req);
-  if (limited(`req:ip:${ip}`, 6, 15 * 60_000)) return NextResponse.json({ ok: false, error: "Too many attempts. Try again in a few minutes." }, { status: 429, headers: noStore });
+  if (limited(`req:ip:${ip}`, 6, 15 * 60_000)) {
+    console.warn("[dashboard] sign-in request refused: more than 6 requests from this network in 15 minutes");
+    return NextResponse.json({ ok: false, error: "Too many attempts. Try again in a few minutes." }, { status: 429, headers: noStore });
+  }
 
   let email = "";
   try {
@@ -41,8 +44,17 @@ export async function POST(req: Request) {
   const res = NextResponse.json({ ok: true }, { headers: noStore });
   res.cookies.set(cookieNames().challenge, nonce, { httpOnly: true, secure: dashboardConfig.isProd(), sameSite: "lax", path: "/", maxAge: LOGIN_LINK_TTL_S });
 
-  if (email && !limited(`req:email:${email}`, 3, 15 * 60_000) && dashboardConfig.isAllowed(email)) {
+  // Every outcome is logged (address masked) so a missing email can be traced; the response
+  // stays the same for all of them, so the page still can't be used to find who has access.
+  if (!email) {
+    console.warn("[dashboard] sign-in request ignored: no valid email address in the request");
+  } else if (limited(`req:email:${email}`, 3, 15 * 60_000)) {
+    console.warn(`[dashboard] sign-in request ignored for ${maskEmail(email)}: more than 3 requests for this address in 15 minutes`);
+  } else if (!dashboardConfig.isAllowed(email)) {
+    console.warn(`[dashboard] sign-in request ignored for ${maskEmail(email)}: not in DASHBOARD_ALLOWED_EMAILS`);
+  } else {
     const token = signToken("login", { sub: email, nh: hashNonce(nonce) }, LOGIN_LINK_TTL_S);
+    if (!token) console.error("[dashboard] sign-in link not created: DASHBOARD_SESSION_SECRET is unusable");
     if (token) {
       const link = `${dashboardConfig.origin()}/api/dashboard/auth/verify?t=${encodeURIComponent(token)}`;
       // Sent after the response so allowed and unknown addresses take the same time.
@@ -63,7 +75,8 @@ export async function POST(req: Request) {
 <a href="${esc(link)}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:13px 22px;border-radius:999px">Open the dashboard</a>
 </div>`,
         });
-        if (!r.ok) console.error("[dashboard] could not send sign-in link:", r.reason);
+        if (r.ok) console.log(`[dashboard] sign-in link sent to ${maskEmail(email)}; mail server replied: ${r.response || "(no reply text)"} ${r.messageId ?? ""}`.trim());
+        else console.error(`[dashboard] could not send sign-in link to ${maskEmail(email)}:`, r.reason);
       });
     }
   }

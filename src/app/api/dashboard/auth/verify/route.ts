@@ -1,12 +1,21 @@
 import { NextResponse } from "next/server";
 import { cookieNames, dashboardConfig, SESSION_TTL_S } from "@/lib/dashboard/config";
-import { clientIp, limited, noStore } from "@/lib/dashboard/request-guards";
+import { clientIp, limited, maskEmail, noStore } from "@/lib/dashboard/request-guards";
 import { hashNonce, makeSessionToken, verifyToken } from "@/lib/dashboard/tokens";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const WHY: Record<string, string> = {
+  slow: "more than 20 attempts from this network in 15 minutes",
+  expired: "link invalid, already used or older than its time limit",
+  browser: "opened in a different browser from the one that asked for it",
+  denied: "address no longer in DASHBOARD_ALLOWED_EMAILS",
+  config: "DASHBOARD_SESSION_SECRET is unusable",
+};
+
 const back = (req: Request, reason: string) => {
+  console.warn(`[dashboard] sign-in link refused: ${WHY[reason] ?? reason}`);
   const res = NextResponse.redirect(new URL(`/dashboard/login?e=${reason}`, dashboardConfig.origin()), 303);
   res.headers.set("Cache-Control", noStore["Cache-Control"]);
   res.headers.set("Referrer-Policy", "no-referrer");
@@ -38,6 +47,7 @@ export async function GET(req: Request) {
   const session = makeSessionToken(claims.sub);
   if (!session) return back(req, "config");
 
+  console.log(`[dashboard] signed in: ${maskEmail(claims.sub)}`);
   const res = NextResponse.redirect(new URL("/dashboard", dashboardConfig.origin()), 303);
   res.cookies.set(cookieNames().session, session, { httpOnly: true, secure: dashboardConfig.isProd(), sameSite: "lax", path: "/", maxAge: SESSION_TTL_S });
   res.cookies.set(cookieNames().challenge, "", { httpOnly: true, secure: dashboardConfig.isProd(), sameSite: "lax", path: "/", maxAge: 0 });

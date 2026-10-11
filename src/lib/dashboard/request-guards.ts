@@ -41,3 +41,10 @@ export function limited(key: string, max: number, windowMs: number): boolean {
 }
 
 export const noStore = { "Cache-Control": "no-store, max-age=0", "X-Robots-Tag": "noindex, nofollow" } as const;
+
+/** An address as it may appear in logs: first letter and domain only ("k•••@gmail.com"). */
+export function maskEmail(email: string): string {
+  const at = email.lastIndexOf("@");
+  if (at < 1) return "(not an email address)";
+  return `${email[0]}•••${email.slice(at)}`;
+}

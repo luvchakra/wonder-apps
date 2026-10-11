@@ -1,7 +1,8 @@
 import nodemailer from "nodemailer";
 import { site } from "@/content/site";
 
-export type MailResult = { ok: true } | { ok: false; reason: string };
+/** On success, the mail server's own reply ("250 …") and the Message-ID, for the logs. */
+export type MailResult = { ok: true; response?: string; messageId?: string } | { ok: false; reason: string };
 
 /**
  * The one place that sends email: the contact form, dashboard sign-in links and newsletters.
@@ -44,7 +45,7 @@ export async function sendMail(opts: {
       greetingTimeout: 10_000,
       socketTimeout: 20_000,
     });
-    await transport.sendMail({
+    const info = await transport.sendMail({
       from: opts.from || defaultFrom(),
       to: opts.to,
       replyTo: opts.replyTo,
@@ -53,7 +54,7 @@ export async function sendMail(opts: {
       html: opts.html,
       messageId: opts.messageKey ? `<${opts.messageKey.replace(/[^\w.-]/g, "-")}@${user.split("@")[1] ?? "wonderapps.biz"}>` : undefined,
     });
-    return { ok: true };
+    return { ok: true, response: String(info.response ?? "").slice(0, 200), messageId: info.messageId };
   } catch (e) {
     return { ok: false, reason: e instanceof Error ? e.message : "send failed" };
   }
