@@ -116,3 +116,21 @@ Edit `src/lib/dashboard/apps/<product>.ts` (contract in `src/lib/dashboard/types
 table or columns to `docs/dashboard/<product>-readonly.sql`, and keep every query aggregate-only,
 bound to `$1..$4`, and schema-qualified. Locally, `DASHBOARD_DEMO=1` renders synthetic numbers
 (never in production) so layouts can be reviewed with no databases.
+
+## Development
+
+`/dashboard/development` shows where each app is being built: one card per product (completion,
+what is being worked on, what is next, last update) and one section per product with its own
+progress files rendered in full, collapsible by heading. The files are read live from the
+products' public GitHub repos (`DEV_SOURCES` in `src/lib/dashboard/development.ts`) and cached
+for five minutes; nothing is stored. Completion uses the same parsers as the public tracker and is
+floored. Raw HTML in the files is dropped, images are not loaded, and relative links open the file
+on GitHub.
+
+| Product | Files shown |
+|---|---|
+| WonderHome | `docs/PROGRESS.md`, `tracking/PROGRESS.md` |
+| WonderJobs | `docs/PROGRESS.md`, `docs/IMPLEMENTATION_TRACKER.md` |
+| Wonder Creator | `docs/progress.md` |
+| WonderArk | `docs/PROGRESS-TRACKER.md` |
+| WonderID | `docs/WonderID/progress/PROGRESS.md`, `docs/PROGRESS.md` |
