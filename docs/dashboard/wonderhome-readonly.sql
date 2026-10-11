@@ -90,7 +90,18 @@ END $$;
 
 -- Re-assert the attributes on every run (also repairs a role someone loosened by hand).
 -- To rotate the password later:  ALTER ROLE wonderapps_dashboard PASSWORD '<new password>';
-ALTER ROLE wonderapps_dashboard LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT CONNECTION LIMIT 6;
+-- Supabase's `postgres` is not a superuser, and since Postgres 16 only a superuser may even
+-- write SUPERUSER / REPLICATION / BYPASSRLS in ALTER ROLE. CREATE ROLE above already sets them
+-- off, and a non-superuser can never turn them on, so refuse to go on if someone else did.
+DO $guard$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'wonderapps_dashboard'
+             AND (rolsuper OR rolreplication OR rolbypassrls)) THEN
+    RAISE EXCEPTION 'wonderapps_dashboard has SUPERUSER, REPLICATION or BYPASSRLS; a superuser must remove them before this script runs';
+  END IF;
+END
+$guard$;
+ALTER ROLE wonderapps_dashboard LOGIN NOCREATEDB NOCREATEROLE NOINHERIT CONNECTION LIMIT 6;
 ALTER ROLE wonderapps_dashboard SET default_transaction_read_only = on;
 ALTER ROLE wonderapps_dashboard SET statement_timeout = '8s';
 ALTER ROLE wonderapps_dashboard SET idle_in_transaction_session_timeout = '10s';
