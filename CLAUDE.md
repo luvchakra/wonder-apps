@@ -125,6 +125,11 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
 - **Newsletters** are built from the same live data (`newsletter.ts`), sent through `src/lib/mailer.ts` by Vercel Cron
   (`vercel.json`, `CRON_SECRET`) or from `/dashboard/newsletter`. `DASHBOARD_DEMO=1` shows synthetic
   numbers locally and is ignored in production.
+- **Development** (`/dashboard/development`, one section per app at `/development/<slug>`) shows each
+  product's own progress files, read live from GitHub (`src/lib/dashboard/development.ts`, `DEV_SOURCES`;
+  five-minute in-memory cache) and rendered as collapsible sections. Numbers come from the same parser and
+  file as `/appstracker`, so the two never disagree; a file that can't be read falls back to the snapshot,
+  never zeros. Add or move a product's progress file in `DEV_SOURCES`.
 - The public-copy rules above (no tech stack names) apply to the marketing site, not to this private page.
 
 ## The tracker (/appstracker)
