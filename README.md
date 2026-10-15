@@ -62,8 +62,9 @@ Not set, on purpose: `NEXT_PUBLIC_SITE_URL` (defaults to `https://wonderapps.biz
 `SMTP_USER` (default to the GoDaddy mailbox). Never set `DASHBOARD_DEMO` in production
 (it is ignored there anyway).
 
-Domains: `www.wonderapps.biz` serves the site; `wonderapps.biz` redirects to it (308);
-`wonder-apps.vercel.app` is the Vercel alias. Preview deployments sit behind Vercel
+Domains: `wonderapps.biz` serves the site and matches the canonical URL in
+`src/content/site.ts`; `www.wonderapps.biz` redirects to it (308, path and query kept;
+switched 2026-10-15); `wonder-apps.vercel.app` is the Vercel alias. Preview deployments sit behind Vercel
 Authentication. Changing a variable takes effect on the next production deployment,
 which follows the build-slot rules in `CLAUDE.md`.
 
