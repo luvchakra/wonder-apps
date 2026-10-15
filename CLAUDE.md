@@ -235,15 +235,16 @@ and the cap is shared with WonderHome, which is in the same account. Every deplo
 ones an ignored-build step cancels. Running out blocks production, so treat
 deployments as a scarce budget with production first.
 
-- **Nothing builds on Vercel until the founder says "merge now" or "build now".**
-  Only a message from the founder containing one of those phrases allows a merge
-  to `main`, a redeploy, or any other action that makes Vercel build. Until then,
-  finish and verify the work, push the branch and open the pull request, then
-  wait, whatever CI or an earlier "merge without asking" says. When the phrase
-  comes, it covers every pull request that is unmerged or waiting at that moment.
-  Land them together so the batch costs one production deployment: put them
-  through one combined merge to `main` where you can. Work that arrives after the
-  phrase waits for the next one.
+- **Merge automatically once the work is verified** (founder's decision, 2026-10-15;
+  this replaced waiting for "merge now"). When a change is finished and `npm run
+  check` passes (plus `npm run decks` when a deck changed), push the branch, open
+  the pull request and squash-merge it to `main` yourself, then check the production
+  deployment reaches Ready and the changed pages are live. Don't ask first.
+  Still one merge per finished change: no merging half-done work to "see it live",
+  and if several pull requests are ready at the same time, land them together so
+  they cost one deployment. Hold the merge and ask instead only when the budget
+  below says to stop, when CI on the pull request is red, or when the change
+  alters public numbers or legal text in a way the founder hasn't seen.
 
 - **Only `main` deploys.** `vercel.json` → `git.deploymentEnabled` turns off
   `claude/**`, `ccr-**`, `feature/**` and `dependabot/**`; keep it that way and add any new
