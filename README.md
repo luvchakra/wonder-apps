@@ -32,10 +32,29 @@ Set the same variables in Vercel → Project → Settings → Environment Variab
 
 ## Deploy
 
-The repo is linked to the Vercel project `wonder-apps` (team `luvchakra's projects`, id `prj_eAN93HE8LG4URCWU0JlhBQtokWuM`). Every push
-to a branch gets a preview URL; merging to `main` deploys production. `vercel.json`
-pins the Next.js framework preset and the `bom1` (Mumbai) function region, matching
-the data residency of the products themselves.
+The repo is linked to the Vercel project `wonder-apps` (team `luvchakra's projects`, id `prj_eAN93HE8LG4URCWU0JlhBQtokWuM`). Only
+`main` deploys: `vercel.json` → `git.deploymentEnabled` turns off the working-branch
+prefixes (`claude/**`, `ccr-**`, `feature/**`, `dependabot/**`), so no previews spend
+build slots (see the build-slot budget in `CLAUDE.md`). `vercel.json` also pins the
+Next.js framework preset, the `bom1` (Mumbai) function region, matching the data
+residency of the products themselves, and the two newsletter crons.
+
+### Vercel checklist (done in the dashboard, not in this repo)
+
+Production environment variables (Settings → Environment Variables):
+
+| Needed for | Variables |
+|---|---|
+| Contact form | `SMTP_PASS`, `CONTACT_RECIPIENTS` (`CONTACT_FROM` optional) |
+| Dashboard sign-in | `DASHBOARD_ALLOWED_EMAILS`, `DASHBOARD_SESSION_SECRET` (32+ chars) |
+| Dashboard data | `WONDERHOME_DATABASE_URL` … `WONDERID_DATABASE_URL` (read-only roles, see `docs/dashboard/README.md`) |
+| Newsletters | `CRON_SECRET` (16+ chars), `NEWSLETTER_CADENCE`, optional `NEWSLETTER_RECIPIENTS` |
+| Metadata | `NEXT_PUBLIC_SITE_URL=https://wonderapps.biz` |
+
+Domains: `wonderapps.biz` as the production domain (and `www.wonderapps.biz`
+redirecting to it). Never set `DASHBOARD_DEMO` in production (it is ignored there anyway).
+Changing variables takes effect on the next production deployment, which follows the
+build-slot rules in `CLAUDE.md`.
 
 ## Edit the content
 

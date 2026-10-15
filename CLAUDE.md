@@ -197,7 +197,7 @@ deployments as a scarce budget with production first.
   phrase waits for the next one.
 
 - **Only `main` deploys.** `vercel.json` → `git.deploymentEnabled` turns off
-  `claude/**`, `feature/**` and `dependabot/**`; keep it that way and add any new
+  `claude/**`, `ccr-**`, `feature/**` and `dependabot/**`; keep it that way and add any new
   working-branch prefix there. No previews unless someone will open one. One
   Vercel project per repo.
 - **One merge to `main` = one production deployment.** Squash-merge, and put docs,
