@@ -181,8 +181,10 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
 
 ## Build-slot budget (Vercel deployments)
 
-The Vercel team (`luvchakras-projects`) caps deployments per day, and it is shared
-with WonderArk and WonderID. Every deployment Vercel *creates* counts, including
+The project lives in the Vercel account `kunals-projects-9f64757f` (project
+`wonder-apps`; moved there from `luvchakras-projects` in October 2026). That
+account caps deployments per day, and the cap is shared with its other projects,
+including `wonderhome`. Every deployment Vercel *creates* counts, including
 ones an ignored-build step cancels. Running out blocks production, so treat
 deployments as a scarce budget with production first.
 
@@ -208,7 +210,7 @@ deployments as a scarce budget with production first.
   and `npm run decks` locally when a deck changed — then push the branch once, when
   it is ready. No fix-up pushes.
 - **Watch the budget.** Before deployment-heavy work, count the team's deployments
-  in the last 24 hours (all three projects). Above ~70% of the cap, stop docs-only
+  in the last 24 hours (every project in the account). Above ~70% of the cap, stop docs-only
   merges and keep the rest for production and hotfixes.
 - **When the cap is hit:** stop merging to `main` (refused deployments are not
   queued), wait until the oldest counted deployment is 24 hours old, then redeploy
