@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { site } from "@/content/site";
-import { startups } from "@/content/startups";
+import type { Startup } from "@/content/types";
 import { Wordmark } from "./Logo";
 import { AnimatedMark } from "./AnimatedMark";
 import { BackToMain } from "./BackToMain";
 
-export function Nav() {
+export type NavProduct = Pick<Startup, "slug" | "name" | "category">;
+
+export function Nav({ products: startups }: { products: NavProduct[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {

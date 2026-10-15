@@ -31,6 +31,7 @@ export function DevTabs({ apps, current }: { apps: { slug: string; name: string;
 
 /** Completion as a bar: the app's colour for done, a lighter step for partial, track for the rest. */
 export function DevBar({ s, color }: { s: DevSection; color: string }) {
+  if (!s.totals) return null;
   const active = Math.max(1, s.totals.total - s.totals.setAside);
   const done = (s.totals.done / active) * 100;
   const partial = (s.totals.partial / active) * 100;
@@ -44,6 +45,7 @@ export function DevBar({ s, color }: { s: DevSection; color: string }) {
 
 export function DevStats({ s }: { s: DevSection }) {
   const t = s.totals;
+  if (!t) return <p className="text-sm" style={{ color: "#8c8b84" }}>Numbers unavailable: neither the live file nor a recorded snapshot could be read.</p>;
   const active = t.total - t.setAside;
   const left = Math.max(0, active - t.done);
   return (

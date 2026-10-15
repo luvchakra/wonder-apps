@@ -1,6 +1,9 @@
 import { dashboardConfig } from "./config";
 import { loadAll } from "./load";
 import { buildNewsletter, type Cadence, type Newsletter } from "./newsletter";
+import { dashProducts, namesOf } from "./products";
+import { getProgressHistory } from "@/lib/content/load";
+import { addDays, changesSince } from "@/lib/progress/trends";
 import { sendMail } from "./mail";
 import type { Window } from "./types";
 import { lastCalendarMonth, lastCompleteWeek, lastDays, zonedDate } from "./window";
@@ -30,8 +33,18 @@ export function windowFor(period: Period): { w: Window; cadence: Cadence } {
 
 export async function compose(period: Period, fresh = true): Promise<{ n: Newsletter; w: Window }> {
   const { w, cadence } = windowFor(period);
-  const snaps = await loadAll(w, fresh);
-  return { n: buildNewsletter({ snaps, w, cadence }), w };
+  const [snaps, products, history] = await Promise.all([
+    loadAll(w, fresh),
+    dashProducts(),
+    getProgressHistory().catch((e: unknown) => {
+      console.error("[newsletter] progress history unavailable:", e instanceof Error ? e.message : e);
+      return null;
+    }),
+  ]);
+  // The period's last day against the day before it began, so the change is what happened inside it.
+  const lastDay = zonedDate(new Date(w.end.getTime() - 1), w.tz);
+  const progress = history ? changesSince(history, products.map((p) => p.slug), addDays(zonedDate(w.start, w.tz), -1), lastDay) : null;
+  return { n: buildNewsletter({ snaps, w, cadence, names: namesOf(products), progress }), w };
 }
 
 /** Sends to a list. The message key (period + start day) gives a retried send the same Message-ID, so inboxes show it once. */

@@ -1,11 +1,12 @@
-import { productProgress, totalsFor, type PortfolioTotals } from "@/content/progress";
+import { totalsFor, type PortfolioTotals } from "@/content/progress";
+import { getLatestProgress } from "@/lib/content/load";
 import { TRACKER_SOURCES } from "@/lib/tracker-parsers";
 
 /**
  * Development progress per product, read live from each product's own public progress files on
- * GitHub (the same files the public /appstracker parses). Nothing is stored here: a five-minute
- * in-memory cache only, and if a file can't be read the section says so and falls back to the
- * curated snapshot numbers, never to zeros.
+ * GitHub (the same files the public /appstracker parses), with a five-minute in-memory cache. If
+ * a file can't be read the section says so and falls back to the latest recorded snapshot in the
+ * database; if that can't be read either it shows no numbers at all, never zeros.
  */
 
 const GH = "https://github.com/luvchakra";
@@ -108,8 +109,9 @@ export function keyFacts(md: string): Fact[] {
 
 export type DevSection = {
   slug: string;
-  totals: PortfolioTotals;
-  /** True when the numbers came from the live file; false means the curated snapshot. */
+  /** Null only when neither the live file nor a recorded snapshot could be read. */
+  totals: PortfolioTotals | null;
+  /** True when the numbers came from the live file; false means the latest recorded snapshot. */
   live: boolean;
   lastUpdated: string | null;
   currentFocus: string | null;
@@ -129,11 +131,13 @@ export async function loadDevSection(slug: string): Promise<DevSection | null> {
 
   // Numbers: the same parser and file as the public tracker, so the two never disagree.
   const tracker = TRACKER_SOURCES[slug];
-  const snapshot = productProgress.find((p) => p.slug === slug);
-  let totals = totalsFor(snapshot?.rows ?? []);
+  const recorded = await getLatestProgress()
+    .then((m) => m.get(slug) ?? null)
+    .catch(() => null);
+  let totals: PortfolioTotals | null = recorded?.rows.length ? totalsFor(recorded.rows) : null;
   let live = false;
-  let lastUpdated: string | null = snapshot?.lastUpdated ?? null;
-  let currentFocus: string | null = snapshot?.currentFocus ?? null;
+  let lastUpdated: string | null = recorded ? (recorded.snapshot.source_last_updated ?? recorded.snapshot.captured_on) : null;
+  let currentFocus: string | null = recorded?.snapshot.current_focus ?? null;
   if (tracker) {
     const r = await fetchText(tracker.raw);
     if (r.ok) {

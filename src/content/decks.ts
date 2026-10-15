@@ -1,7 +1,5 @@
-import { deckCopy } from "./deck-copy";
 import { site } from "./site";
-import { startupBySlug } from "./startups";
-import type { MarketFigure, Plan, Screenshot, Startup } from "./types";
+import type { DeckCopy, MarketFigure, Plan, Screenshot, Startup } from "./types";
 
 /**
  * One slide model feeds both the on-page viewer and the printable route that
@@ -32,9 +30,7 @@ export function deckFile(slug: string) {
   return `/decks/${slug}-investor-deck.pdf`;
 }
 
-export function buildDeck(s: Startup): Deck {
-  const copy = deckCopy[s.slug];
-  if (!copy) throw new Error(`No deck copy for ${s.slug}`);
+export function buildDeck(s: Startup, copy: DeckCopy): Deck {
   const desktops = s.screens.filter((x) => x.kind === "desktop");
   const mobiles = s.screens.filter((x) => x.kind === "mobile");
   const slides: Slide[] = [{ kind: "cover" }];
@@ -59,11 +55,6 @@ export function buildDeck(s: Startup): Deck {
   if (s.market.figures.length) slides.push({ kind: "sources", eyebrow: "Appendix", title: "Sources for every market figure", figures: s.market.figures });
 
   return { slug: s.slug, startup: s, slides, file: deckFile(s.slug), fileName: `${s.name.replace(/\s+/g, "")}-Investor-Deck.pdf` };
-}
-
-export function deckBySlug(slug: string): Deck | undefined {
-  const s = startupBySlug(slug);
-  return s ? buildDeck(s) : undefined;
 }
 
 export const deckFooter = (s: Startup) => `WonderApps · ${s.name} · Investor overview · Not an offer of securities · ${site.contactEmail}`;

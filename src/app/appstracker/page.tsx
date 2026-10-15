@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { productProgress } from "@/content/progress";
+import { getTrackerProducts } from "@/lib/content/load";
 import { TrackerClient } from "@/components/TrackerClient";
 import { Reveal } from "@/components/Reveal";
 import { site } from "@/content/site";
@@ -12,10 +12,11 @@ export const metadata: Metadata = {
     "High-level and story-level build progress across WonderHome, WonderJobs, WonderArk and WonderID, read live from each product's own public engineering tracker.",
 };
 
-export default function AppsTrackerPage() {
+export default async function AppsTrackerPage() {
+  const products = await getTrackerProducts();
   return (
     <>
-      <TrackerClient initial={productProgress} />
+      <TrackerClient initial={products} />
       <section className="theme-light bg-bg-soft text-fg">
         <div className="container py-14">
           <Reveal className="mx-auto max-w-2xl text-center">

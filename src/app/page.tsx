@@ -7,17 +7,17 @@ import { Stat } from "@/components/Stats";
 import { ContactForm } from "@/components/ContactForm";
 import { SectionHeading } from "@/components/ui";
 import { deckFile } from "@/content/decks";
-import { startups } from "@/content/startups";
-import { portfolioTotals } from "@/content/progress";
+import { totalsFor } from "@/content/progress";
+import { getLatestProgress, getStartups } from "@/lib/content/load";
 
-// Floored to the hundred so the copy can never overstate what the trackers show.
-const shippedFloor = Math.floor(portfolioTotals().done / 100) * 100;
-const citedFigures = startups.reduce((n, s) => n + s.market.figures.length, 0);
-
-export default function Home() {
+export default async function Home() {
+  const [startups, latest] = await Promise.all([getStartups(), getLatestProgress()]);
+  // Floored to the hundred so the copy can never overstate what the trackers show.
+  const shippedFloor = Math.floor(totalsFor([...latest.values()].flatMap((l) => l.rows)).done / 100) * 100;
+  const citedFigures = startups.reduce((n, s) => n + s.market.figures.length, 0);
   return (
     <>
-      <Hero />
+      <Hero products={startups.map(({ slug, name, category, accent, screens }) => ({ slug, name, category, accent, screens }))} />
 
       {/* Snapshot */}
       <section id="snapshot" className="theme-light section bg-bg text-fg" aria-labelledby="snapshot-title">
@@ -143,7 +143,7 @@ export default function Home() {
             </ul>
           </Reveal>
           <Reveal delay={0.1} className="lg:col-span-7">
-            <ContactForm />
+            <ContactForm products={startups.map(({ slug, name, accent }) => ({ slug, name, accent }))} />
           </Reveal>
         </div>
       </section>

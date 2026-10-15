@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { startups } from "@/content/startups";
+import type { Startup } from "@/content/types";
 import { DevicePair } from "./DevicePair";
 import { Button } from "./ui";
 import { Logo } from "./Logo";
@@ -22,7 +22,9 @@ const ROTATING: Record<string, string> = {
 };
 const DWELL = 4800;
 
-export function Hero() {
+export type HeroProduct = Pick<Startup, "slug" | "name" | "category" | "accent" | "screens">;
+
+export function Hero({ products: startups }: { products: HeroProduct[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -37,7 +39,7 @@ export function Hero() {
     if (reduce) return;
     const id = window.setInterval(() => setActive((n) => (n + 1) % startups.length), DWELL);
     return () => window.clearInterval(id);
-  }, [reduce]);
+  }, [reduce, startups.length]);
   const cur = startups[active];
   const laptop = cur.screens.find((s) => s.kind === "desktop")!;
   const phone = cur.screens.find((s) => s.kind === "mobile");

@@ -4,7 +4,7 @@ import { ArrowRight, Download, Presentation } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/ui";
 import { buildDeck } from "@/content/decks";
-import { startups } from "@/content/startups";
+import { getDeckCopy, getStartups } from "@/lib/content/load";
 
 export const metadata: Metadata = {
   title: "Investor decks",
@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/decks" },
 };
 
-export default function DecksPage() {
+export default async function DecksPage() {
+  const [startups, copies] = await Promise.all([getStartups(), getDeckCopy()]);
   return (
     <>
       <section className="theme-dark relative overflow-hidden bg-bg pt-[calc(var(--nav-h)+4rem)] text-fg">
@@ -25,7 +26,7 @@ export default function DecksPage() {
       <section className="theme-light section bg-bg-soft text-fg">
         <div className="container grid gap-4 md:grid-cols-2">
           {startups.map((s, i) => {
-            const d = buildDeck(s);
+            const d = buildDeck(s, copies[s.slug]);
             return (
               <Reveal key={s.slug} delay={(i % 2) * 0.06} className="card flex flex-col p-7 sm:p-9">
                 <p className="eyebrow" style={{ color: s.accent }}>{s.category}</p>

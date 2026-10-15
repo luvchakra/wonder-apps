@@ -1,0 +1,2355 @@
+[
+  {
+    "kind": "deck_copy",
+    "slug": "wonderark",
+    "position": 0,
+    "data": {
+      "how": [
+        {
+          "body": "One signup, one login, one business record.",
+          "step": "Create the business once"
+        },
+        {
+          "body": "Start with one module; add or drop later.",
+          "step": "License what you need"
+        },
+        {
+          "body": "A won prospect becomes a customer; a job moves stock; an invoice feeds GST.",
+          "step": "Data connects itself"
+        },
+        {
+          "body": "The next module already knows your customers and items.",
+          "step": "Add a module in place"
+        }
+      ],
+      "moat": [
+        {
+          "body": "A prospect, customer and supplier are one party record; an invoice and a purchase order share one documents table.",
+          "title": "One entity map"
+        },
+        {
+          "body": "Statements and GST come from the same sales and stock records, so books and operations can't drift.",
+          "title": "Books from the same records"
+        },
+        {
+          "body": "Cancelling never deletes data: 30 days read-only, then retained for reactivation.",
+          "title": "Cancel-safe by design"
+        }
+      ],
+      "problem": [
+        "Growth turns into a pile of tools: five logins, five customer records.",
+        "Stock counts disagree with what a field crew actually used.",
+        "GST returns are re-keyed from sales data that already exists elsewhere.",
+        "Every integration is an export, an import and a person with a spreadsheet."
+      ],
+      "solution": [
+        {
+          "body": "AI finds and scores customers, plans campaigns and runs the investor pipeline.",
+          "title": "Discovery, Marketing & Funding"
+        },
+        {
+          "body": "Stock, orders, jobs, crews and field work on one record of the truth.",
+          "title": "Inventory & Service"
+        },
+        {
+          "body": "One inbox across WhatsApp and email, tied to the same customer record.",
+          "title": "CRM"
+        },
+        {
+          "body": "Automatic posting, statements with drill-down, and GST from real sales data.",
+          "title": "Finance & GST"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "deck_copy",
+    "slug": "wondercreator",
+    "position": 0,
+    "data": {
+      "how": [
+        {
+          "body": "A note, a memo, a photo or a link, in a moment.",
+          "step": "Capture"
+        },
+        {
+          "body": "CreativeMind notices how the pieces relate.",
+          "step": "Connect"
+        },
+        {
+          "body": "Shape writing, carousels, images, video, audio or slides.",
+          "step": "Create"
+        },
+        {
+          "body": "Publish to a Creator Page or ask for feedback.",
+          "step": "Share"
+        }
+      ],
+      "moat": [
+        {
+          "body": "Source, version and rights recorded from the first note, which is hard to retrofit.",
+          "title": "Provenance by default"
+        },
+        {
+          "body": "Hard ceilings for rights, commerce and deletion; honest 'not connected' states.",
+          "title": "Governed AI, not autopilot"
+        },
+        {
+          "body": "A deliberate position: no likes, no trending, no ranking.",
+          "title": "Against vanity metrics"
+        }
+      ],
+      "problem": [
+        "Raw material is scattered across a dozen apps, so connections go unseen.",
+        "AI drafts carry no record of the sources, versions or rights behind them.",
+        "Who owns what is tracked in memory, if at all.",
+        "Feeds rank by vanity; makers want honest, specific feedback."
+      ],
+      "solution": [
+        {
+          "body": "Text, photos, voice, PDFs and links in one library with provenance.",
+          "title": "Capture anything"
+        },
+        {
+          "body": "CreativeMind connects your material and offers directions; you decide.",
+          "title": "AI that suggests"
+        },
+        {
+          "body": "Immutable versions, compare and restore, and a lineage of what came from what.",
+          "title": "A studio that remembers"
+        },
+        {
+          "body": "A Creator Page, collaboration with attribution, and feedback with no likes or ranking.",
+          "title": "Publish and gather"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "deck_copy",
+    "slug": "wonderhome",
+    "position": 0,
+    "data": {
+      "how": [
+        {
+          "body": "Calendars, school notices and the family's own words.",
+          "step": "Observe"
+        },
+        {
+          "body": "Outcomes are checked against time, people and stock.",
+          "step": "Understand & plan"
+        },
+        {
+          "body": "Routine work resolves quietly; anything big returns as a plan.",
+          "step": "Act with consent"
+        },
+        {
+          "body": "Sparse, threaded notifications shaped by household preferences.",
+          "step": "Monitor & learn"
+        }
+      ],
+      "moat": [
+        {
+          "body": "Deterministic policy sits outside the model, set per household and per responsibility.",
+          "title": "Consent architecture"
+        },
+        {
+          "body": "People, guardianship, stock, obligations and preferences compound into a model of one home.",
+          "title": "A private household graph"
+        },
+        {
+          "body": "One conversation contract across channels; payments, orders and health changes never ride on voice alone.",
+          "title": "Governed voice"
+        }
+      ],
+      "problem": [
+        "Family admin never ends, and it lands on one person.",
+        "Every tool adds another list to feed; none notices what is slipping.",
+        "A bill is noticed when it is overdue. Dinner is a question at 7 pm.",
+        "Families won't hand a home to software that acts without asking."
+      ],
+      "solution": [
+        {
+          "body": "Plans backwards from ‘dinner by 8’ or ‘bill paid in time’.",
+          "title": "Outcomes, not chores"
+        },
+        {
+          "body": "Every consequential step shows a plan: Confirm, Change or Cancel.",
+          "title": "Asks before it acts"
+        },
+        {
+          "body": "Send a school circular; each date, fee and item becomes a tracked entry.",
+          "title": "Reads the paperwork"
+        },
+        {
+          "body": "School, meals, bills, health, help and pets in one place, by text or voice, in eight languages.",
+          "title": "The whole household"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "deck_copy",
+    "slug": "wonderid",
+    "position": 0,
+    "data": {
+      "how": [
+        {
+          "body": "Import identities and access from existing IAM; read-only to start.",
+          "step": "Connect"
+        },
+        {
+          "body": "An owner and approved apps, data and actions become SHOULD.",
+          "step": "Declare purpose"
+        },
+        {
+          "body": "Explicit rules, not model judgement, raise findings with evidence.",
+          "step": "Compare continuously"
+        },
+        {
+          "body": "Every revocation waits for a person and is re-checked.",
+          "step": "Remediate with a human"
+        }
+      ],
+      "moat": [
+        {
+          "body": "Incumbents bolt agents onto a human model; WonderID started from the agent and extends outward.",
+          "title": "Agent-first, identity-wide"
+        },
+        {
+          "body": "No access or risk decision depends on a language model: an auditable promise.",
+          "title": "Deterministic by architecture"
+        },
+        {
+          "body": "Saviynt, SailPoint, Entra, Okta and MCP map into one model without any becoming the architecture.",
+          "title": "Vendor-neutral model"
+        }
+      ],
+      "problem": [
+        "AI agents got production access. Nobody gave them an identity.",
+        "No owner: provisioned by someone who has since changed teams.",
+        "No readable purpose: scope lives in a ticket, not where a control can see it.",
+        "No link between what an agent can reach and what it actually did."
+      ],
+      "solution": [
+        {
+          "body": "Compare what an agent SHOULD do, CAN do and DID, with evidence for every gap.",
+          "title": "AI agent governance"
+        },
+        {
+          "body": "People, service accounts, applications and agents, reconciled from authoritative sources.",
+          "title": "One identity directory"
+        },
+        {
+          "body": "Discovery, validation, simulation and four-eyes approval before anything goes live.",
+          "title": "Applications, onboarded properly"
+        },
+        {
+          "body": "Request catalog, multi-stage approvals that forbid self-approval, access packages.",
+          "title": "Self-service access"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "deck_copy",
+    "slug": "wonderjobs",
+    "position": 0,
+    "data": {
+      "how": [
+        {
+          "body": "Describe the role in your own words.",
+          "step": "Find"
+        },
+        {
+          "body": "Compare matches with the reasons behind each.",
+          "step": "Decide"
+        },
+        {
+          "body": "An Application Pack of real, labelled materials.",
+          "step": "Apply"
+        },
+        {
+          "body": "A pipeline built from real applications.",
+          "step": "Progress"
+        }
+      ],
+      "moat": [
+        {
+          "body": "Only sources actually searched are shown, and nothing is ever submitted on a candidate's behalf.",
+          "title": "Honesty as a feature"
+        },
+        {
+          "body": "Opportunities de-duplicated across sources with per-field provenance and source-health monitoring.",
+          "title": "A job-data layer"
+        },
+        {
+          "body": "Matching and quality checks are rule-based and tested; the AI only drafts prose.",
+          "title": "Deterministic core"
+        }
+      ],
+      "problem": [
+        "The same job sits on six boards; the same résumé is rewritten ten times.",
+        "Boards rank by recency or by who paid, never by fit.",
+        "Auto-apply tools submit for you and damage your standing with employers.",
+        "Stale and duplicate listings waste a seeker's scarcest resource: attention."
+      ],
+      "solution": [
+        {
+          "body": "One plain-language search across real employer boards and feeds.",
+          "title": "Say what you want"
+        },
+        {
+          "body": "Every match explains itself, and so does every job it hides.",
+          "title": "See why"
+        },
+        {
+          "body": "A tailored résumé in eight templates; the employer's form filled in your own browser.",
+          "title": "Apply in minutes"
+        },
+        {
+          "body": "It never submits. The final click is always the candidate's.",
+          "title": "Stay in control"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "legal",
+    "slug": "privacy",
+    "position": 0,
+    "data": {
+      "slug": "privacy",
+      "title": "Privacy Policy",
+      "summary": "This site is a portfolio. The only personal data it collects is what you choose to send through the contact form.",
+      "sections": [
+        {
+          "heading": "1. Who we are",
+          "paragraphs": [
+            "{{legalName}} operates this website to present the WonderHome, WonderJobs, WonderArk and WonderID products to prospective investors and partners. Each product has its own privacy policy governing its own users; this policy covers only this portfolio site."
+          ]
+        },
+        {
+          "heading": "2. What we collect",
+          "paragraphs": [
+            "This website has no visitor accounts and no analytics cookies. Its database holds only the site's own text and a daily record of each product's public engineering tracker; it holds nothing about you.",
+            "If you submit the contact form, we receive the fields you fill in: your name, email address, organisation, the products you are interested in, and your message. Nothing else on the site records information about you."
+          ]
+        },
+        {
+          "heading": "3. How the contact form works",
+          "paragraphs": [
+            "Your submission is sent as an email to the founder's inbox through a transactional email provider. It is not stored in a database operated by us. The provider processes the message as our sub-processor solely to deliver it, under its own retention and security practices; we can tell you which provider we use on request.",
+            "We use your submission to reply to you. We do not add you to a mailing list and we do not share your details with third parties for marketing."
+          ]
+        },
+        {
+          "heading": "4. Legal basis and retention",
+          "paragraphs": [
+            "We process contact-form data on the basis of your consent and our legitimate interest in responding to enquiries. Messages are kept in the inbox for as long as the conversation is live and deleted when it is no longer needed, or sooner on request."
+          ]
+        },
+        {
+          "heading": "5. Your rights",
+          "paragraphs": [
+            "You may ask us at any time to show you, correct or delete the information you sent us. Where the law of your jurisdiction grants further rights (including under the GDPR or India's Digital Personal Data Protection Act, 2023), we honour them.",
+            "Questions about this document can be sent through the contact form at {{url}}{{contactPath}}, or by emailing {{contactEmail}}."
+          ]
+        },
+        {
+          "heading": "6. Hosting and transfers",
+          "paragraphs": [
+            "The site is served from a global hosting network, and email is delivered by a transactional email provider. Both may process data outside your country. We rely on their standard contractual protections for such transfers."
+          ]
+        },
+        {
+          "heading": "7. Changes",
+          "paragraphs": [
+            "We will post any change to this policy on this page and update the date below. Last updated {{lastUpdated}}."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "legal",
+    "slug": "terms",
+    "position": 1,
+    "data": {
+      "slug": "terms",
+      "title": "Terms of Use",
+      "summary": "Plain rules for reading this site. They are not the terms of any Wonder product.",
+      "sections": [
+        {
+          "heading": "1. Acceptance",
+          "paragraphs": [
+            "By using this website you agree to these terms. If you do not agree, please do not use the site. These terms apply only to {{url}}; each product linked from here has its own terms."
+          ]
+        },
+        {
+          "heading": "2. Purpose of the site",
+          "paragraphs": [
+            "This site provides an informational overview of five software startups for prospective investors, partners and the curious. Nothing on it is an offer to sell, or a solicitation of an offer to buy, any security in any jurisdiction. See the Investor Disclaimer."
+          ]
+        },
+        {
+          "heading": "3. Intellectual property",
+          "paragraphs": [
+            "The text, design, screenshots, logos and code of this site are owned by {{legalName}} or used with permission. You may view and share links freely. You may not reproduce the content commercially without written consent. Third-party marks (for example Saviynt, Okta or Microsoft Entra) belong to their owners and are referenced descriptively."
+          ]
+        },
+        {
+          "heading": "4. Accuracy",
+          "paragraphs": [
+            "We try to keep the site accurate and current. Products described here are early-stage and change frequently; features, plans, prices and roadmaps may differ from what is shown. We make no warranty that the content is complete or error-free."
+          ]
+        },
+        {
+          "heading": "5. Links",
+          "paragraphs": [
+            "Links to the live products and to third-party sites are provided for convenience. We are not responsible for the content or practices of third-party sites."
+          ]
+        },
+        {
+          "heading": "6. Limitation of liability",
+          "paragraphs": [
+            "To the fullest extent permitted by law, we are not liable for any loss arising from your use of, or reliance on, this site."
+          ]
+        },
+        {
+          "heading": "7. Governing law",
+          "paragraphs": [
+            "These terms are governed by the laws of {{jurisdiction}}, without regard to conflict-of-law rules. Last updated {{lastUpdated}}.",
+            "Questions about this document can be sent through the contact form at {{url}}{{contactPath}}, or by emailing {{contactEmail}}."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "legal",
+    "slug": "cookies",
+    "position": 2,
+    "data": {
+      "slug": "cookies",
+      "title": "Cookie Policy",
+      "summary": "This site sets no cookies of its own.",
+      "sections": [
+        {
+          "heading": "1. What we set",
+          "paragraphs": [
+            "Nothing. The site uses no analytics, advertising or preference cookies, and no local storage for tracking. There is no cookie banner because there is nothing to consent to."
+          ]
+        },
+        {
+          "heading": "2. What our hosting provider may set",
+          "paragraphs": [
+            "Our hosting provider may set strictly necessary technical cookies to route traffic or protect against abuse. These are not used to identify you across sites."
+          ]
+        },
+        {
+          "heading": "3. Linked products",
+          "paragraphs": [
+            "When you follow a link to WonderHome, WonderJobs, WonderArk or WonderID, you leave this site and that product's own cookie policy applies."
+          ]
+        },
+        {
+          "heading": "4. Changes",
+          "paragraphs": [
+            "If this ever changes, we will update this page and the date. Last updated {{lastUpdated}}."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "legal",
+    "slug": "disclaimer",
+    "position": 3,
+    "data": {
+      "slug": "disclaimer",
+      "title": "Investor Disclaimer",
+      "summary": "Read this before treating anything on this site as the basis for an investment decision.",
+      "sections": [
+        {
+          "heading": "1. No offer",
+          "paragraphs": [
+            "This website is for information only. It does not constitute an offer to sell, a solicitation of an offer to buy, or a recommendation of any security, and it is not a prospectus, offering memorandum or private placement document. Any investment would be made only through definitive legal documents, to qualified persons, and in compliance with applicable securities law."
+          ]
+        },
+        {
+          "heading": "2. Early-stage risk",
+          "paragraphs": [
+            "Each of the five startups is early-stage. They have limited operating history and, at the date of this site, are pre-revenue or early-revenue. Investing in early-stage companies involves a high degree of risk, including the total loss of capital. Past build velocity is not a guarantee of future commercial performance."
+          ]
+        },
+        {
+          "heading": "3. Forward-looking statements",
+          "paragraphs": [
+            "Roadmaps, market descriptions, plan names, pricing shapes and 'why now' arguments on this site are forward-looking. They reflect the founder's current intentions and beliefs, are subject to change without notice, and may not materialise."
+          ]
+        },
+        {
+          "heading": "4. Figures and screenshots",
+          "paragraphs": [
+            "Build-progress figures (stories completed, modules shipped) are taken from each product's own public engineering trackers on the stated date. Screenshots show the products as deployed at capture time and may include demonstration data. Illustrative scenarios and example quotes on the product sites are clearly labelled as such on those sites and are not customer testimonials."
+          ]
+        },
+        {
+          "heading": "5. Do your own diligence",
+          "paragraphs": [
+            "Nothing here is legal, tax, accounting or investment advice. Prospective investors should conduct their own diligence and consult their own advisers. The founder will make source code, trackers and live demos available to serious parties on request.",
+            "Questions about this document can be sent through the contact form at {{url}}{{contactPath}}, or by emailing {{contactEmail}}."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "legal",
+    "slug": "accessibility",
+    "position": 4,
+    "data": {
+      "slug": "accessibility",
+      "title": "Accessibility Statement",
+      "summary": "We want every investor and reader to be able to use this site, whatever their device or ability.",
+      "sections": [
+        {
+          "heading": "1. Our standard",
+          "paragraphs": [
+            "This site aims to conform to WCAG 2.2 Level AA. Text meets contrast targets in both light and dark colour schemes, all interactive elements are keyboard reachable with a visible focus state, images carry descriptive alternative text, and the layout reflows to a 320-pixel-wide viewport without horizontal scrolling."
+          ]
+        },
+        {
+          "heading": "2. Motion",
+          "paragraphs": [
+            "The site uses scroll-linked parallax and entrance animation. If your operating system requests reduced motion, these animations are disabled and content is shown in place."
+          ]
+        },
+        {
+          "heading": "3. Known limitations",
+          "paragraphs": [
+            "Product screenshots are images and cannot convey every detail to screen-reader users; each has a caption describing what it shows. The live products linked from this site maintain their own accessibility commitments."
+          ]
+        },
+        {
+          "heading": "4. Tell us",
+          "paragraphs": [
+            "If something on this site is hard for you to use, please tell us and we will fix it.",
+            "Questions about this document can be sent through the contact form at {{url}}{{contactPath}}, or by emailing {{contactEmail}}."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "legal",
+    "slug": "security",
+    "position": 5,
+    "data": {
+      "slug": "security",
+      "title": "Security",
+      "summary": "How this site, and the products it presents, treat security.",
+      "sections": [
+        {
+          "heading": "1. This site",
+          "paragraphs": [
+            "The public site has no visitor accounts and no server-side session; its database holds only the site's own text and a daily record of each product's public engineering tracker, nothing about visitors, and visitors can only read it. The single server function handles the contact form, validates input, rejects automated submissions with a honeypot field, and forwards the message by email. No secrets are shipped to the browser; the email provider key lives only in the hosting environment."
+          ]
+        },
+        {
+          "heading": "2. The products",
+          "paragraphs": [
+            "Each product is built with security as a baseline: strict separation between customers' data, server-side checks that never trust a client-supplied identifier, encrypted credentials, an immutable audit trail for consequential actions, and rule-based (non-LLM) authorisation. Each product describes its own controls in more detail; ask us for specifics during diligence."
+          ]
+        },
+        {
+          "heading": "3. Reporting a vulnerability",
+          "paragraphs": [
+            "If you believe you have found a security issue in this site or any Wonder product, please report it through the contact form and mark it as a security report, or email {{contactEmail}} directly. We will acknowledge promptly and keep you informed. Please do not test against production tenants that are not yours."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "kind": "site",
+    "slug": "main",
+    "position": 0,
+    "data": {
+      "tagline": "Ideas for a brighter tomorrow.",
+      "description": "WonderApps is an investor portfolio of five AI-native startups — WonderHome, WonderJobs, Wonder Creator, WonderArk and WonderID. Each has a live product, a cited market case and a downloadable investor deck.",
+      "lastUpdated": "8 October 2026",
+      "positioning": "Five AI-native startups across five markets. Investor decks, cited market data and live products.",
+      "jurisdiction": "India"
+    }
+  },
+  {
+    "kind": "startup",
+    "slug": "wonderhome",
+    "position": 0,
+    "data": {
+      "ask": "Seeking design-partner families and early-stage investors who believe the household is the next operating system.",
+      "url": "https://home.wonderapps.biz/",
+      "hero": {
+        "sub": "WonderHome watches the whole household — school, meals, groceries, bills, help, pets, health and family time, in text or voice — and interrupts the right person only when a decision is genuinely needed.",
+        "headline": "WonderHome takes care, so you can live more."
+      },
+      "moat": [
+        {
+          "body": "Deterministic policy checks sit outside the model. Autonomy is set per household, per responsibility. This is hard to bolt on and is the reason families will let it act.",
+          "title": "Consent architecture"
+        },
+        {
+          "body": "People, guardianship, protected time, stock levels, obligations, health context and preferences form a private, compounding model of one home.",
+          "title": "Household graph"
+        },
+        {
+          "body": "A single HomeTalk contract, not a per-assistant bolt-on: linked voice identities carry hashed, scoped OAuth grants that activate as each assistant account is connected, and payments, orders and health changes are never reachable by voice alone.",
+          "title": "Governed multi-channel voice"
+        },
+        {
+          "body": "Engineering guardrails target under US$2,000/month infrastructure at 10,000 active households and under US$0.75 of background AI per household per month.",
+          "title": "Cost discipline"
+        }
+      ],
+      "name": "WonderHome",
+      "slug": "wonderhome",
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Web · installs on iPhone, Android and desktop"
+        },
+        {
+          "label": "AI",
+          "value": "Plans and acts only with household consent"
+        },
+        {
+          "label": "Pricing",
+          "value": "Free · Pro · Max (no card for Free)"
+        }
+      ],
+      "stage": "Live product · early households onboarding",
+      "accent": "oklch(0.49 0.09 190)",
+      "market": {
+        "lede": "Dual-income, multi-generational homes with school-age children, domestic help and dense admin are the norm across India's metros and a fast-growing share of homes worldwide. They already pay for convenience — delivery, tutoring, help — but nobody sells them coordination.",
+        "title": "Every family is a household to run.",
+        "whyNow": [
+          "Assistants that can plan and act — not just answer — became reliable enough to run background loops in 2025–26.",
+          "Household commerce, school portals and calendars all now have programmatic surfaces to observe and act on.",
+          "Consumer trust hinges on consent-first design; WonderHome's governed-tool architecture is built for exactly that.",
+          "Voice assistants (Gemini Live, Alexa) and WhatsApp are wired to the same governed gateway and switch on the moment a household connects one — the scoped, revocable grant a household will actually trust."
+        ],
+        "figures": [
+          {
+            "note": "Base year 2024, CAGR 2025–2033. Covers consumer and enterprise assistants; publishers scope this market very differently.",
+            "label": "Global AI assistant market, 2024, forecast $73.80B by 2033 at 18.8% CAGR",
+            "detail": "The closest defensible software category to WonderHome, with the publisher citing consumer demand for personalized, hands-free experiences as a driver.",
+            "figure": "$16.29B",
+            "source": {
+              "url": "https://www.grandviewresearch.com/industry-analysis/ai-assistant-market-report",
+              "year": "2025",
+              "title": "AI Assistant Market Size And Share | Industry Report, 2033",
+              "publisher": "Grand View Research"
+            }
+          },
+          {
+            "note": "Usual-status employment, calendar 2025. 1 crore = 10 million.",
+            "label": "Women in employment in India (aged 15+), Jan-Dec 2025",
+            "detail": "Working women are the core of the time-poor buyer pool: 20.0 crore (200 million) women were employed in 2025.",
+            "figure": "20.0 crore",
+            "source": {
+              "url": "https://www.mospi.gov.in/uploads/latestReleases/latest_release_1774607827733_3e8964a9-268b-4cc9-ad65-cfc8a9e32f08_Press_note_AR_PLFS_2025_23032025_V2.1_26032026_final.pdf",
+              "year": "2026",
+              "title": "Press Note on Periodic Labour Force Survey Annual Report, 2025",
+              "publisher": "MoSPI / NSO (Periodic Labour Force Survey Annual Report 2025)"
+            }
+          },
+          {
+            "note": "Survey of 34,950 households, January–March 2025. Urban households: 91.3%.",
+            "label": "Indian households with at least one smartphone (urban: 91.3%), early 2025",
+            "detail": "Nearly nine in ten Indian households already have a smartphone, and 86.3% have internet at home, so a text or voice assistant needs no new hardware.",
+            "figure": "85.5%",
+            "source": {
+              "url": "https://www.mospi.gov.in/sites/default/files/press_release/Final_press%20release_CMS_T.pdf",
+              "year": "2025",
+              "title": "Press Release: Results of Comprehensive Modular Survey: Telecom, 2025",
+              "publisher": "MoSPI / NSO (Comprehensive Modular Survey: Telecom, 2025, NSS 80th round)"
+            }
+          },
+          {
+            "note": "Per participant aged 15–59 in unpaid domestic services; down from 315 minutes in 2019.",
+            "label": "Time women aged 15-59 spend daily on unpaid domestic services (India, 2024)",
+            "detail": "Indian women in prime working age spend about five hours a day on unpaid household work; the NSO says this is down from 315 minutes in 2019.",
+            "figure": "305 min/day",
+            "source": {
+              "url": "https://mospi.gov.in/sites/default/files/press_release/PR_TUS_25022025.pdf",
+              "year": "2025",
+              "title": "Press Note: Time Use Survey (TUS) January-December 2024",
+              "publisher": "MoSPI / NSO (Time Use Survey 2024)"
+            }
+          },
+          {
+            "note": "Forrester gives “over half”, not an exact percentage. Sample is online adults in metro India.",
+            "label": "Online adults in metro India who use generative AI, highest in Asia Pacific",
+            "detail": "Forrester finds metro India leads APAC on generative-AI use, and only 5% of metro Indians say they are not knowledgeable about AI.",
+            "figure": "Over 50%",
+            "source": {
+              "url": "https://www.forrester.com/blogs/consumers-are-using-ai-but-they-still-dont-trust-it/",
+              "year": "2025",
+              "title": "Consumers Are Using AI - But They Still Don't Trust It",
+              "publisher": "Forrester"
+            }
+          },
+          {
+            "note": "NRIs 17.76 million plus persons of Indian origin 19.52 million, as of January 2026.",
+            "label": "Overseas Indians (NRIs plus persons of Indian origin), as of January 2026: 37,280,845",
+            "detail": "MEA counts about 37.3 million Indians abroad (17.76M NRIs and 19.52M PIOs), the expat/NRI side of the buyer base.",
+            "figure": "3.73 crore",
+            "source": {
+              "url": "https://www.mea.gov.in/population-of-overseas-indians",
+              "year": "2026",
+              "title": "Population of Overseas Indians - Data on Indian Diaspora Abroad (as of January 2026)",
+              "publisher": "Ministry of External Affairs, Government of India"
+            }
+          }
+        ],
+        "segments": [
+          "Urban dual-income families with school-age children",
+          "Multi-generational households coordinating help and care",
+          "Expat and NRI families running homes across time zones"
+        ]
+      },
+      "helpUrl": "https://home.wonderapps.biz/help",
+      "problem": {
+        "lede": "Modern family life is beautiful, but it is a lot. Every existing tool adds another list for one parent — usually the same parent — to maintain.",
+        "title": "The management of life can consume the life itself.",
+        "points": [
+          {
+            "body": "Tasks, schedules, bills, shopping and school information never end, and they land disproportionately on one person.",
+            "title": "Invisible mental load"
+          },
+          {
+            "body": "Shared calendars, to-do apps and family chat groups all need feeding. None of them notice what is slipping.",
+            "title": "Tools that add work"
+          },
+          {
+            "body": "A bill is noticed when it is overdue. A science project is discovered the night before. Dinner is a question at 7 pm.",
+            "title": "Decisions at the wrong moment"
+          },
+          {
+            "body": "Families will not hand a home to software that acts without asking, or that treats children like adults.",
+            "title": "Trust is the barrier"
+          }
+        ]
+      },
+      "roadmap": [
+        {
+          "items": [
+            "Turn on WhatsApp, Alexa and Gemini voice as each account is connected",
+            "Voice release gates: a real Alexa and Gemini Live end-to-end run",
+            "Activate payments as plans go live"
+          ],
+          "horizon": "Now"
+        },
+        {
+          "items": [
+            "First partners on the developer platform (scoped keys and a sandbox are built)",
+            "Right-to-left layouts on the remaining screens",
+            "Forwarded-email intake once a receiving domain is set up"
+          ],
+          "horizon": "Next"
+        },
+        {
+          "items": [
+            "Regional expansion beyond India",
+            "More languages from the same catalog"
+          ],
+          "horizon": "Later"
+        }
+      ],
+      "screens": [
+        {
+          "alt": "WonderHome landing page on desktop showing the hero 'WonderHome takes care, so you can live more' and a household dashboard preview",
+          "src": "/screenshots/wonderhome/home-desktop.webp",
+          "kind": "desktop",
+          "caption": "The product site — same design language as the app"
+        },
+        {
+          "alt": "WonderHome on a phone, showing the mobile hero and Today view",
+          "src": "/screenshots/wonderhome/home-mobile.webp",
+          "kind": "mobile",
+          "caption": "Installs like an app on iPhone and Android"
+        },
+        {
+          "alt": "WonderHome features grid: 16 household domains from Family & Profiles to HomeSend and Your language",
+          "src": "/screenshots/wonderhome/features-desktop.webp",
+          "kind": "desktop",
+          "caption": "Sixteen features, each a household outcome"
+        },
+        {
+          "alt": "WonderHome security section: private by default, tenant isolation, child privacy, governed AI",
+          "src": "/screenshots/wonderhome/security-desktop.webp",
+          "kind": "desktop",
+          "caption": "Private by default — security as a family feature"
+        }
+      ],
+      "tagline": "Smarter homes · Happier families",
+      "audience": "Busy families with children, school, bills, help and a home to run",
+      "category": "Consumer · Family AI",
+      "oneLiner": "An AI household operating system that manages the management — so families spend less time coordinating and more time together.",
+      "solution": {
+        "lede": "WonderHome does not give a family more things to manage. It holds household outcomes, resolves routine work where the family's policy permits, and asks — clearly, with a plan — before anything consequential.",
+        "title": "It manages the management.",
+        "pillars": [
+          {
+            "body": "A meal is 'ready by 8 pm', a bill is 'paid before the consequence', homework is 'finished with time to spare'. The system plans backwards from the outcome.",
+            "title": "Outcomes, not chores"
+          },
+          {
+            "body": "Every consequential action shows what it understood, what it plans and the impact — with Confirm, Change and Cancel. Payments, deletions and access changes always ask.",
+            "title": "Asks before it acts"
+          },
+          {
+            "body": "Forward a whole school circular and every date, fee and item becomes its own tracked entry — a moved date updates in place, never a duplicate. 'No, almond milk' or 'Actually, make that Friday': WonderHome swaps or undoes what it did and keeps both steps on record.",
+            "title": "Reads anything, corrects like a person"
+          },
+          {
+            "body": "A single gateway carries the same household context everywhere. It's live on the web today; WhatsApp, Alexa and Gemini Live are built on the same gateway and switch on as each account is connected — payments and orders are never approved by voice.",
+            "title": "One HomeTalk, every channel"
+          },
+          {
+            "body": "Family & profiles, Today, School, Groceries, Meals, Bills, Househelper, Maintenance, Laundry, Pet care, Health & Fitness and Family time — one place, one assistant, text or voice. Every screen, reminder and HomeTalk reply in English, Hindi, Marathi, Spanish, French, German, Arabic or Mandarin, with each record keeping its own currency.",
+            "title": "Whole-household coverage, in eight languages"
+          },
+          {
+            "body": "Tenant isolation is enforced in the database, children get age-appropriate views, health context needs its own explicit permission, and household data is never training data.",
+            "title": "Private by design"
+          }
+        ]
+      },
+      "traction": [
+        {
+          "live": true,
+          "note": "{pct}% of a {rows}-module backlog, per the live tracker; {remaining} still open and {setAside} deliberately deferred",
+          "label": "Stories shipped",
+          "value": "{done} / {total}"
+        },
+        {
+          "live": true,
+          "note": "Voice release gates need a real Alexa and Gemini Live run; right-to-left layouts are deferred",
+          "label": "Modules complete",
+          "value": "{rowsDone} of {rows}"
+        },
+        {
+          "note": "English, Hindi, Marathi, Spanish, French, German, Arabic and Mandarin across every screen and HomeTalk",
+          "label": "Languages",
+          "value": "8"
+        },
+        {
+          "note": "Checkout, refunds and reconciliation built; free during early access until payments go live",
+          "label": "Billing & payments",
+          "value": "India + international"
+        }
+      ],
+      "geography": "India-first, built for global households",
+      "accentSoft": "oklch(0.93 0.03 190)",
+      "howItWorks": [
+        {
+          "body": "Connected calendars, school portals, email and the family's own words tell WonderHome what is happening.",
+          "step": "Observe"
+        },
+        {
+          "body": "Outcomes are checked against time, people and stock. A plan is drafted only when something is at risk.",
+          "step": "Understand & Plan"
+        },
+        {
+          "body": "Routine work resolves silently within policy. Anything consequential returns as a plan the family confirms.",
+          "step": "Act (with consent)"
+        },
+        {
+          "body": "Notifications are sparse, threaded and resolve themselves. The household's preferences shape what comes next.",
+          "step": "Monitor & Learn"
+        }
+      ],
+      "businessModel": {
+        "lede": "Three plans — Free, Pro and Max — with real prices set (Pro ₹299/month, Max ₹599/month). Billing for India and international customers, with refunds, is built and switches on when payments go live; every plan is free during early access until then.",
+        "plans": [
+          {
+            "name": "Free",
+            "bullets": [
+              "Household basics with WonderHome watching quietly",
+              "Outcomes, routines, notifications",
+              "Maintenance, laundry, pet care",
+              "Text conversation and background runs"
+            ],
+            "tagline": "Run the Home"
+          },
+          {
+            "name": "Pro",
+            "bullets": [
+              "The full household: school, commerce, meals, bills, family time",
+              "Voice conversation",
+              "School and homework intelligence",
+              "Ordering and groceries"
+            ],
+            "tagline": "Let WonderHome Think",
+            "featured": true
+          },
+          {
+            "name": "Max",
+            "bullets": [
+              "Everything, with autonomous action",
+              "Deeper integrations",
+              "Highest usage limits"
+            ],
+            "tagline": "Let WonderHome Run the Home"
+          }
+        ],
+        "title": "Consumer subscription with billing built end-to-end."
+      }
+    }
+  },
+  {
+    "kind": "startup",
+    "slug": "wonderjobs",
+    "position": 1,
+    "data": {
+      "ask": "Seeking early-stage investors and distribution partners — universities, bootcamps and career services — who want candidates to have an agent of their own.",
+      "url": "https://jobs.wonderapps.biz/",
+      "hero": {
+        "sub": "Tell Wonder what you're looking for, in your own words. It searches real job sources, explains every match, builds your résumé and fills the employer's form — you make the final call, and it never submits on anyone's behalf.",
+        "headline": "Your next opportunity is out there. Wonder finds it."
+      },
+      "logo": {
+        "dark": "/brands/wonderjobs/wonderjobs-logo-dark.webp",
+        "mark": "/brands/wonderjobs/wonder-mark.webp",
+        "light": "/brands/wonderjobs/wonderjobs-logo-light.webp"
+      },
+      "moat": [
+        {
+          "body": "Only sources actually searched are shown. Illustrative scenarios are labelled. Wonder never submits on an employer's site — Apply with Wonder fills a form but is structurally unable to click submit. Trust compounds where competitors burn it.",
+          "title": "Honesty as a feature"
+        },
+        {
+          "body": "Canonical opportunities deduplicated across sources with per-field provenance, a REST/stream/MCP protocol and source-health monitoring — the data layer a single-source competitor would have to rebuild from scratch.",
+          "title": "JobsLake: infrastructure, not a feature"
+        },
+        {
+          "body": "Matching, ranking and quality checks are rule-based and unit-tested; language models only draft prose. Cheap, auditable and consistent.",
+          "title": "Deterministic core, generative edge"
+        },
+        {
+          "body": "Apply with Wonder never holds the account session in the browser helper. It mints a short-lived, read-only, HMAC-signed token that can't reach WonderJobs' own API and expires in 30 minutes.",
+          "title": "Scoped, ephemeral browser access"
+        },
+        {
+          "body": "State hydrates locally and syncs per tenant in batches — fast on a phone, resilient offline, cheap to serve.",
+          "title": "Local-first, sync-second"
+        }
+      ],
+      "name": "WonderJobs",
+      "slug": "wonderjobs",
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Web · installable · desktop, tablet, mobile"
+        },
+        {
+          "label": "AI",
+          "value": "Drafts and explains; never submits for you"
+        },
+        {
+          "label": "Pricing",
+          "value": "Free today · Pro in development"
+        }
+      ],
+      "stage": "Live product · free plan · public demo",
+      "accent": "oklch(0.55 0.23 285)",
+      "market": {
+        "lede": "Job search is universal, recurring and painful. Incumbent boards monetise employers; the candidate side is under-served by tools that either spam or overreach. Remote-first hiring has widened the field a single person must scan.",
+        "title": "Every active job seeker, every few years.",
+        "whyNow": [
+          "Structured public job feeds and company ATS boards make honest, real-data search possible without scraping walled gardens.",
+          "Language models draft credible, tailored materials — but only trustworthy when paired with deterministic matching and human approval.",
+          "BYOK lets candidates pay their own AI bill, keeping the free tier genuinely free and gross margin high."
+        ],
+        "figures": [
+          {
+            "note": "Forecast; base year 2025, CAGR 2026–2031.",
+            "label": "Global online recruitment market size in 2025, growing to $64.9B by 2031",
+            "detail": "Mordor Intelligence sizes the online recruitment market at $33.59B in 2025, forecasting 11.62% CAGR to 2031, with Asia Pacific the fastest-growing region.",
+            "figure": "$33.6B",
+            "source": {
+              "url": "https://www.mordorintelligence.com/industry-reports/online-recruitment-market",
+              "year": "2026",
+              "title": "Online Recruitment Market Size & Share Analysis - Growth Trends and Forecast (2026 - 2031)",
+              "publisher": "Mordor Intelligence"
+            }
+          },
+          {
+            "note": "Forecast; base year 2023. Covers all of HR, of which recruiting is one application.",
+            "label": "Forecast global AI-in-HR market in 2030 (recruitment and hiring is the largest application)",
+            "detail": "Grand View Research values AI in HR at $3.2B in 2023 and projects $15.2B by 2030, a 24.8% CAGR, driven by automated sourcing, résumé screening and scheduling.",
+            "figure": "$15.2B by 2030",
+            "source": {
+              "url": "https://www.grandviewresearch.com/industry-analysis/artificial-intelligence-hr-market-report",
+              "year": "2024",
+              "title": "Artificial Intelligence In HR Market Size Report, 2024-2030",
+              "publisher": "Grand View Research"
+            }
+          },
+          {
+            "note": "Greenhouse data as relayed by SHRM. “No hiring activity” is not the same as a fake listing.",
+            "label": "Share of job listings with no hiring activity in a given quarter (Greenhouse data)",
+            "detail": "Applicant-tracking vendor Greenhouse found about one in five listings never produced hiring activity, which is why seekers waste applications on 'ghost' postings.",
+            "figure": "~20%",
+            "source": {
+              "url": "https://www.shrm.org/topics-tools/news/talent-acquisition/ghost-jobs-fake-job-ads-phenomenon",
+              "year": "2024",
+              "title": "Ghost Jobs: Real Concern or Phantom Phenomenon?",
+              "publisher": "SHRM (reporting Greenhouse Software data)"
+            }
+          },
+          {
+            "note": "Vendor survey of 1,200 US job seekers, self-reported.",
+            "label": "US job seekers who personally use AI in their job search",
+            "detail": "A survey of 1,200 US job seekers found three in four already use AI, and 87% want employers to be transparent about their own AI use.",
+            "figure": "74%",
+            "source": {
+              "url": "https://www.greenhouse.com/newsroom/an-ai-trust-crisis-70-of-hiring-managers-trust-ai-to-make-faster-and-better-hiring-decisions-only-8-of-job-seekers-call-it-fair",
+              "year": "2025",
+              "title": "An AI Trust Crisis: 70% of Hiring Managers Trust AI to Make Faster and Better Hiring Decisions, Only 8% of Job Seekers Call it Fair (Greenhouse 2025 AI in Hiring Report)",
+              "publisher": "Greenhouse (hiring-software vendor survey)"
+            }
+          },
+          {
+            "note": "SHRM research, 1,900+ HR professionals. Recruiting is the top use at 27%.",
+            "label": "Organisations that have implemented AI in HR functions; recruiting is the top use at 27%",
+            "detail": "SHRM's 2026 research finds under 40% of employers use AI in HR, led by recruiting, so employer-side AI screening is real but still early.",
+            "figure": "39%",
+            "source": {
+              "url": "https://www.shrm.org/executive-network/insights/state-of-ai-hr-2026-5-critical-insights-chros",
+              "year": "2026",
+              "title": "The State of AI in HR in 2026: 5 Critical Insights for CHROs",
+              "publisher": "SHRM"
+            }
+          },
+          {
+            "note": "Official labour-force survey, all-India. Overall rate for ages 15+ was 5.4%.",
+            "label": "India unemployment rate for ages 15-29, April-June 2026 (PLFS)",
+            "detail": "India's official quarterly labour survey puts youth unemployment at 15.9%, against 5.4% for all persons aged 15 and above, the largest cohort of early-career seekers.",
+            "figure": "15.9%",
+            "source": {
+              "url": "https://www.mospi.gov.in/uploads/publications_reports/publications_reports1786356638461_03375143-dcda-4a2e-89bf-036a8c7a87fc_PLFS_QB_April_June_2026.pdf",
+              "year": "2026",
+              "title": "Quarterly Bulletin, Periodic Labour Force Survey (PLFS), April - June 2026",
+              "publisher": "National Statistics Office, MoSPI, Government of India"
+            }
+          }
+        ],
+        "segments": [
+          "Knowledge workers searching remote and hybrid roles",
+          "Career switchers who need fit explained, not assumed",
+          "Students and early-career talent entering global markets",
+          "Senior professionals managing a discreet, high-stakes search"
+        ]
+      },
+      "helpUrl": "https://jobs.wonderapps.biz/help",
+      "problem": {
+        "lede": "Candidates spend evenings re-typing the same details into the same forms, scanning the same boards and guessing whether a role is worth it.",
+        "title": "Job searching is a full-time job. It shouldn't be.",
+        "points": [
+          {
+            "body": "The same listing appears on six boards. The same résumé is rewritten for the tenth time. None of it tells the candidate where they actually fit.",
+            "title": "Repetition without signal"
+          },
+          {
+            "body": "Boards rank by recency or by who paid. A candidate cannot see why a role appeared, or how strong the fit really is.",
+            "title": "Opaque matching"
+          },
+          {
+            "body": "Auto-apply tools submit on the candidate's behalf, damaging reputation with employers and violating platform terms.",
+            "title": "Automation that overreaches"
+          },
+          {
+            "body": "Stale, duplicate and low-quality postings waste the scarcest resource a job seeker has: attention.",
+            "title": "Ghost listings and noise"
+          }
+        ]
+      },
+      "roadmap": [
+        {
+          "items": [
+            "JobsLake production rollout and a real-account verification pass",
+            "Email delivery for follow-ups and thank-you notes",
+            "Google sign-in and a custom email sender"
+          ],
+          "horizon": "Now"
+        },
+        {
+          "items": [
+            "Pro plan billing",
+            "Chrome Web Store listing for Apply with Wonder",
+            "Two-way calendar sync"
+          ],
+          "horizon": "Next"
+        },
+        {
+          "items": [
+            "Additional regional sources",
+            "Mock-interview AI and deeper coaching",
+            "Platform admin for usage and key rotation"
+          ],
+          "horizon": "Later"
+        }
+      ],
+      "screens": [
+        {
+          "alt": "WonderJobs landing page on desktop: a plain-language search, today's priorities and an application ready for the candidate's final action",
+          "src": "/screenshots/wonderjobs/home-desktop.webp",
+          "kind": "desktop",
+          "caption": "Scroll-linked hero on the product site"
+        },
+        {
+          "alt": "WonderJobs Find, Decide, Apply, Progress outcome sections on desktop",
+          "src": "/screenshots/wonderjobs/how-it-works-desktop.webp",
+          "kind": "desktop",
+          "caption": "Find · Decide · Apply · Progress — the whole app reorganised around outcomes"
+        },
+        {
+          "alt": "WonderJobs Home dashboard showing what deserves the candidate's attention today",
+          "src": "/screenshots/wonderjobs/app-desktop.webp",
+          "kind": "desktop",
+          "caption": "Home — what deserves your attention today"
+        },
+        {
+          "alt": "WonderJobs jobs list in demo mode with fit labels, filters and why-surfaced reasons",
+          "src": "/screenshots/wonderjobs/jobs-desktop.webp",
+          "kind": "desktop",
+          "caption": "Jobs view — every match explains itself"
+        },
+        {
+          "alt": "WonderJobs Apply with Wonder / browser extension page explaining what it fills and where it works",
+          "src": "/screenshots/wonderjobs/extension-desktop.webp",
+          "kind": "desktop",
+          "caption": "Apply with Wonder — fills the employer's own form, never submits it"
+        },
+        {
+          "alt": "WonderJobs applications dashboard with a needs-attention list and pipeline board",
+          "src": "/screenshots/wonderjobs/applications-desktop.webp",
+          "kind": "desktop",
+          "caption": "Applications — a real pipeline, not a spreadsheet"
+        },
+        {
+          "alt": "WonderJobs Résumé Studio showing eight ATS-friendly templates",
+          "src": "/screenshots/wonderjobs/resume-studio-desktop.webp",
+          "kind": "desktop",
+          "caption": "Résumé Studio — eight ATS-friendly templates, PDF or Word"
+        },
+        {
+          "alt": "WonderJobs landing on a phone",
+          "src": "/screenshots/wonderjobs/home-mobile.webp",
+          "kind": "mobile",
+          "caption": "Installable PWA"
+        },
+        {
+          "alt": "WonderJobs insights view in demo mode",
+          "src": "/screenshots/wonderjobs/insights-desktop.webp",
+          "kind": "desktop",
+          "caption": "Insights derived from real runs and applications"
+        }
+      ],
+      "tagline": "Find. Grow. Belong.",
+      "audience": "Job seekers, career switchers, students and senior professionals",
+      "category": "Consumer · Career AI agent",
+      "oneLiner": "An AI career agent that searches real job sources, explains every match, prepares every application — and leaves the decisions to the candidate.",
+      "solution": {
+        "lede": "The whole product is organised around outcomes, not screens: a plain-language search that shows what it read before running, cards that explain why a job surfaced and what to weigh, an Application Pack built only from materials that actually exist, and a progress view built from real applications — never a staged step.",
+        "title": "Find, decide, apply, progress — with the candidate in control.",
+        "pillars": [
+          {
+            "body": "Goal, level, years, rated skills, industries, locations, minimum salary, strengths and growth areas. Strong Opportunity (82+), Worth Considering (68+), Stretch (55+) — every score explained per dimension, and rescored when the profile changes.",
+            "title": "Career DNA, scored honestly"
+          },
+          {
+            "body": "A platform layer behind the search — canonical opportunities deduplicated across sources with per-field provenance, a REST/stream/MCP protocol, and an admin console with source health. 'Where this job was found' is always one click away.",
+            "title": "JobsLake: a job-data layer, not a scraper"
+          },
+          {
+            "body": "Fills the employer's own Greenhouse, Lever, Ashby or generic form through the candidate's browser — AI drafts, a guided mode, a downloadable pack — and stops for whatever only the candidate should answer. Structurally unable to submit; the candidate always does.",
+            "title": "Apply with Wonder, never on your behalf"
+          },
+          {
+            "body": "Eight ATS-friendly templates rendered from one structured Career Profile, each a real PDF or Word download, plus a job-specific version generated straight from the Application Pack.",
+            "title": "Résumé Studio"
+          },
+          {
+            "body": "Use WonderJobs AI by default, or bring your own AI key. Keys are encrypted and never shown again.",
+            "title": "Your AI, your keys"
+          }
+        ]
+      },
+      "traction": [
+        {
+          "live": true,
+          "note": "The rest are partial, with operator steps or provider config outstanding",
+          "label": "Epics complete",
+          "value": "{rowsDone} / {rows}"
+        },
+        {
+          "note": "Including end-to-end runs against mock Greenhouse, Lever, Ashby and generic application forms",
+          "label": "Apply with Wonder",
+          "value": "95 tests"
+        },
+        {
+          "note": "PDF and Word downloads from one structured Career Profile, covered by automated tests",
+          "label": "Résumé Studio",
+          "value": "8 ATS templates"
+        },
+        {
+          "note": "Greenhouse/Lever/Ashby boards across 20+ companies plus six aggregators, now behind JobsLake",
+          "label": "Live job sources",
+          "value": "7 families"
+        }
+      ],
+      "geography": "Global remote-first sources plus India via Adzuna",
+      "accentSoft": "oklch(0.94 0.04 285)",
+      "howItWorks": [
+        {
+          "body": "One natural-language search, prefilled from the candidate's own goal. WonderJobs shows what it read and where from before it runs, against real sources through JobsLake.",
+          "step": "Find"
+        },
+        {
+          "body": "Every card says why Wonder surfaced it and what to weigh — never a bare score. Compare two to four jobs side by side; a hidden job says why, with a one-click override.",
+          "step": "Decide"
+        },
+        {
+          "body": "An Application Pack opens only once real materials exist — tailored résumé, cover letter and screening answers, each labelled AI draft or the candidate's edit. Apply with Wonder fills the employer's form; the final action is always the candidate's.",
+          "step": "Apply"
+        },
+        {
+          "body": "A home screen built from real applications and a real schedule — never a staged step or an invented number.",
+          "step": "Progress"
+        }
+      ],
+      "businessModel": {
+        "lede": "The free plan is real and the demo runs without an account. Pro is the natural upgrade for scheduled runs, deeper coaching and higher limits; billing is designed but not yet connected, so today 'Upgrade' records interest. BYOK means heavy users can bring their own inference cost.",
+        "plans": [
+          {
+            "name": "Free",
+            "bullets": [
+              "Real sources, explainable matching",
+              "Application materials and tracker",
+              "WonderJobs AI or bring your own key",
+              "Installable on any device"
+            ],
+            "tagline": "Search and prepare"
+          },
+          {
+            "name": "Pro",
+            "bullets": [
+              "Scheduled runs with a server-side scheduler",
+              "Deeper résumé coaching and mock interviews",
+              "Higher usage limits",
+              "Priority sources as they land"
+            ],
+            "tagline": "In development",
+            "featured": true
+          }
+        ],
+        "title": "Free to search. Pro for depth and automation."
+      }
+    }
+  },
+  {
+    "kind": "startup",
+    "slug": "wondercreator",
+    "position": 2,
+    "data": {
+      "ask": "Seeking early-stage investors and creator-economy partners who believe makers deserve a studio that remembers where their work came from.",
+      "url": "https://creator.wonderapps.biz/",
+      "hero": {
+        "sub": "Bring a thought, a photograph, a voice note or a link. CreativeMind sees how the pieces connect and suggests what they could become; you shape it in CreativeStudio, publish it to your own Creator Page, and keep every version, source and right.",
+        "headline": "Everything begins with a little wonder."
+      },
+      "logo": {
+        "dark": "/brands/wondercreator/wondercreator-logo-dark.webp",
+        "mark": "/brands/wondercreator/wondercreator-mark.webp",
+        "light": "/brands/wondercreator/wondercreator-logo-light.webp"
+      },
+      "moat": [
+        {
+          "body": "Every material records where it came from, every version is immutable and every Creation has a lineage. That record is hard to retrofit and is what makes AI-assisted work trustworthy and licensable.",
+          "title": "Provenance by default"
+        },
+        {
+          "body": "CreativeMind only sees what the creator brings in, suggests rather than decides, and has hard ceilings for rights, commerce and destructive actions. Without a provider key the product says it is not connected rather than faking AI.",
+          "title": "Governed AI, not autopilot"
+        },
+        {
+          "body": "No likes, no trending, no ranking: a deliberate position against engagement-driven networks, expressed in Pulse, Communities and Huddles.",
+          "title": "Designed against vanity metrics"
+        }
+      ],
+      "name": "Wonder Creator",
+      "slug": "wondercreator",
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Web · installable on phone and desktop"
+        },
+        {
+          "label": "AI",
+          "value": "Suggests directions; you decide. Bring your own AI key"
+        },
+        {
+          "label": "Pricing",
+          "value": "Free to start · revenue terms being finalised"
+        }
+      ],
+      "stage": "Live product · sign-up open",
+      "accent": "oklch(0.6 0.21 350)",
+      "market": {
+        "lede": "Creators are the fastest-growing independent workforce online, and generative AI is changing how they work. The tools they use are split between capture apps, editors and social platforms; none keeps the thread from first idea to published, rights-aware work.",
+        "title": "Everyone who makes things is a creator now.",
+        "whyNow": [
+          "Generative AI makes drafting cheap, which makes provenance, version history and rights records more valuable, not less.",
+          "Creators are looking for an alternative to engagement-ranked feeds: a calm place for feedback with no likes, trending or ranking.",
+          "Provider-neutral AI lets the product follow the best models while the creator's material and rights stay put."
+        ],
+        "figures": [
+          {
+            "note": "Forecast; base year 2025, CAGR 2026–2033.",
+            "label": "Global creator economy market size in 2025, forecast $1,345.5B by 2033",
+            "detail": "Grand View Research sizes the creator economy at $252.3B in 2025 and projects 23.3% annual growth to 2033.",
+            "figure": "$252.3B",
+            "source": {
+              "url": "https://www.grandviewresearch.com/industry-analysis/creator-economy-market-report",
+              "year": "2026",
+              "title": "Creator Economy Market Size, Share | Industry Report, 2033",
+              "publisher": "Grand View Research"
+            }
+          },
+          {
+            "note": "Forecast; base year 2024, CAGR 2025–2030. Spans marketing, media, e-commerce and education.",
+            "label": "Generative AI in content creation market by 2030, growing 32.5% a year",
+            "detail": "Grand View sizes generative-AI content creation at $14.8B in 2024 and projects $80.1B by 2030.",
+            "figure": "$80.1B",
+            "source": {
+              "url": "https://www.grandviewresearch.com/industry-analysis/generative-ai-content-creation-market-report",
+              "year": "2026",
+              "title": "Generative AI In Content Creation Market Report, 2025-2030",
+              "publisher": "Grand View Research"
+            }
+          },
+          {
+            "note": "Survey of 16,000+ emerging and semi-professional creators in 8 countries.",
+            "label": "Share of creators actively using creative generative AI, Adobe survey of 16,000",
+            "detail": "Adobe's global survey found creative generative AI is already mainstream among emerging and semi-professional creators.",
+            "figure": "86%",
+            "source": {
+              "url": "https://news.adobe.com/news/2025/10/adobe-max-2025-creators-survey",
+              "year": "2025",
+              "title": "Inaugural Adobe Creators' Toolkit Report: 86 Percent of Global Creators Use Creative Generative AI, See it Boosting Creator Economy",
+              "publisher": "Adobe (survey by The Harris Poll)"
+            }
+          },
+          {
+            "note": "Same Adobe survey. Self-reported.",
+            "label": "Creators concerned their content is used to train AI without permission",
+            "detail": "A clear majority of creators worry about consent over AI training, supporting a rights-first product stance.",
+            "figure": "69%",
+            "source": {
+              "url": "https://news.adobe.com/news/2025/10/adobe-max-2025-creators-survey",
+              "year": "2025",
+              "title": "Inaugural Adobe Creators' Toolkit Report: 86 Percent of Global Creators Use Creative Generative AI, See it Boosting Creator Economy",
+              "publisher": "Adobe (survey by The Harris Poll)"
+            }
+          },
+          {
+            "note": "Goldman’s own definition of professional, 2023 estimate.",
+            "label": "Share of global creators who earn over $100,000 a year (professionals)",
+            "detail": "Goldman's analysis shows only a small sliver of creators make a full living, so income concentration is the norm.",
+            "figure": "4%",
+            "source": {
+              "url": "https://www.goldmansachs.com/insights/articles/the-creator-economy-could-approach-half-a-trillion-dollars-by-2027",
+              "year": "2023",
+              "title": "The creator economy could approach half-a-trillion dollars by 2027",
+              "publisher": "Goldman Sachs Research"
+            }
+          },
+          {
+            "note": "ISB–Hashfame estimate. BCG counts a narrower 2–2.5 million monetised creators.",
+            "label": "India's creator base in 2025, up from 0.96 million in 2020",
+            "detail": "An ISB-Hashfame study finds India's creator base grew more than fourfold in five years, with 66% now outside metro markets.",
+            "figure": "4.12 million",
+            "source": {
+              "url": "https://www.isb.edu/news/press-releases/india-s-creator-economy-enters-a-new-phase-as-non-metro-creators-become-the-majority-reveals-isb-hashfame-report",
+              "year": "2026",
+              "title": "India's Creator Economy Enters a New Phase as Non-Metro Creators Become the Majority, Reveals ISB-Hashfame Report",
+              "publisher": "Indian School of Business (SRITNE) with Hashfame"
+            }
+          }
+        ],
+        "segments": [
+          "Independent writers, photographers and filmmakers",
+          "Musicians and audio creators",
+          "Designers and illustrators building a body of work",
+          "Hobbyists who want to finish what they start"
+        ]
+      },
+      "helpUrl": "https://creator.wonderapps.biz/help",
+      "problem": {
+        "lede": "Raw material arrives as voice memos, photos, screenshots and half-sentences scattered across a dozen apps. Generic AI tools generate without remembering where anything came from, and social platforms reward engagement over craft.",
+        "title": "Creators have more ideas than a place to keep, connect and finish them.",
+        "points": [
+          {
+            "body": "Notes, photos, memos and links live in separate apps, so the connections between them are never seen.",
+            "title": "Scattered raw material"
+          },
+          {
+            "body": "Generated drafts carry no record of which materials, versions or rights went into them.",
+            "title": "AI that forgets its sources"
+          },
+          {
+            "body": "Who owns what, which licence applies and what was borrowed is tracked in someone's head, if at all.",
+            "title": "Rights left to memory"
+          },
+          {
+            "body": "Likes and trending optimise for attention. Makers want honest, specific responses from people who care about the work.",
+            "title": "Feedback ranked by vanity"
+          }
+        ]
+      },
+      "roadmap": [
+        {
+          "items": [
+            "Connect and verify AI, live voice/video and payment providers in production",
+            "Finish the UI redesign canvas across the remaining screens",
+            "Complete CreatorPublish's remaining phases"
+          ],
+          "horizon": "Now"
+        },
+        {
+          "items": [
+            "Open the licence marketplace (built, behind a flag)",
+            "Brand partnerships on the campaign foundation",
+            "Publication analytics from connected destinations"
+          ],
+          "horizon": "Next"
+        },
+        {
+          "items": [
+            "Revenue splits for collaborations",
+            "More creator business tools on the income ledger"
+          ],
+          "horizon": "Later"
+        }
+      ],
+      "screens": [
+        {
+          "alt": "Wonder Creator landing page: 'Everything begins with a little wonder' above a photo, a note, a voice memo and a carousel",
+          "src": "/screenshots/wondercreator/home-desktop.webp",
+          "kind": "desktop",
+          "caption": "A personal creative universe"
+        },
+        {
+          "alt": "Wonder Creator landing page on a phone",
+          "src": "/screenshots/wondercreator/home-mobile.webp",
+          "kind": "mobile",
+          "caption": "Made for the phone in your pocket"
+        },
+        {
+          "alt": "CreativeStudio with four sources on the canvas and a CreativeMind suggestion to use two photos together",
+          "src": "/screenshots/wondercreator/studio-desktop.webp",
+          "kind": "desktop",
+          "caption": "CreativeStudio, with CreativeMind beside you"
+        },
+        {
+          "alt": "Ideas, Materials, Moments, DejaVu and personal sources shown as small product scenes",
+          "src": "/screenshots/wondercreator/world-desktop.webp",
+          "kind": "desktop",
+          "caption": "Your world: ideas, materials, moments and sources"
+        },
+        {
+          "alt": "The journey from Capture to Discover, Explore, Create, Refine and Share",
+          "src": "/screenshots/wondercreator/journey-desktop.webp",
+          "kind": "desktop",
+          "caption": "From inspiration to Creation"
+        },
+        {
+          "alt": "Pulse, Communities and live Huddles",
+          "src": "/screenshots/wondercreator/together-desktop.webp",
+          "kind": "desktop",
+          "caption": "Feedback, not applause — no likes, no trending, no ranking"
+        },
+        {
+          "alt": "A public Creator Page with a poem, a video, audio and a carousel each shown in its own form",
+          "src": "/screenshots/wondercreator/publish-desktop.webp",
+          "kind": "desktop",
+          "caption": "A beautiful home for finished work"
+        }
+      ],
+      "tagline": "Everything begins with a little wonder.",
+      "audience": "Independent writers, photographers, filmmakers, musicians and designers, from hobbyists to working professionals",
+      "category": "Consumer · Creator tools",
+      "oneLiner": "An AI-native creative studio where artists and creators keep their thoughts, photos and voice notes, see how they connect, and shape them into writing, carousels, images, video, audio and presentations — with every version, source and right kept on record.",
+      "solution": {
+        "lede": "Wonder Creator keeps everything a creator brings in, connects it, and helps shape it — with the creator in control of every consequential step.",
+        "title": "A personal creative universe, with a studio inside.",
+        "pillars": [
+          {
+            "body": "Text, photos, voice notes, PDFs, Word files and links in one library, each with its provenance and a security check on upload.",
+            "title": "Capture anything"
+          },
+          {
+            "body": "It finds connections across your material, offers directions with a reason, and only works on what you bring in. Anything touching rights, money or deletion waits for you.",
+            "title": "CreativeMind suggests, never decides"
+          },
+          {
+            "body": "A canvas for writing, carousels, images, video, audio and presentations. Versions are immutable and can be compared or restored, and a lineage graph shows what was made from what.",
+            "title": "CreativeStudio, every version kept"
+          },
+          {
+            "body": "Ownership and joint shares, copyright and licences with terms, territory and dates, each change audited. Records, not legal advice.",
+            "title": "Rights on the record"
+          },
+          {
+            "body": "A public Creator Page in a template that suits the work; Creative Rooms with crews, tasks and an attribution ledger; and Pulse, Communities and live Huddles — with no likes, no trending and no ranking.",
+            "title": "Publish, collaborate, gather feedback"
+          }
+        ]
+      },
+      "traction": [
+        {
+          "live": true,
+          "note": "{pct}% done; {partial} partial, {notStarted} not started — from the product's own delivery log",
+          "label": "Tracked deliverables",
+          "value": "{done} / {total}"
+        },
+        {
+          "note": "Identity, material, CreatorSend, CreatorTalk, CreatorBrain, Studio, versions, lineage, rights, Huddles and more; one partial",
+          "label": "P0 capabilities",
+          "value": "24 built"
+        },
+        {
+          "note": "Authorisation and data-isolation tests against a real database, plus browser flows at desktop and 360px",
+          "label": "Security tests (P0 gate)",
+          "value": "306 tests"
+        },
+        {
+          "note": "AI, live voice/video and payments switch on when their providers are connected; the product says 'not connected' until then",
+          "label": "Product",
+          "value": "Live, sign-up open"
+        }
+      ],
+      "geography": "Global, browser-based",
+      "accentSoft": "oklch(0.95 0.03 350)",
+      "howItWorks": [
+        {
+          "body": "A note, a voice memo, a photo or a link — in a moment.",
+          "step": "Capture"
+        },
+        {
+          "body": "CreativeMind notices how your pieces connect. Suggestions only.",
+          "step": "Discover"
+        },
+        {
+          "body": "Look at a few directions before you choose one.",
+          "step": "Explore"
+        },
+        {
+          "body": "Bring sources into CreativeStudio and shape them on the canvas.",
+          "step": "Create"
+        },
+        {
+          "body": "Every version kept. Compare, restore, keep going.",
+          "step": "Refine"
+        },
+        {
+          "body": "Publish to your Creator Page, or ask Pulse what they think.",
+          "step": "Share"
+        }
+      ],
+      "businessModel": {
+        "lede": "No paid plan is published yet. The product is free to start and already contains the machinery a creator business needs: usage allowances per generation tier, bring-your-own AI key, a licensing marketplace built behind a flag, and licence-fee collection that switches on when payments go live. Revenue terms will be finalised with the first creators.",
+        "plans": [
+          {
+            "name": "Creators",
+            "bullets": [
+              "Capture, connect, create and publish",
+              "A public Creator Page",
+              "Pulse, Communities and live Huddles",
+              "Bring your own AI key, or use the platform's"
+            ],
+            "tagline": "Free to start",
+            "featured": true
+          },
+          {
+            "name": "Licensing & payments",
+            "bullets": [
+              "Licences with terms, territory and dates",
+              "Licence fees in INR and international currencies",
+              "A creator-side income ledger",
+              "A licence marketplace, built behind a flag"
+            ],
+            "tagline": "Built, provider-gated"
+          }
+        ],
+        "title": "Free to start. Creator income built in."
+      }
+    }
+  },
+  {
+    "kind": "startup",
+    "slug": "wonderark",
+    "position": 3,
+    "data": {
+      "ask": "Seeking design customers in field service and distribution, and investors who understand vertical SaaS in India's GST-native SMB market.",
+      "url": "https://ark.wonderapps.biz/",
+      "hero": {
+        "sub": "WonderArk replaces the pile of disconnected apps a growing business ends up with — discovery, marketing, fundraising, inventory, field service, a shared inbox and accounting with GST — with one portal where every module already knows your customers, your items and your team.",
+        "headline": "One login. Every part of your business. Zero duplicate data."
+      },
+      "moat": [
+        {
+          "body": "A prospect, a customer and a supplier are one party row with several roles. An estimate, an invoice and a purchase order are one documents table. This anti-duplication contract is the product.",
+          "title": "The entity-ownership map"
+        },
+        {
+          "body": "Statements and GST come from the same sales and stock records the operations run on, so the books and the business cannot drift apart.",
+          "title": "Books from the same records"
+        },
+        {
+          "body": "Licensing never deletes data and reactivation replays parked events — the confidence a business needs to try a module.",
+          "title": "Cancel-safe by design"
+        }
+      ],
+      "name": "WonderArk",
+      "slug": "wonderark",
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Web · responsive · mobile-friendly field work"
+        },
+        {
+          "label": "AI",
+          "value": "AI-assisted prospecting and queries; bring your own key or use ours"
+        },
+        {
+          "label": "Pricing",
+          "value": "Free · Pro (per module) · Max (bundle)"
+        }
+      ],
+      "stage": "Live platform · five modules, paid plans in readiness review",
+      "accent": "oklch(0.605 0.217 257)",
+      "market": {
+        "lede": "Businesses with a warehouse, a field crew, a sales pipeline and a tax identity — trades, distributors, installers, service companies — are too complex for a single-purpose app and too small for an enterprise suite. India's GST regime makes structured, compliant data non-optional.",
+        "title": "The mid-market between spreadsheets and SAP.",
+        "whyNow": [
+          "E-invoicing and e-way bill mandates keep widening the set of businesses that must operate from clean, connected data.",
+          "AI makes prospect research and multi-module querying practical for a business with no analyst.",
+          "Modular licensing lets a customer start small and expand in place — the land-and-expand motion vertical SaaS lacks."
+        ],
+        "figures": [
+          {
+            "note": "Government of India fact sheet, January 2026 data.",
+            "label": "MSME share of India's GDP, with 48.58% of exports (January 2026 data)",
+            "detail": "MSMEs are the second-largest employer in India after agriculture, so the addressable buyer base is both large and economically central.",
+            "figure": "31.1% of GDP",
+            "source": {
+              "url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jun/doc2026626903401.pdf",
+              "year": "2026",
+              "title": "From Enterprise to Empowerment: The MSME Story - Engines of Growth in a Changing Economy",
+              "publisher": "Press Information Bureau (Government of India), MSME Day 2026 fact sheet"
+            }
+          },
+          {
+            "note": "Self-declared registrations, not a count of active businesses. 1 crore = 10 million.",
+            "label": "Enterprises registered on Udyam Registration Portal and Udyam Assist Platform (June 2026)",
+            "detail": "Formal MSME registrations have reached 8.7 crore, a very large formalised base for a licensed multi-module business platform.",
+            "figure": "8.7 crore",
+            "source": {
+              "url": "https://static.pib.gov.in/WriteReadData/specificdocs/documents/2026/jun/doc2026626903401.pdf",
+              "year": "2026",
+              "title": "From Enterprise to Empowerment: The MSME Story - Engines of Growth in a Changing Economy",
+              "publisher": "Press Information Bureau (Government of India), MSME Day 2026 fact sheet"
+            }
+          },
+          {
+            "note": "Net of cancellations. 1 crore = 10 million.",
+            "label": "Active GST taxpayers in India as of 30 June 2026",
+            "detail": "The GST-registered base is the natural GST-native market; it has grown from 66.5 lakh in 2017.",
+            "figure": "1.67 crore",
+            "source": {
+              "url": "https://tutorial.gst.gov.in/offlineutilities/gst_statistics/9YearsReport.pdf",
+              "year": "2026",
+              "title": "9 Years of GST: A Statistical Report on the Completion of Nine Years of GST (2017-2026)",
+              "publisher": "Goods and Services Tax Network (GSTN)"
+            }
+          },
+          {
+            "note": "System-generated GSTN data, not audited. Share by value; by count it is about 67.8%.",
+            "label": "E-invoice share of GSTR-1 reported B2B invoice value, Jul 2025 - Jun 2026",
+            "detail": "E-invoicing now covers most reported invoice value, so GST-ready invoicing is becoming table stakes for growing SMBs.",
+            "figure": "~83.6%",
+            "source": {
+              "url": "https://tutorial.gst.gov.in/offlineutilities/gst_statistics/9YearsReport.pdf",
+              "year": "2026",
+              "title": "9 Years of GST: A Statistical Report on the Completion of Nine Years of GST (2017-2026)",
+              "publisher": "Goods and Services Tax Network (GSTN)"
+            }
+          },
+          {
+            "note": "Forecast; base year 2025. Other publishers define the market differently.",
+            "label": "India ERP market size in 2025, forecast $2.62B by 2031 (16.08% CAGR)",
+            "detail": "ERP demand in India is driven by GST and e-invoicing compliance, with SMEs the fastest-growing segment at a 19.2% CAGR.",
+            "figure": "$1.07B",
+            "source": {
+              "url": "https://www.mordorintelligence.com/industry-reports/india-enterprise-resource-planning-market",
+              "year": "2026",
+              "title": "India Enterprise Resource Planning Market Size, Share & 2031 Growth Trends Report",
+              "publisher": "Mordor Intelligence"
+            }
+          },
+          {
+            "note": "Global, not India-only. Forecast; base year 2025, CAGR 2026–2033.",
+            "label": "Global field service management market in 2025, forecast $13.8B by 2033 (11.0% CAGR)",
+            "detail": "Field service software is a growing standalone category, with SMEs the fastest-growing customer segment per the publisher.",
+            "figure": "$6.1B",
+            "source": {
+              "url": "https://www.grandviewresearch.com/industry-analysis/field-service-management-market",
+              "year": "2026",
+              "title": "Field Service Management Market Size Report, 2026-2033",
+              "publisher": "Grand View Research"
+            }
+          }
+        ],
+        "segments": [
+          "Field-service and installation businesses",
+          "Distributors and traders managing multi-warehouse stock",
+          "Founder-led B2B companies building their first pipeline",
+          "Any GST-registered business filing from real sales data"
+        ]
+      },
+      "helpUrl": "https://ark.wonderapps.biz/help",
+      "problem": {
+        "lede": "A business that starts on spreadsheets ends up with a CRM, an inventory app, a field-service tool, a chat inbox and a GST portal — five logins, five customer records, five inventory counts.",
+        "title": "Growth turns into a pile of tools.",
+        "points": [
+          {
+            "body": "The same customer exists in the CRM, the invoicing tool and the WhatsApp inbox, with three different phone numbers.",
+            "title": "Duplicate everything"
+          },
+          {
+            "body": "The count in the inventory app never matches the parts a field crew actually used on a job.",
+            "title": "Stock that disagrees"
+          },
+          {
+            "body": "GST returns, e-invoices and e-way bills are re-keyed from sales data that already exists somewhere else.",
+            "title": "Compliance by re-entry"
+          },
+          {
+            "body": "Every 'integration' is an export, an import and a person who owns the spreadsheet in between.",
+            "title": "Integration tax"
+          }
+        ]
+      },
+      "roadmap": [
+        {
+          "items": [
+            "Billing production-readiness review, then self-serve paid plans",
+            "Global tax: VAT/GST for UAE, Saudi Arabia, Australia, NZ and Southeast Asia",
+            "Platform administration portal (26 stories left)"
+          ],
+          "horizon": "Now"
+        },
+        {
+          "items": [
+            "E-invoice and e-way bill transaction lists and their exports",
+            "Finish the offering-centric Discovery upgrade (6 stories left)",
+            "CRM channel connectors (WhatsApp, email)"
+          ],
+          "horizon": "Next"
+        },
+        {
+          "items": [
+            "Public API and partner integrations",
+            "Independent deployability per module as scale demands"
+          ],
+          "horizon": "Later"
+        }
+      ],
+      "screens": [
+        {
+          "alt": "WonderArk landing page on desktop with the new brand: one login, every part of your business, zero duplicate data",
+          "src": "/screenshots/wonderark/home-desktop.webp",
+          "kind": "desktop",
+          "caption": "Business in one place — the new WonderArk identity"
+        },
+        {
+          "alt": "WonderArk landing on a phone",
+          "src": "/screenshots/wonderark/home-mobile.webp",
+          "kind": "mobile",
+          "caption": "Responsive across devices"
+        },
+        {
+          "alt": "WonderArk Discovery module: scored prospects per offering, with Marketing and Funding alongside",
+          "src": "/screenshots/wonderark/modules-desktop.webp",
+          "kind": "desktop",
+          "caption": "Discovery now finds customers, markets to them and funds the growth"
+        },
+        {
+          "alt": "WonderArk how-it-works: create the business once, license modules independently, data connects automatically",
+          "src": "/screenshots/wonderark/how-it-works-desktop.webp",
+          "kind": "desktop",
+          "caption": "License what you need; add modules in place"
+        }
+      ],
+      "tagline": "Business in one place.",
+      "audience": "Growing businesses outgrowing spreadsheets and a pile of disconnected apps",
+      "category": "B2B · SMB operating platform",
+      "oneLiner": "One login and one data model for a growing business: customer discovery, marketing, fundraising, inventory, field service, a shared inbox and accounting with GST — licensed module by module, never duplicating a customer, an item or an invoice.",
+      "solution": {
+        "lede": "A strictly bounded modular platform: a shared core schema owns every cross-module noun — parties, items, documents, payments, messages — and each module owns only what is genuinely its own.",
+        "title": "One portal. One account. Five modules. One truth.",
+        "pillars": [
+          {
+            "body": "Per business offering, AI builds the ideal customer profile, finds and scores real accounts and explains why now. Marketing (strategy, campaigns, AI content, SEO, analytics) and Funding (investor pipeline, readiness, data room, diligence) sit on the same data. AI researches; humans approve every outreach.",
+            "title": "Discovery, Marketing & Funding"
+          },
+          {
+            "body": "Multi-warehouse stock, purchase and sales orders, returns; opportunity-to-job pipeline, crew dispatch calendar, mobile field work with time, notes and signatures, and job invoicing that consumes stock.",
+            "title": "Inventory & Service"
+          },
+          {
+            "body": "A unified inbox across WhatsApp, email and more, routing rules, lead lifecycle and a follow-up queue — tied to the same customer record every other module uses.",
+            "title": "CRM"
+          },
+          {
+            "body": "Automatic posting from sales and purchases, statements with drill-down to the source document, cash flow, bank rules and reporting dimensions — and GST returns computed from actual sales data rather than re-entered.",
+            "title": "Finance & GST"
+          },
+          {
+            "body": "Business-scoped roles and invitations, with every action checked against both the module licence and the person's permission. Every module exports to CSV or Excel.",
+            "title": "A team, not a login"
+          }
+        ]
+      },
+      "traction": [
+        {
+          "live": true,
+          "note": "{pct}% of in-scope work; {setAside} superseded or deferred stories excluded. A story counts only when code cites it",
+          "label": "Stories complete",
+          "value": "{done} / {total}"
+        },
+        {
+          "note": "Discovery (with Marketing and Funding), Inventory, Service, CRM, Finance — independently licensable",
+          "label": "Modules",
+          "value": "5 on one schema"
+        },
+        {
+          "note": "CSV and Excel across all modules and platform admin — 89 of 90 export stories done",
+          "label": "Exports",
+          "value": "Every module"
+        },
+        {
+          "note": "Multi-user, multi-business roles and invitations, enforced alongside licensing",
+          "label": "Team access",
+          "value": "39 of 39"
+        }
+      ],
+      "geography": "India-first (GST-native), architecture is region-agnostic",
+      "accentSoft": "oklch(0.94 0.035 257)",
+      "howItWorks": [
+        {
+          "body": "One signup, one login, one business record — or several businesses under one account.",
+          "step": "Create the business once"
+        },
+        {
+          "body": "Start with one. Add or drop later. Cancelling never deletes data: a 30-day read-only grace, then rows are retained for reactivation.",
+          "step": "License modules independently"
+        },
+        {
+          "body": "A prospect won in Discovery is the customer in Service. Parts consumed on a job move stock in Inventory. The invoice feeds GST.",
+          "step": "Data connects automatically"
+        },
+        {
+          "body": "A built-in assistant answers from live data across every module you have licensed, grounded in real records.",
+          "step": "Ask the platform"
+        }
+      ],
+      "businessModel": {
+        "lede": "Published pricing in Indian Rupees: Free, Pro at ₹2,999/month and Max at ₹9,999/month, plus AI credit packs (₹1,000 for 500 runs up to ₹6,000 for 4,000) or bring-your-own-key. Billing is built and in its production-readiness review, so Pro and Max are sold by conversation today. Licensing is enforced at every layer, so an unlicensed module is genuinely off, not merely hidden.",
+        "plans": [
+          {
+            "name": "Free",
+            "bullets": [
+              "Core discovery tools at no cost",
+              "One login, one business",
+              "Team members with roles and permissions"
+            ],
+            "tagline": "Start with discovery"
+          },
+          {
+            "name": "Pro",
+            "bullets": [
+              "Every module, more usage headroom",
+              "Up to 200 AI runs a month per Discovery offering",
+              "Cancel a module any time: 30 days read-only, data never deleted"
+            ],
+            "tagline": "₹2,999 / month",
+            "featured": true
+          },
+          {
+            "name": "Max",
+            "bullets": [
+              "Highest limits and every feature",
+              "For teams running at scale",
+              "Credit packs or your own AI key on top"
+            ],
+            "tagline": "₹9,999 / month"
+          }
+        ],
+        "title": "License by module. Expand in place."
+      }
+    }
+  },
+  {
+    "kind": "startup",
+    "slug": "wonderid",
+    "position": 4,
+    "data": {
+      "ask": "Seeking two to three enterprise design partners with agents in production or an identity estate to consolidate, and investors focused on security and identity infrastructure.",
+      "url": "https://id.wonderapps.biz/",
+      "hero": {
+        "sub": "People, service accounts and AI agents all hold real access to real systems. WonderID makes each one a governed identity — starting with AI agents, where it compares what an agent SHOULD do, CAN do and DID, and raises an evidence-backed finding the moment they disagree. Read-only to start; your IAM stays the system of record.",
+        "headline": "Govern every identity. Verify every access."
+      },
+      "logo": {
+        "dark": "/brands/wonderid/wonderid-logo-dark.webp",
+        "mark": "/brands/wonderid/wonderid-mark.webp",
+        "light": "/brands/wonderid/wonderid-logo-light.webp"
+      },
+      "moat": [
+        {
+          "body": "Incumbent suites bolt agents onto a human model. WonderID started from the agent — owner, purpose, effective access, observed behaviour — and extends outward, so an AI agent is a first-class identity rather than a column on a service-account table.",
+          "title": "Agent-first, identity-wide"
+        },
+        {
+          "body": "No authorisation, risk, policy or remediation decision depends on a language model. AI writes advisory summaries and proposals only. That is an auditable promise competitors chasing 'AI security' cannot easily make.",
+          "title": "Deterministic by architecture"
+        },
+        {
+          "body": "Saviynt, SailPoint, Entra, Okta, custom IAM and MCP map into one model without any becoming the internal architecture.",
+          "title": "Vendor-neutral canonical model"
+        },
+        {
+          "body": "Strict tenant isolation, an immutable audit trail, encrypted credentials and hardened sign-in from the first commit — verified by a dedicated QA module.",
+          "title": "Built to enterprise bar from line one"
+        }
+      ],
+      "name": "WonderID",
+      "slug": "wonderid",
+      "facts": [
+        {
+          "label": "Platform",
+          "value": "Web · responsive · vendor platform-admin console"
+        },
+        {
+          "label": "AI",
+          "value": "Advisory summaries only; decisions are rule-based"
+        },
+        {
+          "label": "Pricing",
+          "value": "Pilot · Enterprise (packaging with design partners)"
+        }
+      ],
+      "stage": "Live multi-tenant platform · formerly WonderAgent",
+      "accent": "oklch(0.563 0.24 264)",
+      "market": {
+        "lede": "Enterprise IAM was built for employees. Service accounts, workloads and APIs already sprawl beyond them, and AI agents add autonomy on top. Security leaders need one answer to 'who and what has access, who owns it, why, and what did they do with it?' — and proof for auditors.",
+        "title": "Every identity is an attack surface — and most of them aren't people.",
+        "whyNow": [
+          "Agent adoption is outpacing governance; MCP has standardised how agents reach tools, which makes runtime observation tractable.",
+          "Regulators and auditors are asking for demonstrable control over AI systems, not policy documents.",
+          "Incumbent IGA suites are strong on human identity and bolt agents on; a vendor-neutral layer that starts from the agent and keeps existing IAM as system of record is the low-friction path in."
+        ],
+        "figures": [
+          {
+            "note": "Forecast; base year 2025, CAGR 2025–2030. Includes access management, IGA and PAM.",
+            "label": "Global IAM market size in 2025 (forecast $42.61B by 2030)",
+            "detail": "The identity and access management market the buyer already spends in is about $26B and growing about 10% a year, with non-human IAM flagged as the faster-growing segment.",
+            "figure": "$25.96B",
+            "source": {
+              "url": "https://www.marketsandmarkets.com/Market-Reports/identity-access-management-market-1168.html",
+              "year": "2025",
+              "title": "Identity and Access Management (IAM) Market - Global Forecast to 2030",
+              "publisher": "MarketsandMarkets"
+            }
+          },
+          {
+            "note": "Forecast; base year 2024, CAGR 2025–2033. A segment of IAM; scopes differ by publisher.",
+            "label": "Global identity governance and administration (IGA) market, 2024 (to $27.1B by 2033)",
+            "detail": "IGA, the category WonderID sits in, is a roughly $8B market forecast to more than triple by 2033.",
+            "figure": "$8.0B",
+            "source": {
+              "url": "https://www.grandviewresearch.com/industry-analysis/identity-governance-administration-market-report",
+              "year": "2025",
+              "title": "Identity Governance And Administration Market Report, 2025-2033",
+              "publisher": "Grand View Research"
+            }
+          },
+          {
+            "note": "Forecast; base year 2024, CAGR 2024–2030.",
+            "label": "Non-human identity (NHI) access management market, 2024 (to $18.71B by 2030)",
+            "detail": "Analysts already size machine and API identity access management as a separate, roughly $9B market growing about 12% a year.",
+            "figure": "$9.45B",
+            "source": {
+              "url": "https://www.marketsandmarkets.com/PressReleases/non-human-identity-nhi-access-management.asp",
+              "year": "2025",
+              "title": "Non-Human Identity (NHI) Access Management Market worth USD 18.71 billion by 2030",
+              "publisher": "MarketsandMarkets"
+            }
+          },
+          {
+            "note": "Vendor-sponsored survey of 2,900+ security decision-makers.",
+            "label": "Machine identities (incl. AI agents) per human identity, 2026 survey",
+            "detail": "A 2026 survey of 2,900+ security leaders finds machine identities, now including AI agents, outnumber humans 109 to 1.",
+            "figure": "109:1",
+            "source": {
+              "url": "https://www.paloaltonetworks.com/idira/idira-identity-security-landscape",
+              "year": "2026",
+              "title": "2026 Identity Security Landscape",
+              "publisher": "Palo Alto Networks (CyberArk Identity Security Landscape)"
+            }
+          },
+          {
+            "note": "Deloitte survey of 3,235 leaders in 24 countries.",
+            "label": "Companies with a mature governance model for autonomous AI agents",
+            "detail": "Deloitte's global survey of 3,235 leaders finds agentic AI use is set to rise sharply while governance lags.",
+            "figure": "1 in 5",
+            "source": {
+              "url": "https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html",
+              "year": "2026",
+              "title": "The State of AI in the Enterprise - 2026 AI report",
+              "publisher": "Deloitte"
+            }
+          },
+          {
+            "note": "IBM and Ponemon, 602 organisations; breaches March 2025 to February 2026.",
+            "label": "Global average cost of a data breach, IBM 2026",
+            "detail": "IBM's 2026 report puts the global average breach at $4.99M, a record high, so excess access that widens a breach has a direct price.",
+            "figure": "$4.99M",
+            "source": {
+              "url": "https://newsroom.ibm.com/2026-07-29-ibm-study-one-in-four-malicious-breaches-are-ai-enabled,-costing-companies-6-million-on-average",
+              "year": "2026",
+              "title": "IBM Study: One in Four Malicious Breaches are AI-Enabled, Costing Companies $6 Million on Average",
+              "publisher": "IBM (with Ponemon Institute)"
+            }
+          }
+        ],
+        "segments": [
+          "Regulated enterprises in finance, healthcare and public sector",
+          "Organisations rolling out MCP-based agent platforms",
+          "IAM/IGA teams consolidating human, machine and agent identity governance",
+          "GRC teams facing AI-specific audit requirements"
+        ]
+      },
+      "helpUrl": "https://id.wonderapps.biz/help",
+      "problem": {
+        "lede": "An agent is provisioned like a service account, inherits access like a person, and acts continuously like neither. Most exist as untracked service accounts — alongside the people and machines no one has reconciled either.",
+        "title": "AI agents got production access. Nobody gave them an identity.",
+        "points": [
+          {
+            "body": "Provisioned as SVC_FINANCEBOT_PRD by someone who has since changed teams. No business owner, no technical owner, nobody to approve a change.",
+            "title": "No owner"
+          },
+          {
+            "body": "The agent's approved scope lives in a ticket, a design doc or someone's memory — never anywhere a control can evaluate.",
+            "title": "Purpose that no control can read"
+          },
+          {
+            "body": "Nested groups, OAuth scopes and tool permissions add up to reach that nobody has computed, let alone certified.",
+            "title": "Access far beyond purpose"
+          },
+          {
+            "body": "Runtime logs sit in an observability tool keyed by service name, cut off from the entitlement and approval that allowed the action.",
+            "title": "Behaviour disconnected from identity"
+          }
+        ]
+      },
+      "roadmap": [
+        {
+          "items": [
+            "Business and IT roles, preventive SoD and delegations",
+            "Provisioning and deprovisioning pipeline",
+            "Access ledger, imported-access classification and Rogue Access management"
+          ],
+          "horizon": "Now"
+        },
+        {
+          "items": [
+            "Certification campaigns for every identity type",
+            "Passkey (WebAuthn) sign-in and step-up",
+            "WonderID Home and a My Access self-service portal"
+          ],
+          "horizon": "Next"
+        },
+        {
+          "items": [
+            "Configuration Studio and a workflow designer",
+            "An advisory-only WonderID AI assistant",
+            "Partner and MSSP editions"
+          ],
+          "horizon": "Later"
+        }
+      ],
+      "screens": [
+        {
+          "alt": "WonderID product site on desktop: 'Govern every identity. Verify every access.' above a tenant overview",
+          "src": "/screenshots/wonderid/home-desktop.webp",
+          "kind": "desktop",
+          "caption": "The product site — every identity governed, starting with AI agents"
+        },
+        {
+          "alt": "WonderID product site on a phone with the tenant overview preview",
+          "src": "/screenshots/wonderid/home-mobile.webp",
+          "kind": "mobile",
+          "caption": "The same, on a phone"
+        },
+        {
+          "alt": "WonderID risk list ordered by severity and the governed AI agent inventory",
+          "src": "/screenshots/wonderid/product-desktop.webp",
+          "kind": "desktop",
+          "caption": "Risk ordered by what to do first; an agent inventory that is actually governed"
+        },
+        {
+          "alt": "WonderID SHOULD, CAN and DID comparison raising an excessive-access finding for FinanceBot",
+          "src": "/screenshots/wonderid/model-desktop.webp",
+          "kind": "desktop",
+          "caption": "SHOULD · CAN · DID — a critical finding, with the evidence attached"
+        },
+        {
+          "alt": "WonderID platform capabilities: agent lifecycle, effective access, runtime assurance, risk, certification and IAM integration",
+          "src": "/screenshots/wonderid/platform-desktop.webp",
+          "kind": "desktop",
+          "caption": "A governance layer over the IAM you already run"
+        },
+        {
+          "alt": "WonderID sign-in page with the new brand lockup",
+          "src": "/screenshots/wonderid/signin-desktop.webp",
+          "kind": "desktop",
+          "caption": "The WonderID brand, rolled out across every surface"
+        }
+      ],
+      "tagline": "Secure every identity. Human and AI.",
+      "audience": "CISOs, IAM and GRC teams governing people, machines and AI agents",
+      "category": "Enterprise · Identity governance & security",
+      "oneLiner": "Vendor-neutral identity governance for everything that holds access — people, service accounts, applications and AI agents — starting with the identity nobody governs yet: the AI agent.",
+      "solution": {
+        "lede": "Agent governance stays at its core; the same deterministic engine now extends to a unified identity directory, application onboarding and self-service access — across the IAM platforms a customer already runs (Saviynt, Okta, Entra, custom IAM and MCP runtimes map into one canonical model).",
+        "title": "SHOULD. CAN. DID. — then every identity around it.",
+        "pillars": [
+          {
+            "body": "Every agent gets an owner, a purpose contract and a lifecycle state. Its approved purpose (SHOULD), effective access computed from real entitlements, roles, groups and OAuth scopes (CAN), and observed runtime behaviour (DID) are compared continuously; any divergence is a finding with evidence.",
+            "title": "AI agent governance"
+          },
+          {
+            "body": "Humans, external users, service accounts, applications, workloads, APIs and AI agents in one tenant-scoped directory — fed by authoritative sources through a validate, correlate, stage and apply reconciliation pipeline, with joiner, mover and leaver lifecycle.",
+            "title": "One directory for every identity"
+          },
+          {
+            "body": "An application catalog that surfaces unrecognised apps, onboarding that validates, simulates and needs a four-eyes approval before it goes live, and an account inventory that flags orphaned and dormant accounts. AI can draft an onboarding proposal from an OpenAPI spec; a person approves it.",
+            "title": "Applications, onboarded properly"
+          },
+          {
+            "body": "A request catalog with per-item policies, multi-stage approval chains that forbid self-approval, and access packages that work the same for people and agents.",
+            "title": "Self-service access, real approvals"
+          },
+          {
+            "body": "Deterministic scoring — never an LLM guess — for excessive access, unauthorised actions, sensitive-data violations and behavioural deviation. Certification campaigns produce auditor-ready evidence packs.",
+            "title": "Risk, certification & evidence"
+          }
+        ]
+      },
+      "traction": [
+        {
+          "live": true,
+          "note": "{pct}% across {rows} modules; the tracker grew by 74 stories when WonderID's identity roadmap was adopted",
+          "label": "Stories complete",
+          "value": "{done} / {total}"
+        },
+        {
+          "note": "Identity directory, reconciliation, application onboarding, account inventory, requests, approvals and access packages shipped; 4 more partial",
+          "label": "WonderID roadmap",
+          "value": "14 of 36 done"
+        },
+        {
+          "note": "Customer pages plus the vendor platform-admin console",
+          "label": "Screens",
+          "value": "78 + 8"
+        }
+      ],
+      "geography": "Global enterprise",
+      "accentSoft": "oklch(0.93 0.04 264)",
+      "howItWorks": [
+        {
+          "body": "Import identities, applications and access from existing IAM and authoritative sources, plus runtime events from MCP or REST. Connectors declare capabilities explicitly; read-only means read-only.",
+          "step": "Connect"
+        },
+        {
+          "body": "Name an owner, approved applications, approved data classes and approved actions. That contract becomes SHOULD.",
+          "step": "Declare purpose"
+        },
+        {
+          "body": "Purpose, effective access and observed behaviour are evaluated by explicit rules. Findings carry the evidence that produced them.",
+          "step": "Compare continuously"
+        },
+        {
+          "body": "Every recommended revocation waits for a human to confirm, is recorded against the finding, and is re-evaluated once access changes.",
+          "step": "Remediate with a human"
+        }
+      ],
+      "businessModel": {
+        "lede": "Multi-tenant from day one with a separate vendor-only platform-admin boundary for tenants, subscriptions, feature flags, usage and health. Deployment-ready today; commercial packaging follows the first design customers.",
+        "plans": [
+          {
+            "name": "Pilot",
+            "bullets": [
+              "Connect one IAM and one runtime source",
+              "Discover and register agents",
+              "First risk findings and a certification round"
+            ],
+            "tagline": "Read-only proof"
+          },
+          {
+            "name": "Enterprise",
+            "bullets": [
+              "Unlimited identities and integrations",
+              "Identity directory, application onboarding and self-service access",
+              "SSO/MFA, scoped roles and permissions",
+              "Certification, evidence packs and human-confirmed remediation"
+            ],
+            "tagline": "Governance in production",
+            "featured": true
+          }
+        ],
+        "title": "Enterprise SaaS, priced per tenant."
+      }
+    }
+  },
+  {
+    "kind": "tracker",
+    "slug": "wonderhome",
+    "position": 0,
+    "data": {
+      "name": "WonderHome",
+      "notes": {
+        "14": "Grew from 14 to 19 stories this cycle: WhatsApp intake, and whole-document reading with a review/apply/receipt flow",
+        "18": "Scoped, expiring partner keys and a write-nothing sandbox shipped this cycle",
+        "20": "Billing, refunds and nightly reconciliation code-complete; payments stay off until they are switched on",
+        "22": "Every screen in 8 languages (Mandarin added) and per-record currencies; right-to-left layouts deferred by the owner",
+        "23": "Notification center, snooze, escalation, smart batching and behaviour-learned timing all shipped this cycle",
+        "04": "Voice release gates are built; a real Alexa and Gemini Live end-to-end run needs the owner"
+      },
+      "stage": "Live product · early households onboarding",
+      "accent": "oklch(0.49 0.09 190)",
+      "rowLabel": "Backlog module",
+      "sourceUrl": "https://github.com/luvchakra/wonder-home/blob/main/docs/PROGRESS.md",
+      "methodology": "225 stories across 24 modules, tagged P0/P1/P2 at design time. A module's remaining stories are a mix of not-started and in-progress work not split out in the source tracker, so they're counted together here as “remaining.” A story the owner deferred counts as set aside.",
+      "sourceLabel": "docs/PROGRESS.md (generated)",
+      "currentFocus": "Every module but one is complete — 04-017 voice release gates are built and wait on a real Alexa and Gemini Live run by the owner; 22-008 right-to-left layouts deferred by the owner"
+    }
+  },
+  {
+    "kind": "tracker",
+    "slug": "wonderjobs",
+    "position": 1,
+    "data": {
+      "name": "WonderJobs",
+      "notes": {
+        "2": "Google sign-in needs provider config; custom SMTP recommended",
+        "8": "Scheduled-run cadence capped by the hosting plan",
+        "13": "Resume Studio and Interview Prep are early versions"
+      },
+      "stage": "Live product · free plan · public demo",
+      "accent": "oklch(0.55 0.23 285)",
+      "rowLabel": "Epic",
+      "sourceUrl": "https://github.com/luvchakra/wonder-jobs/blob/main/docs/PROGRESS.md",
+      "methodology": "Every story from the original requirements spec plus later requests, tracked epic by epic. “Partial” means shipped but intentionally incomplete (e.g. an early version); “backlog” items are listed by name in the source doc.",
+      "sourceLabel": "docs/PROGRESS.md",
+      "currentFocus": "Epic 13 — secondary product areas (Resume Studio, Interview Prep going deeper)"
+    }
+  },
+  {
+    "kind": "tracker",
+    "slug": "wondercreator",
+    "position": 2,
+    "data": {
+      "name": "Wonder Creator",
+      "notes": {
+        "01": "AI and live voice/video are built and need provider keys to be live; the product says 'not connected' otherwise"
+      },
+      "stage": "Live product · sign-up open",
+      "accent": "oklch(0.6 0.21 350)",
+      "rowLabel": "Workstream",
+      "sourceUrl": "https://github.com/luvchakra/wonder-creator/blob/main/docs/progress.md",
+      "methodology": "Wonder Creator keeps one running delivery log rather than a numbered backlog: each dated deliverable is a row with a status, grouped by workstream. Every row is counted once; a row marked partial or in progress is counted as partial. Rows differ in size (one is a whole phase, another a single screen), so this is a tally of tracked deliverables, not of equally sized stories.",
+      "sourceLabel": "docs/progress.md",
+      "currentFocus": "Creative Room parts, Creation pages and the UI redesign canvas; AI and live voice/video switch on with provider keys"
+    }
+  },
+  {
+    "kind": "tracker",
+    "slug": "wonderark",
+    "position": 3,
+    "data": {
+      "name": "WonderArk",
+      "notes": {
+        "11": "India GST is done; VAT/GST for UAE, Saudi Arabia, Australia, NZ and Southeast Asia is the remaining scope",
+        "12": "Marketing strategy, campaigns, AI content, SEO and analytics; an investor pipeline, readiness, data room and diligence",
+        "13": "Every module exports; e-invoice/e-way bill export waits for those transaction lists to exist",
+        "14": "Checkout, licence provisioning and billing UI built; production-readiness review remains",
+        "15": "Business-scoped roles, invitations and licence × permission enforcement",
+        "04": "Finance now posts automatically, with statements and drill-down, cash flow, bank rules and reporting dimensions; AI bank-line categorisation deliberately deferred",
+        "08": "Fully superseded by backlog 10 (offering-centric); no story here is abandoned work",
+        "09": "AI feature kill switch, configuration history and least-privilege controls now cited in code"
+      },
+      "stage": "Live platform · five modules, paid plans in readiness review",
+      "accent": "oklch(0.605 0.217 257)",
+      "rowLabel": "Backlog",
+      "sourceUrl": "https://github.com/luvchakra/founder-collab/blob/main/docs/PROGRESS-TRACKER.md",
+      "methodology": "Generated from the repository itself: a story counts as done only when its id is cited by the code, migration or test that implements it. “Set aside” stories were deliberately deferred or superseded by later work, not abandoned — the whole 30-story “opportunity intelligence” backlog was superseded by the “offering-centric” backlog that followed it. The one story the tracker marks unverified (written about, but not cited by code) is counted as remaining.",
+      "sourceLabel": "docs/PROGRESS-TRACKER.md (generated)",
+      "currentFocus": "Billing production-readiness review (the last billing story), then global tax (VAT/GST beyond India) and the platform administration portal"
+    }
+  },
+  {
+    "kind": "tracker",
+    "slug": "wonderid",
+    "position": 4,
+    "data": {
+      "name": "WonderID",
+      "notes": {
+        "10": "Workflow designer and identity insights not started",
+        "01": "Scoped WonderID permissioning shipped; SAML SSO waits on a paid hosting plan; passkeys and permission simulation not started",
+        "02": "Unified identity model and relationships shipped; directory and joiner/mover/leaver partial",
+        "03": "Identity reconciliation, app discovery and AI onboarding proposals shipped; provisioning pipeline not started",
+        "04": "Application onboarding, account inventory, request catalog, approvals and access packages shipped; roles, SoD, delegations and the access ledger are next",
+        "06": "Rogue Access management not started",
+        "07": "Certification for every identity type not started",
+        "08": "WonderID brand and navy navigation shipped; My Access portal and AI assistant not started",
+        "09": "Support access deferred rather than shortcut; Configuration Studio not started"
+      },
+      "stage": "Live multi-tenant platform · identity roadmap underway",
+      "accent": "oklch(0.563 0.24 264)",
+      "rowLabel": "Module (agent)",
+      "sourceUrl": "https://github.com/luvchakra/wonder-agent/blob/main/docs/PROGRESS.md",
+      "methodology": "Generated from the per-module backlog tables. WonderAgent became WonderID on 2026-09-26, and its identity-governance roadmap added 74 stories to the same modules, so totals grew while earlier work stayed done. “Deferred” rows are named, reasoned decisions recorded in the module's own backlog, not silent gaps. Beyond these tracked stories, the backlogs list 52 forward-looking P1 and 32 P2 items not yet in scope.",
+      "sourceLabel": "docs/PROGRESS.md (generated)",
+      "currentFocus": "WonderID identity roadmap: 14 of 36 stories done — next are business roles, preventive SoD, delegations and the provisioning pipeline"
+    }
+  }
+]

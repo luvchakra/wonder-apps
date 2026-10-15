@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { legalBySlug, legalDocs } from "@/content/legal";
+import { getLegalDoc, getLegalDocs, getSiteCopy } from "@/lib/content/load";
 import { site } from "@/content/site";
 
 type Params = { slug: string };
 
 export const dynamicParams = false;
 
-export function generateStaticParams(): Params[] {
-  return legalDocs.map((d) => ({ slug: d.slug }));
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await getLegalDocs()).map((d) => ({ slug: d.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const d = legalBySlug(slug);
+  const d = await getLegalDoc(slug);
   return d ? { title: d.title, description: d.summary } : {};
 }
 
 export default async function LegalPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const d = legalBySlug(slug);
+  const [d, copy] = await Promise.all([getLegalDoc(slug), getSiteCopy()]);
   if (!d) notFound();
   return (
     <div className="theme-light bg-bg text-fg">
@@ -40,7 +40,7 @@ export default async function LegalPage({ params }: { params: Promise<Params> })
         <article className="lg:col-span-8 lg:col-start-5">
           <h1 className="headline text-[clamp(2rem,5vw,3.25rem)]">{d.title}</h1>
           <p className="lede mt-4 text-lg text-fg-muted">{d.summary}</p>
-          <p className="mt-2 text-sm text-fg-subtle">Last updated {site.lastUpdated}</p>
+          <p className="mt-2 text-sm text-fg-subtle">Last updated {copy.lastUpdated}</p>
           <div className="mt-12 space-y-10">
             {d.sections.map((s) => (
               <section key={s.heading}>

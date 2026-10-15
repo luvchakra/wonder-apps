@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { startupBySlug, startups } from "@/content/startups";
+import { getDeck, getStartup, getStartups } from "@/lib/content/load";
 import { BusinessModel, DeckSection, FactsStrip, Gallery, HowItWorks, Market, MoatAndTraction, Problem, RoadmapAndAsk, Solution, StartupHero } from "@/components/StartupSections";
 
 type Params = { slug: string };
 
 export const dynamicParams = false;
 
-export function generateStaticParams(): Params[] {
-  return startups.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await getStartups()).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const s = startupBySlug(slug);
+  const s = await getStartup(slug);
   if (!s) return {};
   return {
     title: `${s.name} — ${s.tagline}`,
@@ -26,8 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function StartupPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const s = startupBySlug(slug);
-  if (!s) notFound();
+  const [startups, deck] = await Promise.all([getStartups(), getDeck(slug)]);
+  const s = startups.find((x) => x.slug === slug);
+  if (!s || !deck) notFound();
   const idx = startups.findIndex((x) => x.slug === s.slug);
   const prev = startups[(idx + startups.length - 1) % startups.length];
   const next = startups[(idx + 1) % startups.length];
@@ -36,7 +37,7 @@ export default async function StartupPage({ params }: { params: Promise<Params> 
     <article style={{ "--accent": s.accent, "--accent-soft": s.accentSoft } as React.CSSProperties}>
       <StartupHero s={s} />
       <FactsStrip s={s} />
-      <DeckSection s={s} />
+      <DeckSection deck={deck} />
       <Problem s={s} />
       <Solution s={s} />
       <HowItWorks s={s} />

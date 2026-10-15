@@ -5,13 +5,13 @@ import { DashNav } from "@/components/dashboard/DashNav";
 import { Logo, Wordmark } from "@/components/Logo";
 import { appColor } from "@/lib/dashboard/colors";
 import { requireSession } from "@/lib/dashboard/session";
-import { startups } from "@/content/startups";
+import { dashProducts } from "@/lib/dashboard/products";
 
 export const metadata: Metadata = { title: "Founder dashboard", robots: { index: false, follow: false } };
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await requireSession();
-  const apps = startups.map((s) => ({ slug: s.slug, name: s.name, color: appColor(s.slug) }));
+  const apps = (await dashProducts()).map((s) => ({ slug: s.slug, name: s.name, color: appColor(s.slug) }));
   return (
     <div className="dash lg:grid lg:grid-cols-[248px_1fr]">
       <aside className="border-b p-4 lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:border-b-0 lg:border-r lg:p-5" style={{ borderColor: "var(--d-line)" }}>

@@ -49,7 +49,7 @@ export function TrackerClient({ initial }: { initial: ProductProgress[] }) {
             errors[p.slug] = r.error;
             return p;
           }
-          // Keep editorial notes from the curated snapshot where the row still exists.
+          // Keep editorial notes from the recorded snapshot where the row still exists.
           const rows = r.rows.map((row) => ({ ...row, name: scrub(row.name), note: scrub(row.note ?? p.rows.find((x) => x.id === row.id)?.note) }));
           return { ...p, rows, lastUpdated: r.lastUpdated ?? p.lastUpdated, currentFocus: r.currentFocus ?? p.currentFocus };
         }),

@@ -3,7 +3,7 @@ import { AlertOctagon, AlertTriangle, ArrowUpRight, CheckCircle2, Info } from "l
 import { TimeChart } from "@/components/dashboard/charts";
 import { Card, DeltaChip, Empty, StatTile, StatusPill } from "@/components/dashboard/parts";
 import { RangeTabs } from "@/components/dashboard/RangeTabs";
-import { startups } from "@/content/startups";
+import { dashProducts, namesOf } from "@/lib/dashboard/products";
 import { appColor } from "@/lib/dashboard/colors";
 import { delta, formatValue } from "@/lib/dashboard/format";
 import { loadAll, parseRange, result } from "@/lib/dashboard/load";
@@ -15,8 +15,6 @@ import { windowLabel } from "@/lib/dashboard/window";
 
 export const dynamic = "force-dynamic";
 
-const nameOf = (slug: string) => startups.find((s) => s.slug === slug)?.name ?? slug;
-
 const greeting = (tz: string) => {
   const h = Number(new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", hourCycle: "h23" }).format(new Date()));
   return h < 5 ? "Burning the midnight oil" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
@@ -26,7 +24,9 @@ export default async function Overview({ searchParams }: { searchParams: Promise
   await requireSession();
   const sp = await searchParams;
   const { key, window: w } = parseRange(sp.range);
-  const snaps = await loadAll(w, sp.fresh === "1");
+  const [snaps, products] = await Promise.all([loadAll(w, sp.fresh === "1"), dashProducts()]);
+  const names = namesOf(products);
+  const nameOf = (slug: string) => names[slug] ?? slug;
   const roll = rollup(snaps, w);
   const todo = attention(snaps);
   const stamp = `${windowLabel(w)} · ${w.tz.replace("_", " ")}`;
