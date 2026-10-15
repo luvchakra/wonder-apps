@@ -1,8 +1,8 @@
 # Founder dashboard
 
 One private page at `/dashboard` that shows activity across all five products, plus a weekly
-and monthly emailed briefing. **WonderApps has no database of its own, at any stage.** Every
-number is read live from the product that owns it, through a read-only connection you control.
+and monthly emailed briefing. **The dashboard stores no product data.** WonderApps has its own
+database (see CLAUDE.md), but every dashboard number is read live from the product that owns it, through a read-only connection you control.
 
 ```
 /dashboard                 portfolio pulse: totals, signups by product, "needs you", product cards

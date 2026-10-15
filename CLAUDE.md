@@ -5,7 +5,8 @@ Investor-facing portfolio site for five independent AI-native startups —
 (formerly WonderAgent). Apple-style presentation:
 dark/light bands, scroll-linked parallax, device frames, staged hero animation.
 Static except for one route handler that emails contact-form submissions through
-the WonderApps mailbox (GoDaddy SMTP). No database.
+the WonderApps mailbox (GoDaddy SMTP). WonderApps has its own Supabase project
+(`wonderapps`, see "WonderApps' own database" below); nothing uses it yet.
 
 ## Commands
 
@@ -112,9 +113,10 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 
 The one place the site is not static. Full guide: `docs/dashboard/README.md`.
 
-- **No database of our own, ever.** Numbers are read live from each product through a read-only
-  Postgres role (`<APP>_DATABASE_URL` env vars; scripts in `docs/dashboard/*-readonly.sql`). Nothing is
-  stored in WonderApps except a two-minute in-memory cache.
+- **Product numbers are never copied.** They are read live from each product through a read-only
+  Postgres role (`<APP>_DATABASE_URL` env vars; scripts in `docs/dashboard/*-readonly.sql`), cached in
+  memory for two minutes. WonderApps' own database (below) is for WonderApps' own data, never a copy of
+  a product's.
 - **Aggregates only.** Metrics live in `src/lib/dashboard/apps/<slug>.ts` against the contract in
   `src/lib/dashboard/types.ts`: single `SELECT`, only `$1..$4`, no user input in SQL, no emails/names/free
   text (labels that look like emails are blanked). `registry.ts` rejects non-SELECT SQL at build time.
@@ -131,6 +133,23 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
   file as `/appstracker`, so the two never disagree; a file that can't be read falls back to the snapshot,
   never zeros. Add or move a product's progress file in `DEV_SOURCES`.
 - The public-copy rules above (no tech stack names) apply to the marketing site, not to this private page.
+
+## WonderApps' own database
+
+Since 2026-10-15 WonderApps has its own Supabase project, `wonderapps`
+(`gsxvidvliqarhoxbyifo`, ap-south-1), in the same Supabase organization as WonderHome.
+It is empty and no code reads it yet.
+
+- It holds WonderApps' own data only. Product metrics still come live from each
+  product's read-only role; never sync or store a product's data here.
+- Every table gets row-level security in the migration that creates it. The publishable
+  key is public, so a table without RLS is readable by anyone.
+- Env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (public),
+  and a server-only `WONDERAPPS_DATABASE_URL` once code needs direct Postgres access.
+  Never expose a secret or service-role key to the browser.
+- Schema changes are migrations, checked with Supabase's security advisors afterwards.
+- The inactive `wonder-home` project in that organization is an abandoned WonderHome
+  setup; ignore it.
 
 ## The tracker (/appstracker)
 
