@@ -144,9 +144,11 @@ It is empty and no code reads it yet.
   product's read-only role; never sync or store a product's data here.
 - Every table gets row-level security in the migration that creates it. The publishable
   key is public, so a table without RLS is readable by anyone.
-- Env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (public),
-  and a server-only `WONDERAPPS_DATABASE_URL` once code needs direct Postgres access.
-  Never expose a secret or service-role key to the browser.
+- Env vars: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (public);
+  server-only `SUPABASE_SERVICE_ROLE_KEY` (bypasses RLS), `WONDERAPPS_DATABASE_URL` (the
+  pooled connection string; Vercel can't reach the direct `db.<ref>.supabase.co` host) and
+  `SECRET_ENCRYPTION_KEY` (for encrypting stored secrets, when code needs it). Never import
+  a server-only key into client code or give it a `NEXT_PUBLIC_` name.
 - Schema changes are migrations, checked with Supabase's security advisors afterwards.
 - The inactive `wonder-home` project in that organization is an abandoned WonderHome
   setup; ignore it.
