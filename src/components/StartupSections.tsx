@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Download, ExternalLink, Lock, Presentation } from "lucide-react";
-import { deckBySlug } from "@/content/decks";
+import type { Deck } from "@/content/decks";
 import type { Startup } from "@/content/types";
 import { DeckViewer } from "./DeckViewer";
 import { Device } from "./Device";
@@ -229,9 +229,8 @@ export function Market({ s }: { s: Startup }) {
 }
 
 /* --- Investor deck ------------------------------------------------------- */
-export function DeckSection({ s }: { s: Startup }) {
-  const deck = deckBySlug(s.slug);
-  if (!deck) return null;
+export function DeckSection({ deck }: { deck: Deck }) {
+  const s = deck.startup;
   return (
     <section id="deck" className="theme-dark section scroll-mt-20 bg-bg text-fg" aria-labelledby="deck-title">
       <div className="container">

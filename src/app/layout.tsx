@@ -6,22 +6,26 @@ import { SiteChrome } from "@/components/SiteChrome";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Motion } from "@/components/Motion";
+import { getSiteCopy, getStartups } from "@/lib/content/load";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: { default: `${site.name} — ${site.tagline.replace(/\.$/, "")}`, template: `%s · ${site.name}` },
-  description: site.description,
-  openGraph: {
-    title: `${site.name} — Investor Portfolio`,
-    description: site.description,
-    url: site.url,
-    siteName: site.name,
-    type: "website",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${site.name} — five AI-native startups` }],
-  },
-  twitter: { card: "summary_large_image", title: site.name, description: site.description },
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const copy = await getSiteCopy();
+  return {
+    metadataBase: new URL(site.url),
+    title: { default: `${site.name} — ${copy.tagline.replace(/\.$/, "")}`, template: `%s · ${site.name}` },
+    description: copy.description,
+    openGraph: {
+      title: `${site.name} — Investor Portfolio`,
+      description: copy.description,
+      url: site.url,
+      siteName: site.name,
+      type: "website",
+      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${site.name} — five AI-native startups` }],
+    },
+    twitter: { card: "summary_large_image", title: site.name, description: copy.description },
+    robots: { index: true, follow: true },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: [
@@ -32,7 +36,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [startups, copy] = await Promise.all([getStartups(), getSiteCopy()]);
+  const products = startups.map((s) => ({ slug: s.slug, name: s.name, category: s.category }));
   return (
     <html lang="en">
       <body className="min-h-dvh flex flex-col">
@@ -45,13 +51,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </a>
           <SiteChrome>
             <ScrollMemory />
-            <Nav />
+            <Nav products={products} />
           </SiteChrome>
           <main id="main" className="flex-1">
             {children}
           </main>
           <SiteChrome>
-            <Footer />
+            <Footer products={products} copy={copy} />
           </SiteChrome>
         </Motion>
       </body>

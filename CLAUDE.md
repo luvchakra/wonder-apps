@@ -4,8 +4,11 @@ Investor-facing portfolio site for five independent AI-native startups —
 **WonderHome**, **WonderJobs**, **Wonder Creator**, **WonderArk** and **WonderID**
 (formerly WonderAgent). Apple-style presentation:
 dark/light bands, scroll-linked parallax, device frames, staged hero animation.
-Static except for one route handler that emails contact-form submissions through
-the WonderApps mailbox (GoDaddy SMTP). No database.
+Pages are pre-rendered and refreshed every five minutes from the WonderApps
+database (Supabase project `wonderapps`, ap-south-1), which holds the site's copy and
+a daily history of every product's public engineering tracker — nothing about
+visitors. One route handler emails contact-form submissions through the WonderApps
+mailbox (GoDaddy SMTP); the messages are never stored.
 
 ## Commands
 
@@ -18,6 +21,8 @@ the WonderApps mailbox (GoDaddy SMTP). No database.
 | Build     | `npm run build`     |
 | All gates | `npm run check`     |
 | Progress  | `npm run progress`  |
+| Backfill  | `npm run progress:backfill` |
+| Back up copy | `npm run content:backup` |
 
 There is no test suite yet; `npm run check` (lint + typecheck + build) is the
 pre-push gate.
@@ -25,45 +30,59 @@ pre-push gate.
 ## Stack
 
 Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion ·
-lucide-react · zod · nodemailer (GoDaddy SMTP). System font stack on purpose (no external font
+lucide-react · zod · nodemailer (GoDaddy SMTP) · Supabase (read over its REST API, no client
+library). System font stack on purpose (no external font
 fetch at build time).
 
 ## Layout
 
 ```
-src/content/        ALL copy lives here — edit these, not the components
-  startups.ts       one typed record per product: problem, solution, market
-                    (incl. sourced `figures`), model, moat, traction, roadmap,
-                    screens, links (helpUrl is data only)
-  deck-copy.ts      short slide copy per product for the investor decks
+DATABASE (public.content_documents) — ALL copy lives here, one JSON document per
+  (kind, slug), validated by src/lib/content/schema.ts on every read:
+  startup/<slug>    one record per product: problem, solution, market (incl. sourced
+                    `figures`), model, moat, traction, roadmap, screens, links
+  deck_copy/<slug>  short slide copy per product for the investor decks
+  legal/<slug>      privacy / terms / cookies / disclaimer / accessibility / security
+                    ({{url}}, {{contactEmail}}, {{lastUpdated}}… filled at render)
+  site/main         tagline, positioning, description, jurisdiction, lastUpdated
+  tracker/<slug>    how /appstracker describes a product: stage, methodology, row notes
+DATABASE (public.progress_snapshots + _rows) — one snapshot per product per day
+src/lib/content/    supabase.ts (REST reads, publishable key), schema.ts (zod),
+                    load.ts (every read the site makes; cached, tag `content`/`progress`)
+src/lib/progress/   record.ts (daily recorder), trends.ts (series for the charts)
+supabase/migrations/  the schema, applied to the project; keep in step with it
+supabase/seed/content.json  backup of the copy (`npm run content:backup`); the
+                    database is the source of truth, not this file
+src/content/        code that shapes the copy, not the copy itself:
   decks.ts          the slide model (`buildDeck`) shared by viewer and PDF
-  site.ts           name, nav, legal links, jurisdiction, lastUpdated, canonical
-                    url (wonderapps.biz) and contactEmail (connect@wonderapps.biz)
-  legal.ts          privacy / terms / cookies / disclaimer / accessibility / security
-  types.ts          the Startup type
+  site.ts           configuration: name, nav, legal links, canonical url
+                    (wonderapps.biz) and contactEmail (connect@wonderapps.biz)
+  progress.ts       tracker row types, totals and the traction template helpers
+  types.ts          re-exports the content types from src/lib/content/schema.ts
 src/components/     Hero, Showcase (landing chapter per product), StartupSections
                     (deep-dive page), Device (laptop/phone frames), Parallax,
                     Reveal, Stats (count-up), ContactForm, Nav, Footer
 src/app/
   page.tsx                  landing
-  startups/[slug]/page.tsx  deep dive, statically generated per product
+  startups/[slug]/page.tsx  deep dive, pre-rendered per product (new products need a build)
   decks/page.tsx            index of the five decks
   decks/[slug]/print/       printable 1920x1080 slides → source of the PDFs
-  (legal)/[slug]/page.tsx   legal pages, statically generated from legal.ts
+  (legal)/[slug]/page.tsx   legal pages, pre-rendered from the legal documents
   contact/page.tsx          contact page (?interest=<slug> preselects a product)
   appstracker/page.tsx      portfolio engineering tracker (TrackerClient)
   api/contact/route.ts      POST → `src/lib/mailer.ts` (SMTP). Honeypot field, zod validation.
   api/tracker/route.ts      GET → reads the five products' tracker markdown
                             from raw.githubusercontent.com and returns parsed rows
+  api/cron/progress/route.ts  daily (Vercel Cron) → records today's snapshot of every
+                            tracker through record_progress_snapshot (PROGRESS_WRITE_KEY)
 src/lib/tracker-parsers.ts  deterministic markdown-table parsers, one per product;
                             a parser THROWS when its table isn't found so the client
                             keeps the last good data instead of showing wrong numbers
-src/content/progress.ts     the curated snapshot the tracker renders before (and if)
-                            the live fetch succeeds; editorial notes per row live here
 docs/progress.md            GENERATED story-by-story progress across all five
                             products — regenerate with `npm run progress` (fetches
                             GitHub; `-- --local <dir>` reads local clones instead)
 scripts/build-progress-doc.mjs  the generator
+scripts/backfill-progress.ts    rebuilds snapshot history from each tracker's git log
 public/screenshots/<slug>/  captures of the deployed products (desktop 1800w,
                             mobile 780w). WonderID's are public-page captures
                             (landing, sign-in) — never create an account on a
@@ -75,9 +94,11 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 
 - Each product has a deck: embedded `DeckViewer` (full screen, keyboard, swipe)
   on its page and a committed PDF in `public/decks/`. Slides are drawn at a fixed
-  1920x1080 by `DeckSlides.tsx`. After changing anything a deck reads
-  (`startups.ts`, `deck-copy.ts`, slide components): `npm run build && npm run
-  decks && npm run build` (Next only serves `public/` files that existed at build).
+  1920x1080 by `DeckSlides.tsx`. Pages pick up copy edits within five minutes, but
+  the PDFs are files: after changing anything a deck reads (a `startup` or
+  `deck_copy` document, live traction moving, slide components) run `npm run build
+  && npm run decks && npm run build` and commit the PDFs (Next only serves `public/`
+  files that existed at build).
 - **Market figures** (`market.figures`) must each have a publisher URL you have
   opened and a quote you have matched on the page. Label forecasts with their base
   year and CAGR window; where publishers disagree, cite one with its definition —
@@ -108,13 +129,35 @@ public/brands/<slug>/       logo lockups shipped by the products themselves
 - Every `mailto:` goes through `enquiryMailto()` (`src/lib/mailto.ts`) so it opens
   with a subject and a short template body.
 
+## The WonderApps database
+
+Founder's decision, 2026-10-15: the site's copy and the tracker history live in the
+`wonderapps` Supabase project (this replaced the earlier "no database of our own" rule).
+
+- **What it may hold:** site copy and progress snapshots. **Never** anything about a person:
+  no contact-form messages, no visitor data, no product users' data. Product KPIs stay in
+  the products and are read live (below), never copied here.
+- **Reads** use the publishable key (in `src/lib/content/supabase.ts`, overridable with
+  `WONDERAPPS_SUPABASE_URL` / `WONDERAPPS_SUPABASE_PUBLISHABLE_KEY`). Row-level security
+  lets it read the public tables and write nothing.
+- **Writes:** copy is edited by the owner in the Supabase table editor (`content_documents`);
+  every change is kept in `private.content_revisions`, and a document that fails its schema
+  breaks the build rather than the page. Snapshots are written only by
+  `record_progress_snapshot(write_key, payload)`; the key is `PROGRESS_WRITE_KEY` in Vercel and
+  only its SHA-256 is in the database (`private.write_keys`). The first snapshot of a day wins.
+- **Live traction:** a traction item with `"live": true` is a template filled from the product's
+  latest snapshot (`{done} / {total}`, `{pct}`, `{rowsDone}`…, see `tractionVars`), so pages,
+  decks and the tracker quote one number.
+- **Schema changes:** add a file to `supabase/migrations/` and apply the same SQL to the project.
+  The Supabase tool used by Claude hangs on SQL containing DELETE; avoid it in functions.
+
 ## Founder dashboard (/dashboard) — private, dynamic
 
-The one place the site is not static. Full guide: `docs/dashboard/README.md`.
+Full guide: `docs/dashboard/README.md`.
 
-- **No database of our own, ever.** Numbers are read live from each product through a read-only
-  Postgres role (`<APP>_DATABASE_URL` env vars; scripts in `docs/dashboard/*-readonly.sql`). Nothing is
-  stored in WonderApps except a two-minute in-memory cache.
+- **Product numbers are never stored here.** They are read live from each product through a read-only
+  Postgres role (`<APP>_DATABASE_URL` env vars; scripts in `docs/dashboard/*-readonly.sql`) with a
+  two-minute in-memory cache. Only the public tracker history is kept (in the WonderApps database).
 - **Aggregates only.** Metrics live in `src/lib/dashboard/apps/<slug>.ts` against the contract in
   `src/lib/dashboard/types.ts`: single `SELECT`, only `$1..$4`, no user input in SQL, no emails/names/free
   text (labels that look like emails are blanked). `registry.ts` rejects non-SELECT SQL at build time.
@@ -128,16 +171,21 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
 - **Development** (`/dashboard/development`, one section per app at `/development/<slug>`) shows each
   product's own progress files, read live from GitHub (`src/lib/dashboard/development.ts`, `DEV_SOURCES`;
   five-minute in-memory cache) and rendered as collapsible sections. Numbers come from the same parser and
-  file as `/appstracker`, so the two never disagree; a file that can't be read falls back to the snapshot,
-  never zeros. Add or move a product's progress file in `DEV_SOURCES`.
+  file as `/appstracker`, so the two never disagree; a file that can't be read falls back to the latest
+  recorded snapshot, never zeros. Add or move a product's progress file in `DEV_SOURCES`.
+- **Trends** come from the recorded snapshots: completion and stories done over time for the portfolio
+  on `/dashboard/development`, done vs in scope and what moved in the last 7 days per product, and a
+  "Build progress this period" section in every newsletter. Days between snapshots carry the last one
+  forward; days before a product's first snapshot are gaps, never zeros.
 - The public-copy rules above (no tech stack names) apply to the marketing site, not to this private page.
 
 ## The tracker (/appstracker)
 
-- Renders the snapshot in `src/content/progress.ts` on the server, then fetches
-  `/api/tracker` on mount and on the Refresh button. Live rows replace snapshot
-  rows per product; a product whose fetch or parse fails keeps its snapshot and
-  shows an inline warning. Never let a parse failure produce zeros.
+- Renders each product's latest recorded snapshot (plus its `tracker` document) on the
+  server, then fetches `/api/tracker` on mount and on the Refresh button. Live rows
+  replace snapshot rows per product; a product whose fetch or parse fails keeps its
+  snapshot and shows an inline warning. A product with no snapshot fails the render
+  rather than showing zeros. Never let a parse failure produce zeros.
 - Parsers find tables by exact header cells, not line numbers. If a product
   changes its tracker layout, fix the parser in `src/lib/tracker-parsers.ts`
   and re-run it against the repo's file before shipping.
@@ -162,9 +210,8 @@ The one place the site is not static. Full guide: `docs/dashboard/README.md`.
   page maps `?interest=wonderagent`. Say "formerly WonderAgent" once per page at
   most, not everywhere.
 - Completion percentages are floored, never rounded up: 223 of 224 is 99%.
-- Help-centre links (`helpUrl`): WonderJobs, WonderArk and WonderID are
-  public; WonderHome still redirects to sign-in (checked 2026-09-19). Keep
-  the link regardless — the founder is making it public.
+- Help-centre links (`helpUrl`): all five are public (WonderHome's opened by
+  2026-10-15).
 - Each product's `url`/`helpUrl` point to its custom domain (`home.`, `jobs.`,
   `creator.`, `ark.`, `id.` — all `.wonderapps.biz`), the products' intended addresses.
   If a domain isn't cut over yet, that's an infra step outside this repo, not
@@ -227,6 +274,12 @@ without them the route returns 503 with a clear message and logs the reason.
 `SMTP_HOST`/`SMTP_PORT`/`SMTP_USER` default to `smtpout.secureserver.net`/`465`/
 `connect@wonderapps.biz`. GoDaddy only relays mail from the signed-in mailbox, so
 `CONTACT_FROM`/`NEWSLETTER_FROM` must stay on it.
+
+The database needs no variable to read (the publishable key is in code). The daily
+progress recorder needs `PROGRESS_WRITE_KEY` (and `CRON_SECRET`); without them it
+returns 503 and the site keeps showing the last recorded day. To rotate the key, set a
+new one in Vercel and its hash in the SQL editor:
+`update private.write_keys set sha256 = extensions.digest('<key>', 'sha256') where name = 'progress';`
 
 ## Session startup
 

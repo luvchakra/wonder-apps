@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { AppHeader, AppView } from "@/components/dashboard/AppView";
 import { RangeTabs } from "@/components/dashboard/RangeTabs";
-import { startups } from "@/content/startups";
+import { dashProducts } from "@/lib/dashboard/products";
 import { loadOne, parseRange } from "@/lib/dashboard/load";
 import { appBySlug } from "@/lib/dashboard/registry";
 import { requireSession } from "@/lib/dashboard/session";
@@ -13,7 +13,7 @@ export default async function AppPage({ params, searchParams }: { params: Promis
   await requireSession();
   const { slug } = await params;
   const sp = await searchParams;
-  const startup = startups.find((s) => s.slug === slug);
+  const startup = (await dashProducts()).find((s) => s.slug === slug);
   if (!startup || !appBySlug(slug)) notFound();
   const { key, window: w } = parseRange(sp.range);
   const data = await loadOne(slug, w, sp.fresh === "1");
@@ -21,7 +21,7 @@ export default async function AppPage({ params, searchParams }: { params: Promis
   return (
     <div className="grid grid-cols-1 gap-8">
       <div className="flex flex-wrap items-end justify-between gap-5">
-        <AppHeader app={data.app} name={startup.name} snap={data.snap} tagline={startup.oneLiner} />
+        <AppHeader app={data.app} name={startup.name} snap={data.snap} tagline={startup.oneLiner ?? ""} />
         <RangeTabs base={`/dashboard/${slug}`} current={key} stamp={`${windowLabel(w)} · ${w.tz.replace("_", " ")}`} />
       </div>
       <AppView app={data.app} snap={data.snap} w={w} />

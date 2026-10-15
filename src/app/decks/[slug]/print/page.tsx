@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SlideView } from "@/components/DeckSlides";
-import { deckBySlug } from "@/content/decks";
-import { startups } from "@/content/startups";
+import { getDeck, getStartups } from "@/lib/content/load";
 
 export const dynamicParams = false;
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
-export function generateStaticParams() {
-  return startups.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  return (await getStartups()).map((s) => ({ slug: s.slug }));
 }
 
 /** Source for the downloadable PDF: every slide at 1920x1080, one per printed page. Built by `npm run decks`. */
 export default async function DeckPrint({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const deck = deckBySlug(slug);
+  const deck = await getDeck(slug);
   if (!deck) notFound();
   return (
     <div className="deck-print">

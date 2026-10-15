@@ -190,7 +190,7 @@ export function AppHeader({ app, name, snap, tagline }: { app: AppDashboard; nam
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{name}</h1>
         <StatusPill status={snap.status} />
       </div>
-      <p className="mt-2 max-w-2xl text-[15px] leading-relaxed" style={{ color: "#c3c2b7" }}>{tagline}</p>
+      {tagline && <p className="mt-2 max-w-2xl text-[15px] leading-relaxed" style={{ color: "#c3c2b7" }}>{tagline}</p>}
       <div className="mt-3 grid grid-cols-1 max-w-2xl gap-1.5 text-xs leading-relaxed" style={{ color: "#8c8b84" }}>
         <p>
           <strong style={{ color: "#c3c2b7" }}>Watch first:</strong> {app.focus}

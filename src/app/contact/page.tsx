@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { EmailCTA } from "@/components/EmailCTA";
 import { Reveal } from "@/components/Reveal";
 import { site } from "@/content/site";
-import { startups } from "@/content/startups";
+import { getStartups } from "@/lib/content/load";
 
 export const metadata: Metadata = {
   title: "Contact the founder",
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ interest?: string }> }) {
   const { interest: raw } = await searchParams;
   const interest = raw === "wonderagent" ? "wonderid" : raw;
+  const startups = await getStartups();
   const valid = startups.some((s) => s.slug === interest) ? interest : undefined;
   return (
     <section className="theme-light bg-bg-soft text-fg">
@@ -46,7 +47,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
         </Reveal>
         <Reveal delay={0.1} className="lg:col-span-7">
           <Suspense>
-            <ContactForm defaultInterest={valid} />
+            <ContactForm products={startups.map(({ slug, name, accent }) => ({ slug, name, accent }))} defaultInterest={valid} />
           </Suspense>
         </Reveal>
       </div>

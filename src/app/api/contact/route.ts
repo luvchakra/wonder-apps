@@ -1,18 +1,17 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { startups } from "@/content/startups";
+import { getStartups } from "@/lib/content/load";
 import { mailConfigured, sendMail } from "@/lib/mailer";
 
 export const runtime = "nodejs";
-
-const slugs = startups.map((s) => s.slug) as [string, ...string[]];
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please tell us your name.").max(120),
   email: z.string().trim().email("Please use a valid email address.").max(200),
   organisation: z.string().trim().max(160).optional().or(z.literal("")),
   role: z.enum(["investor", "partner", "customer", "press", "other"]).default("investor"),
-  interests: z.array(z.enum(slugs)).max(slugs.length).default([]),
+  // Checked against the product list below; the format check alone keeps the form working if the database is unreachable.
+  interests: z.array(z.string().regex(/^[a-z0-9-]{1,40}$/)).max(10).default([]),
   message: z.string().trim().min(10, "A sentence or two helps us reply well.").max(4000),
   /** Honeypot: real users never see or fill this. Any value is accepted here and dropped below. */
   website: z.string().optional(),
@@ -58,7 +57,13 @@ export async function POST(req: Request) {
     );
   }
 
-  const interested = data.interests.map((slug) => startups.find((s) => s.slug === slug)?.name ?? slug);
+  const products = await getStartups().catch((e: unknown) => {
+    console.error("[contact] product list unavailable; sending slugs as given:", e instanceof Error ? e.message : e);
+    return null;
+  });
+  const interested = products
+    ? data.interests.flatMap((slug) => products.filter((s) => s.slug === slug).map((s) => s.name))
+    : [...new Set(data.interests)];
   const subject = `[WonderApps] ${data.role} enquiry from ${data.name}${interested.length ? ` · ${interested.join(", ")}` : ""}`;
 
   const text = [

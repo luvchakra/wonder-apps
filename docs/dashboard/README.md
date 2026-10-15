@@ -1,8 +1,11 @@
 # Founder dashboard
 
 One private page at `/dashboard` that shows activity across all five products, plus a weekly
-and monthly emailed briefing. **WonderApps has no database of its own, at any stage.** Every
+and monthly emailed briefing. **Product numbers are never stored in WonderApps.** Every
 number is read live from the product that owns it, through a read-only connection you control.
+The only history kept is of each product's *public* engineering tracker (the WonderApps
+database's `progress_snapshots`), which drives the development trends and the newsletter's
+build-progress section.
 
 ```
 /dashboard                 portfolio pulse: totals, signups by product, "needs you", product cards

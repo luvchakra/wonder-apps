@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { formatExact, formatValue, shortDay } from "@/lib/dashboard/format";
 import type { Format } from "@/lib/dashboard/types";
 
-export type ChartSeries = { name: string; color: string; values: number[] };
+/** A null value is a day with no data: a gap in the line, "—" in the tooltip and table, never a zero. */
+export type ChartSeries = { name: string; color: string; values: (number | null)[] };
 
 const AXIS = "#8c8b84";
 const GRID = "rgba(255,255,255,0.07)";
@@ -66,7 +67,7 @@ export function TimeChart({
   const n = days.length;
 
   const totals = useMemo(() => days.map((_, i) => series.reduce((s, x) => s + (x.values[i] ?? 0), 0)), [days, series]);
-  const maxV = niceMax(Math.max(...(stacked ? totals : series.flatMap((s) => s.values)), 0));
+  const maxV = niceMax(Math.max(...(stacked ? totals : series.flatMap((s) => s.values.filter((v): v is number => v != null))), 0));
   const x = (i: number) => padL + (kind === "bars" ? (iw / n) * (i + 0.5) : n === 1 ? iw / 2 : (iw / (n - 1)) * i);
   const y = (v: number) => padT + ih - (v / maxV) * ih;
   const ticks = format === "int" && maxV < 2 ? [0, maxV] : [0, 0.5, 1].map((t) => t * maxV);
@@ -111,7 +112,8 @@ export function TimeChart({
             </g>
           ))}
           {days.map((d, i) =>
-            i % every === 0 || i === n - 1 ? (
+            // Keep the last label, and drop a regular one that would crowd it.
+            (i % every === 0 && (n - 1 - i >= every * 0.6 || i === 0)) || i === n - 1 ? (
               <text key={d} x={x(i)} y={height - 6} textAnchor={i === 0 ? "start" : i === n - 1 ? "end" : "middle"} fontSize="11" fill={AXIS}>
                 {shortDay(d)}
               </text>
@@ -137,11 +139,26 @@ export function TimeChart({
                 );
               })
             : series.map((s, k) => {
-                const pts = s.values.map((v, i) => `${x(i)},${y(v)}`);
+                // Runs of consecutive days with data; a null breaks the line instead of dropping it to zero.
+                const runs: number[][] = [];
+                s.values.forEach((v, i) => {
+                  if (v == null) return;
+                  const last = runs[runs.length - 1];
+                  if (last && last[last.length - 1] === i - 1) last.push(i);
+                  else runs.push([i]);
+                });
                 return (
                   <g key={k}>
-                    {series.length === 1 ? <path d={`M${x(0)},${y(0)} L${pts.join(" L")} L${x(n - 1)},${y(0)} Z`} fill={`url(#g-${label.replace(/\W/g, "")}-${k})`} /> : null}
-                    <path d={`M${pts.join(" L")}`} fill="none" stroke={s.color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+                    {runs.map((run) => {
+                      const pts = run.map((i) => `${x(i)},${y(s.values[i] as number)}`);
+                      return (
+                        <g key={run[0]}>
+                          {series.length === 1 ? <path d={`M${x(run[0])},${y(0)} L${pts.join(" L")} L${x(run[run.length - 1])},${y(0)} Z`} fill={`url(#g-${label.replace(/\W/g, "")}-${k})`} /> : null}
+                          {run.length === 1 ? <circle cx={x(run[0])} cy={y(s.values[run[0]] as number)} r={2} fill={s.color} /> : null}
+                          <path d={`M${pts.join(" L")}`} fill="none" stroke={s.color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+                        </g>
+                      );
+                    })}
                   </g>
                 );
               })}
@@ -150,7 +167,10 @@ export function TimeChart({
             <g>
               <line x1={x(hover)} x2={x(hover)} y1={padT} y2={padT + ih} stroke="rgba(255,255,255,0.28)" />
               {kind === "area"
-                ? series.map((s, k) => <circle key={k} cx={x(hover)} cy={y(s.values[hover] ?? 0)} r={4} fill={s.color} stroke={SURFACE} strokeWidth={2} />)
+                ? series.map((s, k) => {
+                    const v = s.values[hover];
+                    return v == null ? null : <circle key={k} cx={x(hover)} cy={y(v)} r={4} fill={s.color} stroke={SURFACE} strokeWidth={2} />;
+                  })
                 : null}
             </g>
           ) : null}
@@ -161,7 +181,7 @@ export function TimeChart({
             {series.map((s) => (
               <p key={s.name} className="flex items-center gap-2" style={{ margin: "3px 0" }}>
                 <span style={{ width: 12, height: 3, borderRadius: 2, background: s.color, flex: "none" }} />
-                <strong style={{ color: "#fff", fontSize: 13 }}>{formatExact(s.values[hover] ?? 0, format)}</strong>
+                <strong style={{ color: "#fff", fontSize: 13 }}>{formatExact(s.values[hover], format)}</strong>
                 <span style={{ color: "#c3c2b7" }}>{s.name}</span>
               </p>
             ))}
@@ -209,7 +229,7 @@ export function TimeChart({
                   <td className="px-3 py-1.5" style={{ color: "#c3c2b7" }}>{shortDay(d)}</td>
                   {series.map((s) => (
                     <td key={s.name} className="px-3 py-1.5 text-right tabular-nums">
-                      {formatExact(s.values[i] ?? 0, format)}
+                      {formatExact(s.values[i], format)}
                     </td>
                   ))}
                 </tr>

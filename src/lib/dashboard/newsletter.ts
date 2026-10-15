@@ -1,4 +1,4 @@
-import { startups } from "@/content/startups";
+import type { ProgressChange } from "@/lib/progress/trends";
 import { appColor } from "./colors";
 import { dashboardConfig } from "./config";
 import { delta, formatValue, tone, type Delta } from "./format";
@@ -13,13 +13,12 @@ export type Cadence = "weekly" | "monthly" | "custom";
 export type Newsletter = { subject: string; html: string; text: string; preheader: string; highlights: string[] };
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string);
-const nameOf = (slug: string) => startups.find((s) => s.slug === slug)?.name ?? slug;
 
 const TONE = { good: "#0a8a0a", bad: "#d14343", neutral: "#8a8a8f" } as const;
 const ARROW = (d: Delta | null) => (d?.dir === "up" || d?.dir === "new" ? "▲" : d?.dir === "down" ? "▼" : "–");
 
 /** Auto-written highlights: the biggest real movements first, then anything that needs a look. */
-function highlights(snaps: Record<string, AppSnapshot>): string[] {
+function highlights(snaps: Record<string, AppSnapshot>, nameOf: (slug: string) => string): string[] {
   type H = { score: number; text: string };
   const out: H[] = [];
   for (const a of apps) {
@@ -61,11 +60,28 @@ function bars(values: number[], color: string) {
     .join("")}</tr></table>`;
 }
 
-export function buildNewsletter(opts: { snaps: Record<string, AppSnapshot>; w: Window; cadence: Cadence }): Newsletter {
+/** One line per product: where its tracker stands and how many stories it finished during the period. */
+function buildLines(progress: ProgressChange[], nameOf: (slug: string) => string): string[] {
+  return progress.map((p) => {
+    const moved = p.doneThen === null ? "first recorded this period" : p.done === p.doneThen ? "no change" : `${p.done > p.doneThen ? "+" : "−"}${Math.abs(p.done - p.doneThen)} done`;
+    const scope = p.activeThen !== null && p.active !== p.activeThen ? `, scope ${p.active > p.activeThen ? "+" : "−"}${Math.abs(p.active - p.activeThen)}` : "";
+    return `${nameOf(p.slug)}: ${p.done.toLocaleString("en-US")} of ${p.active.toLocaleString("en-US")} stories (${p.pct}%), ${moved}${scope}`;
+  });
+}
+
+export function buildNewsletter(opts: {
+  snaps: Record<string, AppSnapshot>;
+  w: Window;
+  cadence: Cadence;
+  names: Record<string, string>;
+  /** Build progress over the period from the recorded tracker history; null when it couldn't be read. */
+  progress: ProgressChange[] | null;
+}): Newsletter {
+  const nameOf = (slug: string) => opts.names[slug] ?? slug;
   const { snaps, w, cadence } = opts;
   const origin = dashboardConfig.origin();
   const roll = rollup(snaps, w);
-  const hl = highlights(snaps);
+  const hl = highlights(snaps, nameOf);
   const period = windowLabel(w);
   const monthName = new Intl.DateTimeFormat("en-GB", { timeZone: w.tz, month: "long", year: "numeric" }).format(w.start);
   const kicker = cadence === "weekly" ? "Weekly briefing" : cadence === "monthly" ? "Monthly briefing" : "Briefing";
@@ -137,6 +153,15 @@ ${hl.map((h) => `<div style="margin-top:9px;font-size:14px;line-height:1.5;color
 </td></tr></table>`
     : "";
 
+  const build = opts.progress?.length ? buildLines(opts.progress, nameOf) : [];
+  const buildHtml = build.length
+    ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;border:1px solid #ececef;border-radius:14px;background:#fff"><tr><td style="padding:16px 18px">
+<div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a8a8f">Build progress this period</div>
+${opts.progress!.map((p, i) => `<div style="margin-top:9px;font-size:14px;line-height:1.5;color:#222"><span style="color:${appColor(p.slug)}">●</span>&nbsp; ${esc(build[i])}</div>`).join("")}
+<div style="margin-top:10px;font-size:11.5px;color:#8a8a8f">From each product's public engineering tracker, recorded daily.</div>
+</td></tr></table>`
+    : "";
+
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${esc(subject)}</title></head>
 <body style="margin:0;background:#f2f2f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent">${esc(preheader)}</div>
@@ -149,7 +174,7 @@ ${hl.map((h) => `<div style="margin-top:9px;font-size:14px;line-height:1.5;color
 <div style="font-size:30px;line-height:1.1;font-weight:700;letter-spacing:-.025em;color:#fff;margin-top:22px">${esc(title)}</div>
 <div style="font-size:15px;line-height:1.5;color:#c3c2b7;margin-top:10px">${esc(summary)}</div>
 </td></tr>
-<tr><td style="padding-top:16px">${strip}${hlHtml}${blocks}
+<tr><td style="padding-top:16px">${strip}${hlHtml}${buildHtml}${blocks}
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:26px 0 8px">
 <a href="${origin}/dashboard" style="display:inline-block;background:#111;color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 22px;border-radius:999px">Open the full dashboard</a>
 </td></tr></table>
@@ -162,6 +187,7 @@ ${hl.map((h) => `<div style="margin-top:9px;font-size:14px;line-height:1.5;color
     "",
     `Users ${formatValue(roll.users, "int")} · New signups ${formatValue(roll.newUsers, "int")} · Monthly active ${formatValue(roll.mau, "int")} · Paying ${formatValue(roll.paying, "int")}`,
     ...(hl.length ? ["", "Highlights", ...hl.map((h) => `- ${h}`)] : []),
+    ...(build.length ? ["", "Build progress this period", ...build.map((b) => `- ${b}`)] : []),
     ...apps.flatMap((a) => {
       const s = snaps[a.slug];
       if (!s || (s.status !== "ok" && s.status !== "partial")) return ["", `${nameOf(a.slug)}: no data this time`];

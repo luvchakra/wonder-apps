@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
-import { startups } from "@/content/startups";
+import type { Startup } from "@/content/types";
 
 type Status = { state: "idle" } | { state: "sending" } | { state: "sent" } | { state: "error"; message: string; field?: string };
 
@@ -12,7 +12,9 @@ const field =
   "w-full rounded-xl border border-line bg-card px-4 py-3 text-[15px] text-fg placeholder:text-fg-subtle transition-shadow focus:border-transparent focus:shadow-[0_0_0_3px_var(--accent)] focus:outline-none";
 const label = "block text-sm font-medium text-fg-muted mb-1.5";
 
-export function ContactForm({ defaultInterest }: { defaultInterest?: string }) {
+export type ContactProduct = Pick<Startup, "slug" | "name" | "accent">;
+
+export function ContactForm({ products: startups, defaultInterest }: { products: ContactProduct[]; defaultInterest?: string }) {
   const [status, setStatus] = useState<Status>({ state: "idle" });
   const [interests, setInterests] = useState<string[]>(defaultInterest ? [defaultInterest] : []);
 

@@ -1,8 +1,14 @@
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
+import { TimeChart } from "@/components/dashboard/charts";
 import { DevMarkdown } from "@/components/dashboard/DevMarkdown";
+import { Card, Empty } from "@/components/dashboard/parts";
+import { shortDay } from "@/lib/dashboard/format";
+import { getProductHistory } from "@/lib/content/load";
+import { today } from "@/lib/progress/record";
+import { activeOf, addDays, asOf, dailySeries, moduleMoves } from "@/lib/progress/trends";
 import { DevBar, DevFacts, DevStats, DevTabs, updatedLabel } from "@/components/dashboard/DevParts";
-import { startups } from "@/content/startups";
+import { dashProducts } from "@/lib/dashboard/products";
 import { appColor } from "@/lib/dashboard/colors";
 import { blobUrl, DEV_SOURCES, loadDevSection } from "@/lib/dashboard/development";
 import { requireSession } from "@/lib/dashboard/session";
@@ -12,10 +18,26 @@ export const dynamic = "force-dynamic";
 export default async function AppDevelopmentPage({ params }: { params: Promise<{ slug: string }> }) {
   await requireSession();
   const { slug } = await params;
+  const startups = await dashProducts();
   const startup = startups.find((s) => s.slug === slug);
   if (!startup || !DEV_SOURCES[slug]) notFound();
-  const s = await loadDevSection(slug);
+  const [s, history] = await Promise.all([
+    loadDevSection(slug),
+    getProductHistory(slug).catch((e: unknown) => {
+      console.error(`[development] ${slug} history unavailable:`, e instanceof Error ? e.message : e);
+      return null;
+    }),
+  ]);
   if (!s) notFound();
+  const end = today();
+  const snaps = history?.map((h) => h.snapshot) ?? [];
+  const doneSeries = dailySeries(snaps, [slug], (x) => x.done, end);
+  const scopeSeries = dailySeries(snaps, [slug], activeOf, end);
+  const weekAgo = addDays(end, -7);
+  const latest = history?.[history.length - 1] ?? null;
+  const before = history ? asOf(history, weekAgo) : null;
+  const moves = latest ? moduleMoves(latest.rows, before?.rows ?? null) : [];
+  const moved = moves.filter((m) => m.doneThen === null || m.doneNow !== m.doneThen).sort((a, b) => b.doneNow - (b.doneThen ?? 0) - (a.doneNow - (a.doneThen ?? 0)));
   const apps = startups.map((a) => ({ slug: a.slug, name: a.name, color: appColor(a.slug) }));
   const color = appColor(slug);
 
@@ -36,7 +58,7 @@ export default async function AppDevelopmentPage({ params }: { params: Promise<{
       <section className="dash-card grid grid-cols-1 gap-6 p-5 sm:p-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <div className="grid content-start gap-4">
           <p className="text-5xl font-semibold tabular-nums" style={{ color: "#fff" }}>
-            {s.totals.activeCompletionPct}
+            {s.totals ? s.totals.activeCompletionPct : "—"}
             <span className="text-2xl" style={{ color: "#8c8b84" }}>% built</span>
           </p>
           <DevBar s={s} color={color} />
@@ -47,6 +69,48 @@ export default async function AppDevelopmentPage({ params }: { params: Promise<{
         </div>
         <DevFacts s={s} />
       </section>
+
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <Card title="Done and in scope over time" hint="In scope is every story not set aside. The gap between the lines is what is left; it widens when scope is added.">
+          {doneSeries.days.length ? (
+            <TimeChart
+              days={doneSeries.days}
+              series={[
+                { name: "Done", color, values: doneSeries.values[slug] ?? [] },
+                { name: "In scope", color: "#8c8b84", values: scopeSeries.values[slug] ?? [] },
+              ]}
+              format="int"
+              kind="area"
+              label={`${slug}-done-and-scope`}
+              height={240}
+            />
+          ) : (
+            <Empty>No recorded history yet.</Empty>
+          )}
+        </Card>
+        <Card
+          title="Moved in the last 7 days"
+          hint={latest && before ? `Done stories per row on ${shortDay(latest.snapshot.captured_on)} against ${shortDay(weekAgo)}.` : "Nothing was recorded a week ago, so every row counts as new."}
+        >
+          {!latest ? (
+            <Empty>No recorded history yet.</Empty>
+          ) : moved.length === 0 ? (
+            <Empty>No module moved in the last 7 days.</Empty>
+          ) : (
+            <ul className="grid gap-2 text-sm">
+              {moved.slice(0, 10).map((m) => (
+                <li key={m.id} className="flex items-baseline justify-between gap-3">
+                  <span className="min-w-0 truncate" style={{ color: "#c3c2b7" }} title={m.name}>{m.name}</span>
+                  <span className="shrink-0 tabular-nums" style={{ color: "#fff" }}>
+                    {m.doneThen === null ? "new" : `${m.doneNow - m.doneThen >= 0 ? "+" : "−"}${Math.abs(m.doneNow - m.doneThen)}`}
+                    <span style={{ color: "#8c8b84" }}> · {m.doneNow} of {m.activeNow}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      </div>
 
       {s.docs.map(({ doc, markdown, error }, i) => (
         <section key={doc.path} className="dash-card p-5 sm:p-6">

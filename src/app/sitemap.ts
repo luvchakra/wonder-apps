@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/content/site";
-import { startups } from "@/content/startups";
-import { legalDocs } from "@/content/legal";
+import { getLegalDocs, getStartups } from "@/lib/content/load";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [startups, legalDocs] = await Promise.all([getStartups(), getLegalDocs()]);
   const now = new Date();
   return [
     { url: site.url, lastModified: now, priority: 1 },
