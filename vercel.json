@@ -5,7 +5,8 @@
     "deploymentEnabled": {
       "claude/**": false,
       "feature/**": false,
-      "dependabot/**": false
+      "dependabot/**": false,
+      "ccr-**": false
     }
   },
   "regions": [
