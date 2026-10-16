@@ -1,0 +1,75 @@
+# The full end-to-end suite, every night at 03:00 India time, against a fresh production build
+# of main. Never on pull requests (ci.yml keeps those fast). See docs/testing.md.
+#
+# Run it by hand: Actions → "E2E nightly" → Run workflow (optionally list spec files), or
+#   gh workflow run e2e-nightly.yml -f specs="e2e/contact.spec.ts e2e/tracker.spec.ts"
+name: E2E nightly
+
+on:
+  schedule:
+    - cron: "30 21 * * *" # 21:30 UTC = 03:00 IST
+  workflow_dispatch:
+    inputs:
+      specs:
+        description: "Spec files to run, space-separated (empty = all)"
+        required: false
+        default: ""
+      budget_minutes:
+        description: "Time budget in minutes; tests past it are reported as not run"
+        required: false
+        default: "25"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-nightly
+  cancel-in-progress: false
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    # Hard ceiling well above the budget; the budget ends the run cleanly first.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # The suite creates no records and changes no shared settings (contact messages are never
+      # sent or stored, the dashboard session is minted per run, nothing writes to the database),
+      # so there is nothing earlier runs could have left behind. If a spec ever starts creating
+      # data, give it an "e2e-" prefix and clean it up here first. See docs/testing.md.
+      - name: Clean up earlier runs
+        run: echo "Nothing to clean up: no spec creates data or changes a shared setting."
+
+      - name: Run the suite (fresh build)
+        id: run
+        continue-on-error: true
+        env:
+          CI: "true"
+          E2E_BUDGET_MIN: ${{ inputs.budget_minutes || '25' }}
+          SPECS: ${{ inputs.specs }}
+        run: |
+          # shellcheck disable=SC2086
+          npx playwright test $SPECS
+
+      - name: Summary (passed / failed / flaky / not run)
+        if: always()
+        run: npm run -s e2e:summary
+
+      - name: Keep the report and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report-${{ github.run_id }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+          if-no-files-found: warn

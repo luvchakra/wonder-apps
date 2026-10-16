@@ -1,0 +1,128 @@
+# Fast checks on every pull request and every push to main. No browser tests here:
+# the end-to-end suite runs nightly (e2e-nightly.yml). See docs/testing.md for what runs where.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NODE_VERSION: "24"
+
+jobs:
+  # Which files changed, and whether they change how everything is checked.
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      full: ${{ steps.scope.outputs.full }}
+      lint_files: ${{ steps.scope.outputs.lint_files }}
+      base: ${{ steps.scope.outputs.base }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: scope
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then
+            base=$(git merge-base "$PR_BASE" HEAD)
+          else
+            base="$PUSH_BEFORE"
+            git cat-file -e "$base^{commit}" 2>/dev/null || base=$(git rev-list --max-parents=0 HEAD | tail -1)
+          fi
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+          changed=$(git diff --name-only --diff-filter=ACMR "$base" HEAD)
+          printf 'Changed files:\n%s\n' "$changed"
+
+          # Anything that changes how the whole repo is linted, typed or built: check all of it.
+          full=false
+          if [ "$EVENT" = "push" ] || echo "$changed" | grep -Eq '^(package\.json|package-lock\.json|tsconfig\.json|eslint\.config\.mjs|next\.config\.ts|postcss\.config\.mjs|playwright\.config\.ts|vercel\.json|\.github/)'; then
+            full=true
+          fi
+          echo "full=$full" >> "$GITHUB_OUTPUT"
+
+          lint_files=$(echo "$changed" | grep -E '\.(ts|tsx|js|jsx|mjs|cjs)$' | tr '\n' ' ' || true)
+          echo "lint_files=$lint_files" >> "$GITHUB_OUTPUT"
+          echo "Full check: $full"
+
+  typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+
+  lint:
+    needs: changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Lint (whole repo when config or CI changed, on main; otherwise the changed files)
+        env:
+          FULL: ${{ needs.changes.outputs.full }}
+          FILES: ${{ needs.changes.outputs.lint_files }}
+        run: |
+          if [ "$FULL" = "true" ]; then
+            npm run lint
+          elif [ -n "${FILES// /}" ]; then
+            # shellcheck disable=SC2086
+            npx eslint --no-warn-ignored $FILES
+          else
+            echo "No lintable files changed."
+          fi
+
+  # Production dependencies must have no high or critical advisory. Dev-only tooling is
+  # reported in the job log but doesn't block (it never reaches visitors).
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Production dependencies (blocking)
+        run: npm audit --omit=dev --audit-level=high
+      - name: All dependencies (report only)
+        run: npm audit --audit-level=high || echo "::warning::Dev-only dependencies have advisories; see the log above."
+
+  secrets:
+    needs: changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          curl -sSfL -o gitleaks.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.28.0/gitleaks_8.28.0_linux_x64.tar.gz
+          echo "a65b5253807a68ac0cafa4414031fd740aeb55f54fb7e55f386acb52e6a840eb  gitleaks.tgz" | sha256sum -c -
+          tar xzf gitleaks.tgz gitleaks
+      - name: Scan the commits in this change
+        env:
+          BASE: ${{ needs.changes.outputs.base }}
+        run: ./gitleaks git --no-banner --redact --log-opts="$BASE..HEAD" .

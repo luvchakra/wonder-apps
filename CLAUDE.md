@@ -23,9 +23,30 @@ mailbox (GoDaddy SMTP); the messages are never stored.
 | Progress  | `npm run progress`  |
 | Backfill  | `npm run progress:backfill` |
 | Back up copy | `npm run content:backup` |
+| E2E (local build) | `npm run e2e -- [spec files]` |
 
-There is no test suite yet; `npm run check` (lint + typecheck + build) is the
-pre-push gate.
+`npm run check` (lint + typecheck + build) is the pre-push gate. There are no unit
+tests yet.
+
+## Testing and CI
+
+Full guide: `docs/testing.md`.
+
+- **Pull requests** (`.github/workflows/ci.yml`): typecheck, lint (changed files; everything when
+  dependencies, TS/lint/build/test config, `vercel.json` or CI files change), dependency audit
+  (blocks on production high/critical), secret scan. Parallel, a minute or two. No browser tests.
+- **Push to main:** the same with the whole lint.
+- **Nightly 03:00 IST** (`e2e-nightly.yml`): fresh build of `main`, the full Playwright suite in
+  `e2e/`, retry once (passing on retry = flaky, needs a root cause), 25-minute budget that ends
+  with a summary, report and traces kept 14 days. Also runs by hand with optional spec files.
+- E2E runs against a local production build with no mail password, no product database URLs and
+  no database write key. The app isn't live with real users yet, so specs may create test data
+  freely; name it `e2e-…` and clean it up at the start of the nightly.
+- **Rules:** never skip, disable or delete a test to make CI green. A red nightly is fixed before
+  other work merges; find the root cause. Before merging something risky (dashboard sign-in, the
+  contact form or mailer, migrations or the progress recorder, a cross-page flow), run the
+  affected specs locally with `npm run e2e -- <specs>`. A change that adds, removes or renames a
+  page or flow updates its spec in the same pull request.
 
 ## Stack
 
@@ -236,14 +257,16 @@ ones an ignored-build step cancels. Running out blocks production, so treat
 deployments as a scarce budget with production first.
 
 - **Merge automatically once the work is verified** (founder's decision, 2026-10-15;
-  this replaced waiting for "merge now"). When a change is finished and `npm run
-  check` passes (plus `npm run decks` when a deck changed), push the branch, open
-  the pull request and squash-merge it to `main` yourself, then check the production
+  this replaced waiting for "merge now"). Every change goes through a pull request,
+  never a direct push to `main`. When a change is finished and `npm run check` passes
+  (plus `npm run decks` when a deck changed), push the branch, open the pull request,
+  wait for its CI to pass, squash-merge it to `main` yourself, then check the production
   deployment reaches Ready and the changed pages are live. Don't ask first.
   Still one merge per finished change: no merging half-done work to "see it live",
   and if several pull requests are ready at the same time, land them together so
   they cost one deployment. Hold the merge and ask instead only when the budget
-  below says to stop, when CI on the pull request is red, or when the change
+  below says to stop, when CI on the pull request is red, when the last nightly E2E
+  run is red (fix that first), or when the change
   alters public numbers or legal text in a way the founder hasn't seen.
 
 - **Only `main` deploys.** `vercel.json` → `git.deploymentEnabled` turns off
