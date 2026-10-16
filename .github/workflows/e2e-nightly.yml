@@ -46,7 +46,8 @@ jobs:
       # so there is nothing earlier runs could have left behind. If a spec ever starts creating
       # data, give it an "e2e-" prefix and clean it up here first. See docs/testing.md.
       - name: Clean up earlier runs
-        run: echo "Nothing to clean up: no spec creates data or changes a shared setting."
+        run: |
+          echo "Nothing to clean up: no spec creates data or changes a shared setting."
 
       - name: Run the suite (fresh build)
         id: run

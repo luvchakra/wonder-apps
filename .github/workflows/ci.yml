@@ -109,6 +109,20 @@ jobs:
       - name: All dependencies (report only)
         run: npm audit --audit-level=high || echo "::warning::Dev-only dependencies have advisories; see the log above."
 
+  # Workflow files are checked like code: a YAML or expression mistake here would otherwise only
+  # show up when the workflow is triggered (and a broken nightly says nothing at all).
+  workflows:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: actionlint
+        run: |
+          curl -sSfL -o actionlint.tgz https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz
+          echo "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757  actionlint.tgz" | sha256sum -c -
+          tar xzf actionlint.tgz actionlint
+          ./actionlint -color
+
   secrets:
     needs: changes
     runs-on: ubuntu-latest
