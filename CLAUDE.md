@@ -34,7 +34,7 @@ Full guide: `docs/testing.md`.
 
 - **Pull requests** (`.github/workflows/ci.yml`): typecheck, lint (changed files; everything when
   dependencies, TS/lint/build/test config, `vercel.json` or CI files change), dependency audit
-  (blocks on production high/critical), secret scan. Parallel, a minute or two. No browser tests.
+  (blocks on production high/critical), secret scan, workflow lint (actionlint). Parallel, under a minute. No browser tests.
 - **Push to main:** the same with the whole lint.
 - **Nightly 03:00 IST** (`e2e-nightly.yml`): fresh build of `main`, the full Playwright suite in
   `e2e/`, retry once (passing on retry = flaky, needs a root cause), 25-minute budget that ends

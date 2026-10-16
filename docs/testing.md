@@ -5,7 +5,7 @@ Pull requests stay fast; the slow browser suite runs every night. Production dep
 
 | When | Workflow | What runs | Typical time |
 |---|---|---|---|
-| Every pull request | `.github/workflows/ci.yml` | In parallel: **typecheck** · **lint** (changed files; the whole repo when `package.json`, the lockfile, `tsconfig.json`, `eslint.config.mjs`, `next.config.ts`, `postcss.config.mjs`, `playwright.config.ts`, `vercel.json` or `.github/` change) · **dependency audit** (blocks on high/critical in production dependencies; dev-only findings are reported) · **secret scan** (gitleaks, the commits in the change) | 1–2 min |
+| Every pull request | `.github/workflows/ci.yml` | In parallel: **typecheck** · **lint** (changed files; the whole repo when `package.json`, the lockfile, `tsconfig.json`, `eslint.config.mjs`, `next.config.ts`, `postcss.config.mjs`, `playwright.config.ts`, `vercel.json` or `.github/` change) · **dependency audit** (blocks on high/critical in production dependencies; dev-only findings are reported) · **secret scan** (gitleaks, the commits in the change) · **workflow lint** (actionlint on `.github/workflows/`) | 1–2 min |
 | Push to `main` | `ci.yml` | The same jobs with the **whole** lint | 1–2 min |
 | Nightly, 03:00 India time | `.github/workflows/e2e-nightly.yml` | Fresh production build of `main`, then the **full end-to-end suite** (Playwright, Chromium, desktop + phone) | ~3 min |
 | By hand | `e2e-nightly.yml` (Run workflow) | All specs, or the spec files you list | |
