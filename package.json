@@ -12,7 +12,9 @@
     "progress": "node scripts/build-progress-doc.mjs",
     "decks": "node scripts/build-decks.mjs",
     "progress:backfill": "tsx scripts/backfill-progress.ts",
-    "content:backup": "node scripts/content-backup.mjs"
+    "content:backup": "node scripts/content-backup.mjs",
+    "e2e": "playwright test",
+    "e2e:summary": "node scripts/e2e-summary.mjs"
   },
   "dependencies": {
     "framer-motion": "^13.4.0",
@@ -27,6 +29,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.2",

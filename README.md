@@ -97,6 +97,12 @@ All copy lives in the database table `content_documents`. Edit it in the Supabas
 
 Screenshots live in `public/screenshots/<product>/`; add a file and reference it in the product's `screens` array.
 
+## Tests and CI
+
+Pull requests run fast checks only (typecheck, lint, dependency audit, secret scan); the
+browser suite in `e2e/` runs every night at 03:00 India time against a fresh build, and by hand.
+Run chosen specs locally with `npm run e2e -- e2e/contact.spec.ts`. Details: [`docs/testing.md`](docs/testing.md).
+
 ## Progress history
 
 Every product's public tracker is recorded once a day (`/api/cron/progress`, same parsers as
