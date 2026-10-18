@@ -8,6 +8,8 @@ import { appColor } from "@/lib/dashboard/colors";
 import { delta, formatValue } from "@/lib/dashboard/format";
 import { loadStored, parseRange, result } from "@/lib/dashboard/load";
 import { asOfLabel, NoStoredData } from "@/components/dashboard/StoreNotice";
+import { PortfolioHistory } from "@/components/dashboard/History";
+import { readStatHistory } from "@/lib/dashboard/store";
 import { attention, headlineStats, rollup } from "@/lib/dashboard/portfolio";
 import { requireSession } from "@/lib/dashboard/session";
 import { apps } from "@/lib/dashboard/registry";
@@ -25,7 +27,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
   await requireSession();
   const sp = await searchParams;
   const { key } = parseRange(sp.range);
-  const [stored, products] = await Promise.all([loadStored(key), dashProducts()]);
+  const [stored, products, history] = await Promise.all([loadStored(key), dashProducts(), readStatHistory()]);
   const { snaps, w } = stored;
   if (stored.state !== "ok")
     return (
@@ -125,6 +127,8 @@ export default async function Overview({ searchParams }: { searchParams: Promise
           )}
         </Card>
       </div>
+
+      <PortfolioHistory h={history} apps={apps.map((a) => ({ slug: a.slug, name: nameOf(a.slug), color: appColor(a.slug) }))} />
 
       <section aria-label="Products" className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
         {apps.map((a) => {

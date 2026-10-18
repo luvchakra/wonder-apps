@@ -42,6 +42,19 @@ show yet" instead of figures; `DASHBOARD_DEMO=1` still shows synthetic numbers l
 A product whose variable was unset at collection shows "Not connected"; one that couldn't be
 reached shows "Unreachable"; a single failing metric is listed without breaking the page.
 
+### History and alerts
+
+Each day's collection is kept, so the overview shows people with an account and monthly active
+people day by day per product, and every product page its headline numbers over time
+(`public.dashboard_stat_history`, migration `0005_dashboard_stat_history.sql`, which returns only
+the single-number results of the rolling-7-day rows). Totals read as they stood each day; range
+numbers as the 7 days to each day. History starts with the first collection and is never
+back-filled; until two days exist the cards say so.
+
+If the daily run can't store the numbers, or a connected product is unreachable or only partly
+read, the addresses in `DASHBOARD_ALLOWED_EMAILS` get one email that day
+(`src/lib/dashboard/alerts.ts`). A product that was never connected doesn't trigger it.
+
 ## Setup (once per product)
 
 1. Open the product's database SQL editor and run `docs/dashboard/<product>-readonly.sql`
