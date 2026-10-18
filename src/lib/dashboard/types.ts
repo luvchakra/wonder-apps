@@ -1,10 +1,12 @@
 /**
  * The founder dashboard's metric contract.
  *
- * WonderApps has no database of its own. Each product exposes a READ-ONLY
- * Postgres connection (`<APP>_DATABASE_URL`, set in Vercel) and every number on
- * the dashboard is one of the fixed, parameter-free SQL queries defined in
- * `apps/<slug>.ts`. Queries return aggregates only — never rows about people.
+ * Each product exposes a READ-ONLY Postgres connection (`<APP>_DATABASE_URL`,
+ * set in Vercel) and every number on the dashboard is one of the fixed SQL
+ * queries defined in `apps/<slug>.ts`. Queries return aggregates only — never
+ * rows about people. The results are collected daily (and on Refresh) into
+ * WonderApps' own database (store.ts, migration 0004); pages and newsletters
+ * read the stored results, never a product database.
  *
  * SQL parameters (all bound, never interpolated):
  *   $1 timestamptz  window start (inclusive)

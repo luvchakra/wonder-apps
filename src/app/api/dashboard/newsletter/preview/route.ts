@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   if (!(await getSession())) return NextResponse.json({ ok: false, error: "Not signed in." }, { status: 401, headers: noStore });
   const url = new URL(req.url);
   const period = parsePeriod(url.searchParams.get("period"));
-  const { n, w } = await compose(period, false);
+  const { n, w } = await compose(period);
   const day = w.start.toISOString().slice(0, 10);
   return new NextResponse(n.html, {
     headers: {

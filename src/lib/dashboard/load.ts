@@ -1,6 +1,6 @@
 import { dashboardConfig } from "./config";
-import { getSnapshot } from "./db";
-import { apps, appBySlug } from "./registry";
+import { appBySlug } from "./registry";
+import { readPeriod, windowForPeriod } from "./store";
 import type { AppDashboard, AppSnapshot, MetricDef, MetricResult, RangeKey, Window } from "./types";
 import { RANGES } from "./types";
 import { lastDays } from "./window";
@@ -11,14 +11,21 @@ export function parseRange(raw: string | string[] | undefined): { key: RangeKey;
   return { key, window: lastDays(RANGES[key].days, dashboardConfig.timeZone()) };
 }
 
-export async function loadAll(w: Window, fresh = false): Promise<Record<string, AppSnapshot>> {
-  const entries = await Promise.all(apps.map(async (a) => [a.slug, await getSnapshot(a, w, { fresh })] as const));
-  return Object.fromEntries(entries);
+/**
+ * Pages read the numbers WonderApps stored (store.ts), never a product database. The window is
+ * the one the numbers were computed for, so labels match the data even late in the day.
+ * When nothing is stored yet, `state` says why and the page shows an empty state.
+ */
+export async function loadStored(key: RangeKey) {
+  const d = await readPeriod(key);
+  return { ...d, w: d.w ?? windowForPeriod(key) };
 }
 
-export async function loadOne(slug: string, w: Window, fresh = false) {
+export async function loadOne(slug: string, key: RangeKey) {
   const app = appBySlug(slug);
-  return app ? { app, snap: await getSnapshot(app, w, { fresh }) } : null;
+  if (!app) return null;
+  const d = await loadStored(key);
+  return { app, snap: d.snaps[slug] ?? null, d };
 }
 
 export const result = <K extends MetricResult["kind"]>(snap: AppSnapshot | undefined, id: string, kind: K) => {

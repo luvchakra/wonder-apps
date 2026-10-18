@@ -1,12 +1,11 @@
 import { totalsFor, type PortfolioTotals } from "@/content/progress";
 import { getLatestProgress } from "@/lib/content/load";
-import { TRACKER_SOURCES } from "@/lib/tracker-parsers";
 
 /**
- * Development progress per product, read live from each product's own public progress files on
- * GitHub (the same files the public /appstracker parses), with a five-minute in-memory cache. If
- * a file can't be read the section says so and falls back to the latest recorded snapshot in the
- * database; if that can't be read either it shows no numbers at all, never zeros.
+ * Development progress per product. Numbers come only from the latest snapshot WonderApps
+ * recorded (the daily progress cron); with none recorded the section shows no numbers, never
+ * zeros. Each product's own public progress files are still read live from GitHub for reading,
+ * with a five-minute in-memory cache.
  */
 
 const GH = "https://github.com/luvchakra";
@@ -109,10 +108,10 @@ export function keyFacts(md: string): Fact[] {
 
 export type DevSection = {
   slug: string;
-  /** Null only when neither the live file nor a recorded snapshot could be read. */
+  /** Null only when no snapshot has been recorded for the product. */
   totals: PortfolioTotals | null;
-  /** True when the numbers came from the live file; false means the latest recorded snapshot. */
-  live: boolean;
+  /** The day the numbers were recorded (the latest stored progress snapshot). */
+  recordedOn: string | null;
   lastUpdated: string | null;
   currentFocus: string | null;
   facts: Fact[];
@@ -129,29 +128,15 @@ export async function loadDevSection(slug: string): Promise<DevSection | null> {
     }),
   );
 
-  // Numbers: the same parser and file as the public tracker, so the two never disagree.
-  const tracker = TRACKER_SOURCES[slug];
+  // Numbers: the latest snapshot WonderApps recorded (the daily progress recorder parses the same
+  // file with the same parser as /appstracker). The files below are still read live for reading.
   const recorded = await getLatestProgress()
     .then((m) => m.get(slug) ?? null)
     .catch(() => null);
-  let totals: PortfolioTotals | null = recorded?.rows.length ? totalsFor(recorded.rows) : null;
-  let live = false;
+  const totals: PortfolioTotals | null = recorded?.rows.length ? totalsFor(recorded.rows) : null;
+  const recordedOn = recorded?.snapshot.captured_on ?? null;
   let lastUpdated: string | null = recorded ? (recorded.snapshot.source_last_updated ?? recorded.snapshot.captured_on) : null;
-  let currentFocus: string | null = recorded?.snapshot.current_focus ?? null;
-  if (tracker) {
-    const r = await fetchText(tracker.raw);
-    if (r.ok) {
-      try {
-        const parsed = tracker.parse(r.text);
-        totals = totalsFor(parsed.rows);
-        live = true;
-        lastUpdated = parsed.lastUpdated ?? lastUpdated;
-        currentFocus = parsed.currentFocus ?? currentFocus;
-      } catch {
-        // A layout change in the product's file: keep the snapshot numbers, never zeros.
-      }
-    }
-  }
+  const currentFocus: string | null = recorded?.snapshot.current_focus ?? null;
 
   const facts = docs.flatMap((d) => (d.markdown ? keyFacts(d.markdown) : []));
   const updatedFact = facts.find((f) => /last updated/i.test(f.label));
@@ -160,7 +145,7 @@ export async function loadDevSection(slug: string): Promise<DevSection | null> {
   return {
     slug,
     totals,
-    live,
+    recordedOn,
     lastUpdated,
     currentFocus: currentFocus ? brief(currentFocus) : null,
     facts: facts.filter((f) => !/last updated/i.test(f.label)),

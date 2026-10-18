@@ -176,9 +176,16 @@ Founder's decision, 2026-10-15: the site's copy and the tracker history live in 
 
 Full guide: `docs/dashboard/README.md`.
 
-- **Product numbers are never stored here.** They are read live from each product through a read-only
-  Postgres role (`<APP>_DATABASE_URL` env vars; scripts in `docs/dashboard/*-readonly.sql`) with a
-  two-minute in-memory cache. Only the public tracker history is kept (in the WonderApps database).
+- **Product numbers are collected into WonderApps' own database and read from there** (founder's
+  decision, 2026-10-18; this replaced "never stored here"). `src/lib/dashboard/store.ts` collects every
+  period (7d/30d/90d/weekly/monthly) for every product through each product's read-only Postgres role
+  (`<APP>_DATABASE_URL`; scripts in `docs/dashboard/*-readonly.sql`) once a day (`/api/cron/dashboard`,
+  02:40 UTC), when the founder presses **Refresh** (`/api/dashboard/refresh`), and when a newsletter's
+  period has no row from today. Only that collection opens a product database; pages and newsletters read
+  `private.dashboard_snapshots` (migration 0004) through `public.dashboard_snapshots_latest`, written by
+  `public.record_dashboard_snapshot`. Both functions require `PROGRESS_WRITE_KEY`; the table is in the
+  private schema because the publishable key is public. Stored rows are finished aggregates (the metric
+  results), never anything about a person. No stored row → a clear empty state, never zeros.
 - **Aggregates only.** Metrics live in `src/lib/dashboard/apps/<slug>.ts` against the contract in
   `src/lib/dashboard/types.ts`: single `SELECT`, only `$1..$4`, no user input in SQL, no emails/names/free
   text (labels that look like emails are blanked). `registry.ts` rejects non-SELECT SQL at build time.
@@ -186,14 +193,14 @@ Full guide: `docs/dashboard/README.md`.
 - **Access.** `DASHBOARD_ALLOWED_EMAILS` + emailed one-time link bound to the requesting browser, signed
   12 h sessions (`DASHBOARD_SESSION_SECRET`). `src/proxy.ts` is the first gate and every page/route calls
   `requireSession()`/`getSession()` again. Never link `/dashboard` from the public site.
-- **Newsletters** are built from the same live data (`newsletter.ts`), sent through `src/lib/mailer.ts` by Vercel Cron
+- **Newsletters** are built from the same stored data (`newsletter.ts`), sent through `src/lib/mailer.ts` by Vercel Cron
   (`vercel.json`, `CRON_SECRET`) or from `/dashboard/newsletter`. `DASHBOARD_DEMO=1` shows synthetic
   numbers locally and is ignored in production.
 - **Development** (`/dashboard/development`, one section per app at `/development/<slug>`) shows each
   product's own progress files, read live from GitHub (`src/lib/dashboard/development.ts`, `DEV_SOURCES`;
-  five-minute in-memory cache) and rendered as collapsible sections. Numbers come from the same parser and
-  file as `/appstracker`, so the two never disagree; a file that can't be read falls back to the latest
-  recorded snapshot, never zeros. Add or move a product's progress file in `DEV_SOURCES`.
+  five-minute in-memory cache) and rendered as collapsible sections. Its numbers come only from the latest
+  recorded progress snapshot (the daily progress cron parses the same file with the same parser as
+  `/appstracker`); none recorded → no numbers, never zeros. Add or move a product's progress file in `DEV_SOURCES`.
 - **Trends** come from the recorded snapshots: completion and stories done over time for the portfolio
   on `/dashboard/development`, done vs in scope and what moved in the last 7 days per product, and a
   "Build progress this period" section in every newsletter. Days between snapshots carry the last one

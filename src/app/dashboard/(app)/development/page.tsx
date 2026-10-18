@@ -34,7 +34,7 @@ export default async function DevelopmentPage() {
         <p className="dash-eyebrow">Development</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Where each app is being built.</h1>
         <p className="mt-2 max-w-2xl text-[15px]" style={{ color: "var(--d-ink-2)" }}>
-          Read live from each product&rsquo;s own progress files, refreshed every few minutes. Open an app for its full progress: phases, decisions, what is left, story by story.
+          Numbers from the snapshot WonderApps records of each product&rsquo;s tracker every day; the progress files are read live. Open an app for its full progress: phases, decisions, what is left, story by story.
         </p>
       </header>
       <DevTabs apps={apps} />
@@ -60,7 +60,7 @@ export default async function DevelopmentPage() {
                   </p>
                   <p className="mt-1 text-xs" style={{ color: "#8c8b84" }}>
                     {updatedLabel(s)}
-                    {s.live ? "" : " · snapshot (live file unavailable)"}
+                    {s.recordedOn ? ` · recorded ${s.recordedOn}` : ""}
                   </p>
                 </div>
                 <p className="text-3xl font-semibold tabular-nums" style={{ color: "#fff" }}>

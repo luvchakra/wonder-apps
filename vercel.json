@@ -18,6 +18,10 @@
       "schedule": "10 1 * * *"
     },
     {
+      "path": "/api/cron/dashboard",
+      "schedule": "40 2 * * *"
+    },
+    {
       "path": "/api/cron/newsletter?cadence=weekly",
       "schedule": "30 3 * * 1"
     },

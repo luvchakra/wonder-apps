@@ -8,11 +8,9 @@ types.setTypeParser(1082, (v) => v);
 types.setTypeParser(20, (v) => Number(v));
 types.setTypeParser(1700, (v) => Number(v));
 
-const g = globalThis as unknown as { __waPools?: Map<string, Pool>; __waCache?: Map<string, { at: number; p: Promise<AppSnapshot> }> };
+const g = globalThis as unknown as { __waPools?: Map<string, Pool> };
 const pools = (g.__waPools ??= new Map());
-const cache = (g.__waCache ??= new Map());
 
-const TTL_MS = 120_000;
 const STATEMENT_TIMEOUT = "8s";
 const CONCURRENCY = 3;
 
@@ -156,16 +154,13 @@ async function snapshot(app: AppDashboard, w: Window): Promise<AppSnapshot> {
   return { slug: app.slug, status: failed === 0 ? "ok" : "partial", note: failed ? `${failed} of ${app.metrics.length} metrics could not be read.` : undefined, results, fetchedAt };
 }
 
-/** Snapshot of one app for a window, cached for two minutes so refreshes never hammer a database. */
-export function getSnapshot(app: AppDashboard, w: Window, opts?: { fresh?: boolean }): Promise<AppSnapshot> {
-  const key = `${app.slug}|${w.start.toISOString()}|${w.end.toISOString()}|${w.tz}`;
-  const hit = cache.get(key);
-  if (!opts?.fresh && hit && Date.now() - hit.at < TTL_MS) return hit.p;
-  // A snapshot never rejects: any surprise becomes an "unreachable" card, not a failed page.
-  const p = snapshot(app, w).catch(
+/**
+ * Computes one app's metrics for a window straight from its database. Used ONLY by collection
+ * (store.ts): the daily cron, the Refresh button and a newsletter whose period has no row from
+ * today. Pages never call this; they read what was stored. Never rejects.
+ */
+export function collectSnapshot(app: AppDashboard, w: Window): Promise<AppSnapshot> {
+  return snapshot(app, w).catch(
     (e): AppSnapshot => ({ slug: app.slug, status: "unreachable", note: clean(e instanceof Error ? e.message : "unexpected error"), results: {}, fetchedAt: new Date().toISOString() }),
   );
-  cache.set(key, { at: Date.now(), p });
-  if (cache.size > 60) for (const [k, v] of cache) if (Date.now() - v.at > TTL_MS) cache.delete(k);
-  return p;
 }
