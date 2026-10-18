@@ -200,3 +200,69 @@ const toPayload = (r: Row) => ({
   results: r.results,
   fetched_at: r.fetched_at,
 });
+
+/* --- history ------------------------------------------------------------- */
+
+export type StatHistory = {
+  /** Every collected day, oldest first. */
+  days: string[];
+  /** product → day → metric id → value. */
+  values: Record<string, Record<string, Record<string, number | null>>>;
+  state: StoreState["state"];
+};
+
+/**
+ * Each day's stored single-number results for one period (default: the rolling 7 days, so a
+ * range metric reads as "the 7 days to that day" and a point-in-time metric as "that day").
+ * History builds up from the first collection; nothing is back-filled or invented.
+ */
+export async function readStatHistory(period: StoredPeriod = "7d", days = 180): Promise<StatHistory> {
+  const tz = dashboardConfig.timeZone();
+  const since = zonedDate(new Date(Date.now() - days * 86_400_000), tz);
+  if (demoEnabled()) return demoHistory(period, since);
+  const key = writeKey();
+  if (!key) return { days: [], values: {}, state: "no_key" };
+  let rows: { product_slug: string; captured_on: string; stats: Record<string, unknown> }[];
+  try {
+    rows = await restRpc("dashboard_stat_history", { write_key: key, p_period: period, p_since: since });
+  } catch (e) {
+    console.error("[dashboard] stat history unavailable:", e instanceof Error ? e.message : e);
+    return { days: [], values: {}, state: "error" };
+  }
+  const values: StatHistory["values"] = {};
+  const set = new Set<string>();
+  for (const r of rows) {
+    set.add(r.captured_on);
+    const out: Record<string, number | null> = {};
+    for (const [k, v] of Object.entries(r.stats ?? {})) out[k] = typeof v === "number" && Number.isFinite(v) ? v : null;
+    (values[r.product_slug] ??= {})[r.captured_on] = out;
+  }
+  const list = [...set].sort();
+  return { days: list, values, state: list.length ? "ok" : "empty" };
+}
+
+/** One metric's values across the history's days (null where that day has no reading). */
+export const historySeries = (h: StatHistory, slug: string, id: string | undefined) =>
+  h.days.map((d) => (id ? (h.values[slug]?.[d]?.[id] ?? null) : null));
+
+function demoHistory(period: StoredPeriod, since: string): StatHistory {
+  const tz = dashboardConfig.timeZone();
+  const shown: string[] = [];
+  for (let i = 44; i >= 0; i--) {
+    const d = zonedDate(new Date(Date.now() - i * 86_400_000), tz);
+    if (d >= since) shown.push(d);
+  }
+  const values: StatHistory["values"] = {};
+  for (const a of apps) {
+    const base = demoSnapshot(a, windowForPeriod(period));
+    values[a.slug] = Object.fromEntries(
+      shown.map((d, i) => [
+        d,
+        Object.fromEntries(
+          Object.values(base.results).flatMap((r) => (r.kind === "stat" && r.value != null ? [[r.id, Math.round(r.value * (0.6 + (0.4 * (i + 1)) / shown.length) * 10) / 10]] : [])),
+        ),
+      ]),
+    );
+  }
+  return { days: shown, values, state: "ok" };
+}

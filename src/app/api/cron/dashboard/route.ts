@@ -1,6 +1,8 @@
 import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { noStore } from "@/lib/dashboard/request-guards";
+import { alertOnProblems } from "@/lib/dashboard/alerts";
+import { dashProducts, namesOf } from "@/lib/dashboard/products";
 import { collectAndStore } from "@/lib/dashboard/store";
 
 export const runtime = "nodejs";
@@ -12,7 +14,8 @@ const same = (a: string, b: string) => a.length === b.length && timingSafeEqual(
 /**
  * Vercel Cron calls this daily (vercel.json), before the newsletters, with
  * `Authorization: Bearer $CRON_SECRET`. It collects every dashboard period for every product
- * and stores them as today's numbers; pages and newsletters read only what is stored.
+ * and stores them as today's numbers; pages and newsletters read only what is stored. If the
+ * store fails or a connected product can't be read, the people who can sign in get one email.
  */
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
@@ -25,5 +28,7 @@ export async function GET(req: Request) {
 
   const r = await collectAndStore();
   console.log(`[dashboard] daily collection: stored ${r.stored} rows in ${r.ms} ms; ${r.products.map((p) => `${p.slug}=${p.status}`).join(", ")}`);
-  return NextResponse.json({ ok: r.ok, stored: r.stored, ms: r.ms, products: r.products, error: r.storeError }, { status: r.ok ? 200 : 502, headers: noStore });
+  const names = await dashProducts().then(namesOf).catch(() => ({}) as Record<string, string>);
+  const alerted = await alertOnProblems(r, names);
+  return NextResponse.json({ ok: r.ok, stored: r.stored, ms: r.ms, products: r.products, error: r.storeError, alerted }, { status: r.ok ? 200 : 502, headers: noStore });
 }

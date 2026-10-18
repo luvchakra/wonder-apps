@@ -186,6 +186,12 @@ Full guide: `docs/dashboard/README.md`.
   `public.record_dashboard_snapshot`. Both functions require `PROGRESS_WRITE_KEY`; the table is in the
   private schema because the publishable key is public. Stored rows are finished aggregates (the metric
   results), never anything about a person. No stored row → a clear empty state, never zeros.
+- **History and alerts.** Every collection keeps a row per day, so the overview draws people with an
+  account and monthly active people day by day, and each product page its headline numbers over time
+  (`public.dashboard_stat_history`, migration 0005: stat values only, from the rolling-7-day rows).
+  History starts with the first collection; nothing is back-filled. When the daily run can't store, or a
+  connected product is unreachable or partly read, everyone in `DASHBOARD_ALLOWED_EMAILS` gets one email
+  (`src/lib/dashboard/alerts.ts`); an unconnected product is a setup state, not an alert.
 - **Aggregates only.** Metrics live in `src/lib/dashboard/apps/<slug>.ts` against the contract in
   `src/lib/dashboard/types.ts`: single `SELECT`, only `$1..$4`, no user input in SQL, no emails/names/free
   text (labels that look like emails are blanked). `registry.ts` rejects non-SELECT SQL at build time.

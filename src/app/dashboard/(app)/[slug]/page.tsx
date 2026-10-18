@@ -7,6 +7,9 @@ import { appBySlug } from "@/lib/dashboard/registry";
 import { requireSession } from "@/lib/dashboard/session";
 import { windowLabel } from "@/lib/dashboard/window";
 import { asOfLabel, NoStoredData } from "@/components/dashboard/StoreNotice";
+import { AppHistory } from "@/components/dashboard/History";
+import { appColor } from "@/lib/dashboard/colors";
+import { readStatHistory } from "@/lib/dashboard/store";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +20,7 @@ export default async function AppPage({ params, searchParams }: { params: Promis
   const startup = (await dashProducts()).find((s) => s.slug === slug);
   if (!startup || !appBySlug(slug)) notFound();
   const { key } = parseRange(sp.range);
-  const data = await loadOne(slug, key);
+  const [data, history] = await Promise.all([loadOne(slug, key), readStatHistory()]);
   if (!data) notFound();
   const { w } = data.d;
   if (!data.snap)
@@ -37,6 +40,7 @@ export default async function AppPage({ params, searchParams }: { params: Promis
         <AppHeader app={data.app} name={startup.name} snap={snap} tagline={startup.oneLiner ?? ""} />
         <RangeTabs base={`/dashboard/${slug}`} current={key} stamp={`${windowLabel(w)} · as of ${asOfLabel(snap.fetchedAt, w.tz)}`} />
       </div>
+      <AppHistory h={history} app={data.app} color={appColor(slug)} />
       <AppView app={data.app} snap={snap} w={w} />
     </div>
   );
