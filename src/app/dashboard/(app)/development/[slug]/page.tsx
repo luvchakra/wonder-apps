@@ -50,7 +50,7 @@ export default async function AppDevelopmentPage({ params }: { params: Promise<{
           {startup.name}
         </h1>
         <p className="mt-2 text-sm" style={{ color: "var(--d-ink-3)" }}>
-          {updatedLabel(s)} · read live from the product&rsquo;s own progress files{s.live ? "" : " (numbers from the last snapshot: the live file couldn't be read)"}
+          {updatedLabel(s)} · numbers recorded {s.recordedOn ?? "—"} · progress files read live from GitHub
         </p>
       </header>
       <DevTabs apps={apps} current={slug} />

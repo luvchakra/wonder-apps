@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LogOut } from "lucide-react";
 import { DashNav } from "@/components/dashboard/DashNav";
+import { RefreshButton } from "@/components/dashboard/RefreshButton";
 import { Logo, Wordmark } from "@/components/Logo";
 import { appColor } from "@/lib/dashboard/colors";
 import { requireSession } from "@/lib/dashboard/session";
@@ -37,6 +38,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         </div>
       </aside>
       <main className="min-w-0 px-4 py-6 sm:px-8 sm:py-9 lg:px-10">
+        <div className="mb-6">
+          <RefreshButton />
+        </div>
         {children}
         <div className="mt-10 flex items-center justify-between gap-4 border-t pt-4 lg:hidden" style={{ borderColor: "var(--d-line)" }}>
           <span className="truncate text-xs" style={{ color: "var(--d-ink-3)" }}>{session.email}</span>

@@ -6,7 +6,8 @@ import { RangeTabs } from "@/components/dashboard/RangeTabs";
 import { dashProducts, namesOf } from "@/lib/dashboard/products";
 import { appColor } from "@/lib/dashboard/colors";
 import { delta, formatValue } from "@/lib/dashboard/format";
-import { loadAll, parseRange, result } from "@/lib/dashboard/load";
+import { loadStored, parseRange, result } from "@/lib/dashboard/load";
+import { asOfLabel, NoStoredData } from "@/components/dashboard/StoreNotice";
 import { attention, headlineStats, rollup } from "@/lib/dashboard/portfolio";
 import { requireSession } from "@/lib/dashboard/session";
 import { apps } from "@/lib/dashboard/registry";
@@ -20,16 +21,30 @@ const greeting = (tz: string) => {
   return h < 5 ? "Burning the midnight oil" : h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
 };
 
-export default async function Overview({ searchParams }: { searchParams: Promise<{ range?: string; fresh?: string }> }) {
+export default async function Overview({ searchParams }: { searchParams: Promise<{ range?: string }> }) {
   await requireSession();
   const sp = await searchParams;
-  const { key, window: w } = parseRange(sp.range);
-  const [snaps, products] = await Promise.all([loadAll(w, sp.fresh === "1"), dashProducts()]);
+  const { key } = parseRange(sp.range);
+  const [stored, products] = await Promise.all([loadStored(key), dashProducts()]);
+  const { snaps, w } = stored;
+  if (stored.state !== "ok")
+    return (
+      <div className="grid grid-cols-1 gap-8">
+        <header className="dash-rise flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="dash-eyebrow">Portfolio pulse · {RANGES[key].label.toLowerCase()}</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{greeting(w.tz)}.</h1>
+          </div>
+          <RangeTabs base="/dashboard" current={key} stamp={windowLabel(w)} />
+        </header>
+        <NoStoredData state={stored.state} error={stored.error} />
+      </div>
+    );
   const names = namesOf(products);
   const nameOf = (slug: string) => names[slug] ?? slug;
   const roll = rollup(snaps, w);
   const todo = attention(snaps);
-  const stamp = `${windowLabel(w)} · ${w.tz.replace("_", " ")}`;
+  const stamp = `${windowLabel(w)} · as of ${asOfLabel(stored.asOf, w.tz)}`;
   const unplugged = apps.filter((a) => snaps[a.slug]?.status === "not_configured");
 
   return (
@@ -39,7 +54,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
           <p className="dash-eyebrow">Portfolio pulse · {RANGES[key].label.toLowerCase()}</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">{greeting(w.tz)}.</h1>
           <p className="mt-2 max-w-xl text-[15px]" style={{ color: "var(--d-ink-2)" }}>
-            {roll.live} of {roll.total} products are reporting. Everything here is read live from each product&apos;s own database, counts only.
+            {roll.live} of {roll.total} products are reporting. Collected from each product&apos;s own database once a day (or when you press Refresh) and stored here, counts only.
           </p>
         </div>
         <RangeTabs base="/dashboard" current={key} stamp={stamp} />

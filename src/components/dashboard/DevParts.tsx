@@ -45,7 +45,7 @@ export function DevBar({ s, color }: { s: DevSection; color: string }) {
 
 export function DevStats({ s }: { s: DevSection }) {
   const t = s.totals;
-  if (!t) return <p className="text-sm" style={{ color: "#8c8b84" }}>Numbers unavailable: neither the live file nor a recorded snapshot could be read.</p>;
+  if (!t) return <p className="text-sm" style={{ color: "#8c8b84" }}>Numbers unavailable: no snapshot has been recorded for this product yet.</p>;
   const active = t.total - t.setAside;
   const left = Math.max(0, active - t.done);
   return (

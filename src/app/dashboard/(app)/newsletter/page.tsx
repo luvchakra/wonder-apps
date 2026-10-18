@@ -6,6 +6,7 @@ import { dashboardConfig } from "@/lib/dashboard/config";
 import { compose, PERIODS, parsePeriod } from "@/lib/dashboard/newsletter-run";
 import { requireSession } from "@/lib/dashboard/session";
 import { mailConfigured } from "@/lib/mailer";
+import { asOfLabel } from "@/components/dashboard/StoreNotice";
 
 export const dynamic = "force-dynamic";
 
@@ -29,11 +30,12 @@ const mask = (e: string) => e.replace(/^(.).*(@.*)$/, "$1•••$2");
 export default async function NewsletterPage({ searchParams }: { searchParams: Promise<{ period?: string }> }) {
   const session = await requireSession();
   const period = parsePeriod((await searchParams).period);
-  const { n } = await compose(period, false);
+  const { n, asOf, w, empty } = await compose(period);
   const cadence = dashboardConfig.cadence();
   const recipients = dashboardConfig.recipients();
   const tz = dashboardConfig.timeZone();
   const checks = [
+    { ok: !empty, label: empty ? "No stored numbers for this period yet" : `Stored numbers as of ${asOfLabel(asOf, w.tz)}`, env: "Collected daily; a send collects first if today's are missing" },
     { ok: mailConfigured(), label: "Email (SMTP)", env: "SMTP_PASS" },
     { ok: (process.env.CRON_SECRET ?? "").length >= 16, label: "Scheduler secret", env: "CRON_SECRET" },
     { ok: recipients.length > 0, label: `${recipients.length} recipient${recipients.length === 1 ? "" : "s"}`, env: "NEWSLETTER_RECIPIENTS" },

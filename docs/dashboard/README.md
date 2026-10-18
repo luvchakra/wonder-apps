@@ -1,10 +1,11 @@
 # Founder dashboard
 
 One private page at `/dashboard` that shows activity across all five products, plus a weekly
-and monthly emailed briefing. **Product numbers are never stored in WonderApps.** Every
-number is read live from the product that owns it, through a read-only connection you control.
-The only history kept is of each product's *public* engineering tracker (the WonderApps
-database's `progress_snapshots`), which drives the development trends and the newsletter's
+and monthly emailed briefing. **WonderApps collects each product's numbers into its own
+database once a day and the dashboard reads them from there** (founder's decision, 2026-10-18).
+Collection reads each product through a read-only connection you control and stores only the
+finished aggregates, never anything about a person. The public engineering tracker history
+(`progress_snapshots`) is kept too and drives the development trends and the newsletter's
 build-progress section.
 
 ```
@@ -20,12 +21,26 @@ build-progress section.
    `SELECT`, only the columns the metrics need (never emails, names or content), and every
    session is read-only with an 8-second statement limit.
 2. You put that role's **pooled** connection string in Vercel as `<PRODUCT>_DATABASE_URL`.
-3. The dashboard runs the fixed queries in `src/lib/dashboard/apps/<product>.ts`. They take
-   only a date window and a time zone, return **aggregates**, and never reach the browser as
-   rows. Results are cached for two minutes in memory (nothing is stored).
+3. Collection (`src/lib/dashboard/store.ts`) runs the fixed queries in
+   `src/lib/dashboard/apps/<product>.ts` for five periods (last 7, 30 and 90 days, the last full
+   week and the last full month). They take only a date window and a time zone and return
+   **aggregates**. The results are stored as today's row per product and period in
+   `private.dashboard_snapshots` (migration `supabase/migrations/0004_dashboard_snapshots.sql`).
+4. Collection runs **once a day** (Vercel Cron, `/api/cron/dashboard`, 02:40 UTC / 08:10 IST,
+   before the newsletters), whenever you press **Refresh** at the top of the dashboard (overwrites
+   today's rows), and before a newsletter is sent if its period has no row from today.
+5. Every page and the newsletter preview read only the stored rows, through
+   `public.dashboard_snapshots_latest`, and show "as of" the time they were collected, with the
+   window they were computed for.
 
-A product whose variable is unset shows "Not connected"; one that can't be reached shows
-"Unreachable"; a single failing metric is listed without breaking the page.
+The table is in the database's private schema because the publishable key is public. It can be
+written and read only through `public.record_dashboard_snapshot` and
+`public.dashboard_snapshots_latest`, and both require `PROGRESS_WRITE_KEY` (the same key the
+progress recorder uses). Without the key (local runs, the E2E server) pages show "No numbers to
+show yet" instead of figures; `DASHBOARD_DEMO=1` still shows synthetic numbers locally.
+
+A product whose variable was unset at collection shows "Not connected"; one that couldn't be
+reached shows "Unreachable"; a single failing metric is listed without breaking the page.
 
 ## Setup (once per product)
 
@@ -108,7 +123,7 @@ browser-bound, short-lived link plus the allow-list.
 calendar month; both compare with the period before. A retried cron can't double-send (idempotency
 key per period). Vercel Hobby allows these because they run at most daily.
 
-The email is drafted from live numbers: portfolio totals, auto-written highlights (the biggest
+The email is drafted from the stored numbers (collected first if today's are missing): portfolio totals, auto-written highlights (the biggest
 real movements, then anything that needs a look), and one block per product with its headline
 KPIs, deltas and a daily signups bar chart. From `/dashboard/newsletter` you can preview any
 period, download the HTML, send yourself a test, or send to the list now.
@@ -126,8 +141,9 @@ bound to `$1..$4`, and schema-qualified. Locally, `DASHBOARD_DEMO=1` renders syn
 what is being worked on, what is next, last update) and one section per product with its own
 progress files rendered in full, collapsible by heading. The files are read live from the
 products' public GitHub repos (`DEV_SOURCES` in `src/lib/dashboard/development.ts`) and cached
-for five minutes; nothing is stored. Completion uses the same parsers as the public tracker and is
-floored. Raw HTML in the files is dropped, images are not loaded, and relative links open the file
+for five minutes. The numbers (completion, done, left) come only from the latest recorded progress
+snapshot, which the daily progress cron parses from the same file with the same parser as the
+public tracker; completion is floored. Raw HTML in the files is dropped, images are not loaded, and relative links open the file
 on GitHub.
 
 | Product | Files shown |
