@@ -60,6 +60,11 @@ export function Nav({ products: startups }: { products: NavProduct[] }) {
               </Link>
             </li>
             <li>
+              <Link href="/careers" className="text-[13px] text-fg-muted transition-colors hover:text-fg">
+                Careers
+              </Link>
+            </li>
+            <li>
               <Link href={site.contactPath} className="rounded-full bg-fg px-3.5 py-1.5 text-[13px] font-medium text-bg transition-opacity hover:opacity-85">
                 Talk to the founder
               </Link>
