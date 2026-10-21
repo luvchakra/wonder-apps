@@ -60,3 +60,16 @@ test("every page but the home page offers a way back to it", async ({ page, isMo
   await page.getByRole("button", { name: /back to the wonderapps main page/i }).first().click();
   await expect(page).toHaveURL(/\/$/);
 });
+
+test("pages send the security headers and robots.txt keeps AI crawlers out", async ({ page }) => {
+  const res = await page.request.get("/");
+  const h = res.headers();
+  expect(h["x-powered-by"]).toBeUndefined();
+  expect(h["content-security-policy"]).toContain("frame-ancestors 'none'");
+  expect(h["content-security-policy"]).toContain("object-src 'none'");
+  expect(h["x-content-type-options"]).toBe("nosniff");
+  expect(h["cross-origin-opener-policy"]).toBe("same-origin");
+  const robots = await (await page.request.get("/robots.txt")).text();
+  expect(robots).toMatch(/User-Agent: GPTBot[\s\S]*?Disallow: \/\n/);
+  expect(robots).toMatch(/User-Agent: \*\nAllow: \//);
+});

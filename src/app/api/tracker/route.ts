@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { TRACKER_SOURCES } from "@/lib/tracker-parsers";
 import type { ProgressRow } from "@/content/progress";
+import { clientIp, limited } from "@/lib/dashboard/request-guards";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,7 +25,13 @@ async function fetchOne(slug: string, source: (typeof TRACKER_SOURCES)[string]):
 
 // GET only: this reads five public GitHub files server-side (avoids browser CORS) and
 // never accepts input, so there is nothing here for a caller to inject or abuse.
-export async function GET() {
+export async function GET(req: Request) {
+  // Generous: the page calls this on load and on Refresh. A burst far above that is logged and slowed.
+  const ip = clientIp(req);
+  if (limited(`tracker:${ip}`, 60, 10 * 60_000)) {
+    console.warn("[tracker] rate limit hit", { ip });
+    return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429, headers: { "Retry-After": "120", "Cache-Control": "no-store" } });
+  }
   const entries = Object.entries(TRACKER_SOURCES);
   const results = await Promise.all(entries.map(([slug, source]) => fetchOne(slug, source)));
   return NextResponse.json(

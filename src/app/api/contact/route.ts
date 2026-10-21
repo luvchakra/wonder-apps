@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getStartups } from "@/lib/content/load";
 import { mailConfigured, sendMail } from "@/lib/mailer";
+import { clientIp, limited } from "@/lib/dashboard/request-guards";
 
 export const runtime = "nodejs";
 
@@ -27,6 +28,12 @@ function recipients(): string[] {
 const escape = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string);
 
 export async function POST(req: Request) {
+  // Generous: a person sends one or two messages; this only stops a script hammering the mailbox.
+  const ip = clientIp(req);
+  if (limited(`contact:${ip}`, 5, 10 * 60_000)) {
+    console.warn("[contact] rate limit hit", { ip });
+    return NextResponse.json({ ok: false, error: "Too many messages in a short time. Please try again in a few minutes." }, { status: 429, headers: { "Retry-After": "600" } });
+  }
   let body: unknown;
   try {
     body = await req.json();
