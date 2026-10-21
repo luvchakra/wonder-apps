@@ -23,7 +23,7 @@ export async function restGet<T>(path: string, cache: Cache): Promise<T> {
   return (await res.json()) as T;
 }
 
-/** Calls a database function. Used only by the progress recorder, which also needs the write key. */
+/** Calls a database function (the progress recorder, the dashboard store and the careers key; all need the write key). */
 export async function restRpc<T>(fn: string, body: unknown): Promise<T> {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
     method: "POST",
@@ -36,5 +36,7 @@ export async function restRpc<T>(fn: string, body: unknown): Promise<T> {
     const detail = await res.text().catch(() => "");
     throw new Error(`Database call ${fn} failed (${res.status}): ${detail.slice(0, 200)}`);
   }
-  return (await res.json()) as T;
+  // A function that returns nothing answers 204 with no body.
+  const text = await res.text();
+  return (text ? JSON.parse(text) : null) as T;
 }
