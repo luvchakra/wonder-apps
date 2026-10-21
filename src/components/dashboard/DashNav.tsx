@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { BarChart3, Hammer, Mail } from "lucide-react";
+import { BarChart3, Briefcase, Hammer, Mail } from "lucide-react";
 
 export type NavApp = { slug: string; name: string; color: string };
 
@@ -18,13 +18,14 @@ export function DashNav({ apps }: { apps: NavApp[] }) {
     ...apps.map((a) => ({ href: `/dashboard/${a.slug}`, label: a.name, icon: <span className="size-2.5 rounded-full" style={{ background: a.color }} />, active: path === `/dashboard/${a.slug}` })),
     { href: "/dashboard/development", label: "Development", icon: <Hammer className="size-4" />, active: path.startsWith("/dashboard/development") },
     { href: "/dashboard/newsletter", label: "Newsletter", icon: <Mail className="size-4" />, active: path === "/dashboard/newsletter" },
+    { href: "/dashboard/careers", label: "Careers", icon: <Briefcase className="size-4" />, active: path === "/dashboard/careers" },
   ];
   return (
     <nav aria-label="Dashboard" className="flex gap-1.5 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
       {links.map((l) => (
         <Link
           key={l.href}
-          href={`${l.href}${l.href === "/dashboard/newsletter" || l.href === "/dashboard/development" ? "" : q}`}
+          href={`${l.href}${l.href === "/dashboard/newsletter" || l.href === "/dashboard/development" || l.href === "/dashboard/careers" ? "" : q}`}
           aria-current={l.active ? "page" : undefined}
           className={`${item} shrink-0 whitespace-nowrap`}
           style={{ background: l.active ? "rgba(255,255,255,0.09)" : "transparent", color: l.active ? "#fff" : "#c3c2b7" }}

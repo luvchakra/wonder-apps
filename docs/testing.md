@@ -82,3 +82,9 @@ GitHub → Actions → **E2E nightly** → **Run workflow**, optionally with spe
 
 - `/decks` has no level-1 heading (its title is an `h2`). The public-pages check accepts `h1` or
   `h2` until the page is fixed; tighten it back to `h1` with the fix.
+
+## Unit tests
+
+`npm test` runs `tests/**/*.test.ts` with Node's test runner (via tsx). `tests/stub-server-only.mjs`
+lets server modules load in Node. Every outside call is mocked with `scriptedFetch` (`tests/careers/helpers.ts`);
+unit tests never reach WonderJobs or the database. CI runs them in the `unit` job.

@@ -50,6 +50,11 @@ export function Footer({ products: startups, copy }: { products: Pick<Startup, "
                   Engineering tracker
                 </Link>
               </li>
+              <li>
+                <Link href="/careers" className="text-fg-muted transition-colors hover:text-fg">
+                  Careers
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -32,6 +32,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/((?!api/).*)", headers: securityHeaders },
+      // The applicant's status link carries a private token: never pass it on as a referrer.
+      { source: "/careers/status", headers: [{ key: "Referrer-Policy", value: "no-referrer" }] },
       { source: "/_next/static/:path*", headers: [{ key: "Cross-Origin-Resource-Policy", value: "same-origin" }] },
     ];
   },

@@ -63,6 +63,8 @@ export default defineConfig({
       CONTACT_RECIPIENTS: "",
       CRON_SECRET: "",
       PROGRESS_WRITE_KEY: "",
+      // Never reach WonderJobs: with no key, /careers shows its not-set-up state.
+      WONDERJOBS_CAREERS_KEY: "",
       WONDERHOME_DATABASE_URL: "",
       WONDERJOBS_DATABASE_URL: "",
       WONDERCREATOR_DATABASE_URL: "",

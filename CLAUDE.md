@@ -23,10 +23,11 @@ mailbox (GoDaddy SMTP); the messages are never stored.
 | Progress  | `npm run progress`  |
 | Backfill  | `npm run progress:backfill` |
 | Back up copy | `npm run content:backup` |
+| Unit tests | `npm test` |
 | E2E (local build) | `npm run e2e -- [spec files]` |
 
-`npm run check` (lint + typecheck + build) is the pre-push gate. There are no unit
-tests yet.
+`npm run check` (lint + typecheck + unit tests + build) is the pre-push gate. Unit tests
+(`npm test`, Node's test runner, `tests/`) mock every outside call; CI runs them on every PR.
 
 ## Testing and CI
 
@@ -212,6 +213,21 @@ Full guide: `docs/dashboard/README.md`.
   "Build progress this period" section in every newsletter. Days between snapshots carry the last one
   forward; days before a product's first snapshot are gaps, never zeros.
 - The public-copy rules above (no tech stack names) apply to the marketing site, not to this private page.
+
+## Careers (/careers) — public, run by WonderJobs
+
+- `/careers`, `/careers/<id>` and `/careers/status?t=…` show WonderJobs' open jobs and forward
+  applications. WonderJobs stores applications, emails applicants and the hiring team, and deletes
+  them; **this site stores and logs nothing about applicants** (logs: job id, status, time only).
+- `src/lib/careers/wonderjobs.ts` is the only WonderJobs client (server-only; base URL fixed,
+  override only `https://*.wonderapps.biz`; 8 s timeout; GETs retried once, POSTs never; job list
+  cached 60 s, nothing else). The browser calls only `/api/careers/apply` and `/api/careers/status`
+  (same-origin, per-IP limits). The status token travels in request bodies, never in a fetched URL.
+- The career-site key (`wjcs_…`) is pasted at `/dashboard/careers`, stored AES-GCM-encrypted
+  (`src/lib/careers/key.ts`, migration 0006, secret derived from `DASHBOARD_SESSION_SECRET` unless
+  `CAREERS_KEY_SECRET` is set), shown masked, every save/clear audited. `WONDERJOBS_CAREERS_KEY`
+  is only the fallback. Never show sample jobs.
+- The careers page address registered in WonderJobs is `https://wonderapps.biz/careers`.
 
 ## The tracker (/appstracker)
 
