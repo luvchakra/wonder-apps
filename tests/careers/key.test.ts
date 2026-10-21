@@ -89,3 +89,16 @@ test("with nothing stored, the environment variable is the fallback", async () =
   const none = await resolveKey();
   assert.equal(none.key, null);
 });
+
+test("a save the database answers with 204 and no body counts as saved", async () => {
+  process.env.PROGRESS_WRITE_KEY = "write-key";
+  const { f } = scriptedFetch([new Response(null, { status: 204 })]);
+  const orig = globalThis.fetch;
+  globalThis.fetch = f;
+  try {
+    const { result } = await captureLogs(() => setKey(KEY, "admin@example.invalid"));
+    assert.deepEqual(result, { ok: true, mask: "wjcs_••••••••WXYZ" });
+  } finally {
+    globalThis.fetch = orig;
+  }
+});
