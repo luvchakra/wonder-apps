@@ -1,3 +1,4 @@
+import "server-only";
 import { Pool, types } from "pg";
 import { demoEnabled, demoSnapshot } from "./demo";
 import { daysIn } from "./window";

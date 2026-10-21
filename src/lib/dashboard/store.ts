@@ -1,3 +1,4 @@
+import "server-only";
 import { restRpc } from "@/lib/content/supabase";
 import { dashboardConfig } from "./config";
 import { collectSnapshot } from "./db";

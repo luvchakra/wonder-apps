@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/dashboard/LoginForm";
 import { Logo, Wordmark } from "@/components/Logo";
 import { getSession } from "@/lib/dashboard/session";
 
-export const metadata: Metadata = { title: "Sign in · Founder dashboard", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Sign in · Founder dashboard", robots: { index: false, follow: false }, other: { robots: "noindex, nofollow, noai, noimageai" } };
 export const dynamic = "force-dynamic";
 
 const ERRORS: Record<string, string> = {

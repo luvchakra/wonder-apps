@@ -8,7 +8,7 @@ import { appColor } from "@/lib/dashboard/colors";
 import { requireSession } from "@/lib/dashboard/session";
 import { dashProducts } from "@/lib/dashboard/products";
 
-export const metadata: Metadata = { title: "Founder dashboard", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Founder dashboard", robots: { index: false, follow: false }, other: { robots: "noindex, nofollow, noai, noimageai" } };
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await requireSession();

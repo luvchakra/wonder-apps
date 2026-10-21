@@ -234,6 +234,12 @@ Full guide: `docs/dashboard/README.md`.
 
 ## Rules that matter here
 
+- **Hardening (2026-10-21).** Pages send a CSP (`frame-ancestors 'none'`, `object-src 'none'`),
+  nosniff, COOP, Referrer-Policy and HSTS from `next.config.ts`; `X-Powered-By` and browser source
+  maps are off. `robots.txt` disallows the AI crawlers (search engines still index public pages).
+  `/api/contact` and `/api/tracker` have generous per-IP limits (429 + Retry-After, logged).
+  Server modules that hold secrets import `server-only`. Draft terms for counsel: `docs/legal/TERMS-DRAFT.md`.
+
 - **Never invent traction.** Every number on the site traces to a product's
   public engineering tracker or live site. If you cannot cite it, don't add it.
 - WonderAgent was renamed **WonderID** on 2026-09-26 by the founder (repo

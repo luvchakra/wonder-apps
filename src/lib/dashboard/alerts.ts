@@ -1,3 +1,4 @@
+import "server-only";
 import { sendMail } from "@/lib/mailer";
 import { dashboardConfig } from "./config";
 import type { CollectResult } from "./store";
