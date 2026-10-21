@@ -18,6 +18,12 @@ test("careers is linked from the footer and says it isn't set up, with no sample
   await expect(page.locator('a[href^="/careers/"]')).toHaveCount(0);
 });
 
+test("careers is in the top menu", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("banner").getByRole("link", { name: "Careers" }).first().click();
+  await expect(page).toHaveURL(/\/careers$/);
+});
+
 test("a job page with no key shows a plain state, not a form", async ({ page }) => {
   await page.goto("/careers/e2e-job");
   await expect(page.getByText("Careers isn't set up yet")).toBeVisible();

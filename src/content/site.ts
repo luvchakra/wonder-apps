@@ -16,6 +16,7 @@ export const site = {
     { href: "/#snapshot", label: "At a glance" },
     { href: "/decks", label: "Investor decks" },
     { href: "/#founder", label: "Founder" },
+    { href: "/careers", label: "Careers" },
   ],
   legal: [
     { href: "/privacy", label: "Privacy Policy" },
